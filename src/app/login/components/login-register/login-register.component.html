@@ -1,0 +1,40 @@
+<nb-card style="border-radius: 3rem;" [nbSpinner]="loading" nbSpinnerSize="tiny" nbSpinnerStatus="primary">
+    <nb-card-header class="text-center" style="font-weight: bold;">
+      REGISTRE SU USUARIO Y CONTRASEÑA
+    </nb-card-header>
+    <nb-card-body>
+      <form [formGroup]="formHeaders">
+        <div>
+            <label class="label">Usuario:</label>
+            <input type="text" status="info" nbInput fullWidth shape="semi-round" formControlName="username" autocomplete="new-username">
+          </div>
+          <hr>
+          <div>
+            <label class="label">Correo:</label>
+            <input type="text" status="info" nbInput fullWidth shape="semi-round" formControlName="email" autocomplete="new-email">
+          </div>
+          <hr>
+          <div>
+            <label class="label">Contraseña:</label>
+            <nb-form-field>
+              <input [type]="getInputType()" status="info" nbInput fullWidth shape="semi-round" formControlName="password" autocomplete="new-password">
+              <button nbSuffix nbButton ghost (click)="toggleShowPassword()">
+                <nb-icon [icon]="showPassword ? 'eye-outline' : 'eye-off-2-outline'" pack="eva"
+                  [attr.aria-label]="showPassword ? 'hide password' : 'show password'">
+                </nb-icon>
+              </button>
+            </nb-form-field>
+          </div>
+        <div class="text-center" *ngIf="!formHeaders.value.success">
+            <br>
+          <nb-alert status="danger" style="font-size: 10px;">{{formHeaders.value.messageResponse}}</nb-alert>
+        </div>
+      </form>
+    </nb-card-body>
+    <nb-card-footer class="text-center">
+        <button nbButton size="tiny" status="basic" shape="semi-round" (click)="backRegister()">Cancelar</button>&nbsp;
+      <button nbButton size="tiny" status="primary" shape="semi-round" (click)="registerLogin()" [disabled]="formHeaders.invalid"
+        [nbSpinner]="loading">Guardar</button>
+  
+    </nb-card-footer>
+  </nb-card>

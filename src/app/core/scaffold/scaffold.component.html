@@ -1,0 +1,29 @@
+<nb-layout>
+    <nb-layout-header  class="header-actions" fixed>
+        <nb-actions>
+            <nb-action class="text-center" *ngIf="!isLessThanXl">
+                <img src="https://cdn-icons-png.flaticon.com/512/1987/1987925.png" alt="" height="60px">
+                <span style="color: white;">&nbsp;&nbsp; CARMI - ART</span>
+            </nb-action>
+            <nb-action>
+                <button nbButton ghost (click)="toggle()">
+                    <nb-icon status="warning" [icon]="isLessThanXl ? 'menu': 'menu-2-outline'"></nb-icon>
+                  </button>
+            </nb-action>
+          </nb-actions>
+          <nb-actions>
+            <nb-action class="p-0">
+                <button nbButton size="small" (click)="logout()" [nbSpinner]="loading" ghost>Salir</button>
+            </nb-action>
+    </nb-actions>
+    </nb-layout-header>
+    <nb-sidebar responsive tag="core-sidebar">
+        <nb-menu [items]="MENU_ITEMS" tag="core-menu"></nb-menu>
+        <nb-sidebar-footer>
+            <strong style="font-size: 8px;">Create by Cristian Huarcaya 2023</strong>
+        </nb-sidebar-footer>
+    </nb-sidebar>
+    <nb-layout-column class="found" [nbSpinner]="loading" nbSpinnerSize="tiny" nbSpinnerStatus="primary">
+        <router-outlet></router-outlet>
+    </nb-layout-column>
+</nb-layout>

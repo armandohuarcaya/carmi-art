@@ -1,0 +1,172 @@
+::ng-deep nb-select.ng-invalid {
+    // campo requerido
+    border-left: 1px solid #e74c3c !important;
+}
+
+::ng-deep input.ng-invalid {
+    border-left: 1px solid #e74c3c !important;
+}
+
+::ng-deep select.ng-invalid {
+    // campo requerido
+    border-left: 1px solid #e74c3c !important;
+}
+
+::ng-deep textarea.ng-invalid {
+    // campo requerido
+    border-left: 1px solid #e74c3c !important;
+}
+
+::ng-deep .scrollModal {
+    max-width: 95vw;
+    max-height: 95vh;
+}
+
+::ng-deep nb-dialog-container {
+    // para darle estilo a los modales
+    display: block;
+    animation: custom-dialog-enter 1s ease;
+}
+
+@keyframes custom-dialog-enter {
+    from {
+        transform: scale(0);
+    }
+
+    to {
+        transform: none;
+    }
+}
+
+// PAra el diseño de la tabla
+::ng-deep .table>:not(caption)>*>* {     //quitar borde de la tabla cuando es 0
+    border-bottom-width: 0px !important;
+    // background-color: 1px solid var(--text-hint-color) !important;
+}
+
+::ng-deep table.table {     // color de tabla segun el tema
+    font-family: var(--font-family-primary) !important;
+    color: var(--color-primary-600) !important;
+
+}
+
+::ng-deep table tbody tr {
+    font-size: 11px !important;
+}
+
+::ng-deep .table {
+    &.table-striped tbody tr {
+        ::first-line {       //cuando es Hover mantiene su color según el tema
+            color: var(--text-basic-color) !important;
+        }
+    }
+
+    &.table-hover tbody tr {
+        &:hover {
+            ::first-line {     //cuando es Hover mantiene su color según el tema
+                color: var(--text-basic-color) !important;
+            }
+        }
+    }
+}
+::ng-deep .head_table_padre {
+    background: var(--color-primary-600) !important;
+    color: white !important;
+    font-size: 11px !important;
+    text-transform: uppercase !important;
+    font-weight: bold !important;
+}
+::ng-deep .head_table_hijo {
+    background: var(--color-primary-600) !important;
+    color: white !important;
+    font-size: 10px !important;
+    text-transform: uppercase !important;
+    font-weight: bold !important;
+}
+::ng-deep .head_table_hijo_basic {
+    background: var(--card-header-basic-background-color) !important;
+    font-size: 11px !important;
+    text-transform: uppercase !important;
+    font-weight: bold !important;
+}
+
+//  ---------------
+
+//stepper
+
+::ng-deep nb-stepper .header .step.selected {
+    color: var(--color-warning-500);
+}
+
+// fielset
+::ng-deep fieldset {
+    border-color: transparent;
+    padding: 0px !important;
+}
+
+///Card Header background
+::ng-deep .card_header_backgournd {
+    background: var(--color-primary-500);
+    color: white;
+}
+
+///header diseño
+::ng-deep .backgournd {
+    background: var(--text-hint-color);
+}
+
+// para poner texto al buscado en su boton
+::ng-deep .lb-search {
+    input {
+      padding-right: 6.9rem !important;
+    }
+  
+    .nb-form-field-suffix-medium, .nb-form-field-suffix-small {
+      width: 6.9rem !important;
+      margin-left: calc(6.9rem * -1) !important;
+    }
+  }
+  ::ng-deep .parpadea {
+
+    animation-name: parpadeo;
+    animation-duration: 1s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  
+    -webkit-animation-name:parpadeo;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-iteration-count: infinite;
+  }
+  
+  @-moz-keyframes parpadeo{
+    0% { opacity: 1.0; }
+    50% { opacity: 0.0; }
+    100% { opacity: 1.0; }
+  }
+  
+  @-webkit-keyframes parpadeo {
+    0% { opacity: 1.0; }
+    50% { opacity: 0.0; }
+     100% { opacity: 1.0; }
+  }
+  
+  @keyframes parpadeo {
+    0% { opacity: 1.0; }
+     50% { opacity: 0.0; }
+    100% { opacity: 1.0; }
+  }
+
+  ::ng-deep .nbCardHeader {
+    padding-top: 7px !important;
+    padding-bottom: 7px !important;
+    font-size: 11px !important;
+  }
+  // ALINEAR VERTICALMENTE AL CENTRO
+  ::ng-deep.alingVertical {
+    display: flex;
+    align-items: center;
+ }
+ ::ng-deep.label {
+    font-size: 11px;
+ }

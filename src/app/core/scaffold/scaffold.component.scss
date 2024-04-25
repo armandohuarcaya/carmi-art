@@ -1,0 +1,28 @@
+:host {
+    ::ng-deep nb-layout-header.header-actions nav {
+      -ms-flex-pack: justify;
+      justify-content: space-between;
+    }
+  
+    ::ng-deep nb-layout-footer.header-actions nav {
+      background-color: var(--header-background-color) !important;
+      border: none !important;
+    }
+  
+    ::ng-deep nb-layout-footer.header-actions {
+      &.fixed {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 1040;
+      }
+    }
+    .bakground {
+      background: var(--color-primary-300);
+      color: white;
+    }
+    ::ng-deep nb-layout nb-sidebar {
+      background-color: var(--header-background-color) !important;
+    }
+}

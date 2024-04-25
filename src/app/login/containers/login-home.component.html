@@ -1,0 +1,25 @@
+<nb-layout>
+    <!-- <nb-layout-header fixed>Company Name</nb-layout-header>
+     -->
+    <nb-layout-column class="found">
+      <!-- <div class="container">
+        <div class="row"> -->
+          <!-- <div class="col-md-4"></div> -->
+          <div class="col-md-2 col-sm-8 col-lg-2">
+          <div *ngIf="formHeaders.value.type === 'SIGN_IN'">
+            <app-sign-in (changeValues)="changeValues($event)"></app-sign-in>
+          </div>
+          <div *ngIf="formHeaders.value.type === 'REGISTER'">
+            <app-login-register (changeValues)="changeValues($event)"></app-login-register>
+          </div>
+          <div *ngIf="formHeaders.value.type === 'RECOVERY'">
+            <app-login-recovery (changeValues)="changeValues($event)"></app-login-recovery>
+          </div>
+          <div *ngIf="formHeaders.value.type === 'NEW_PASSWORD'">
+            <app-login-new-password (changeValues)="changeValues($event)"></app-login-new-password>
+          </div>
+        </div>
+      <!-- </div>
+      </div> -->
+  </nb-layout-column>
+</nb-layout>

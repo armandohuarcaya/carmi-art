@@ -1,0 +1,24 @@
+<nb-card style="border-radius: 3rem;" [nbSpinner]="loading" nbSpinnerSize="tiny" nbSpinnerStatus="primary">
+    <nb-card-header class="text-center" style="font-weight: bold;">
+      SOLICITAR NUEVA CONTRASEÑA
+    </nb-card-header>
+    <nb-card-body>
+      <form [formGroup]="formHeaders">
+          <div>
+            <label class="label">Correo:</label>
+            <input type="text" status="info" nbInput fullWidth shape="semi-round" formControlName="email" autocomplete="new-email">
+          </div>
+          <hr>
+        <div class="text-center" *ngIf="!formHeaders.value.success">
+          <br>
+          <nb-alert status="danger" style="font-size: 10px;">{{formHeaders.value.messageResponse}}</nb-alert>
+        </div>
+      </form>
+    </nb-card-body>
+    <nb-card-footer class="text-center">
+        <button nbButton size="tiny" status="basic" shape="semi-round" (click)="backRegister()">Cancelar</button>&nbsp;
+      <button nbButton size="tiny" status="primary" shape="semi-round" (click)="requestPAssword()" [disabled]="formHeaders.invalid"
+        [nbSpinner]="loading">Enviar</button>
+  
+    </nb-card-footer>
+  </nb-card>

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import {registerLocaleData} from '@angular/common';
 import localePe from '@angular/common/locales/es-PE';
-import { NbActionsModule, NbButtonModule, NbContextMenuModule, NbDatepickerModule, NbDialogModule, NbIconModule, NbLayoutModule, NbMediaBreakpoint, NbMenuModule, NbSelectModule, NbSidebarModule, NbSpinnerModule, NbThemeModule, NbToastrModule, NbToastrService, NbToggleModule, NbUserModule } from '@nebular/theme';
+import { NbActionsModule, NbButtonModule, NbContextMenuModule, NbDatepickerModule, NbDialogModule, NbGlobalLogicalPosition, NbIconModule, NbLayoutModule, NbMediaBreakpoint, NbMenuModule, NbSelectModule, NbSidebarModule, NbSpinnerModule, NbThemeModule, NbToastrModule, NbToastrService, NbToggleModule, NbUserModule } from '@nebular/theme';
 import { RouterModule, Routes } from '@angular/router';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { BrowserModule } from '@angular/platform-browser';
@@ -15,6 +15,7 @@ import { CoreOptions, CORE_OPTIONS } from './core.options';
 import { InterceptorInterceptor } from './oauth2/interceptor.interceptor';
 import { GeneralService } from '../providers';
 import { Auth2Guard } from './oauth2/oauth2.guard';
+import { ErrorInterceptor } from './interceptors/error.interceptor';
 registerLocaleData(localePe);
 
 // export function init_app(configService: AppConfigService, injector: Injector): any {
@@ -22,8 +23,8 @@ registerLocaleData(localePe);
 // }
 
 const toastConfig: any = {
-    hasIcon: true,
-    duration: 5000
+    duration: 5000,
+    position: NbGlobalLogicalPosition.BOTTOM_END
 };
 
 const mediaBreakpoints: NbMediaBreakpoint[] = [
@@ -85,7 +86,8 @@ const mediaBreakpoints: NbMediaBreakpoint[] = [
         CatchErrorInterceptor,
         {provide: LOCALE_ID, useValue: 'es-Pe'},
         // {provide: HTTP_INTERCEPTORS, useClass: NbAuthSimpleInterceptor, multi: true},
-        {provide: HTTP_INTERCEPTORS, useClass: CatchErrorInterceptor, multi: true, deps: [NbToastrService]},
+        // {provide: HTTP_INTERCEPTORS, useClass: CatchErrorInterceptor, multi: true, deps: [NbToastrService]},
+        {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
         // {provide: APP_INITIALIZER, useFactory: init_app, deps: [AppConfigService, Injector], multi: true},
         {provide: HTTP_INTERCEPTORS, useClass: InterceptorInterceptor, multi: true},
         Auth2Guard,

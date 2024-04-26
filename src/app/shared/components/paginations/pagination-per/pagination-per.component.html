@@ -1,0 +1,9 @@
+<nb-form-field class="float-start">
+  <nb-icon nbPrefix icon="menu-outline"></nb-icon>
+  <nb-select size="tiny" [selected]="currentPerPage" (selectedChange)="changeSelect($event)">
+    <nb-option [value]="total">Todos</nb-option>
+    <nb-option *ngFor="let value of perpages" [value]="value">
+      {{ value}}
+    </nb-option>
+  </nb-select>
+</nb-form-field>

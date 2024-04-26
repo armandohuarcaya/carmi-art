@@ -58,27 +58,26 @@ export class SignInComponent implements OnInit, OnDestroy {
       provider: 'carmi',
       password: forms.password,
     }
-    // if (forms.name === 'admin' && forms.password === '1234567891') {
+    // if (forms.email === 'admin@admin' && forms.password === '1234567891') {
     //   localStorage.setItem('autorize', JSON.stringify(true));
     //   setTimeout(() => {
-    //     this.router.navigate(['/pages/settings/intipaz']);
-        
+    //     this.router.navigate(['/pages/settings/products']);
     //   }, 100);
-     
     // }
     this.loading = true;
     this.service.addNameDataPublic$(serviceName, params).subscribe((res:any) => {
-      this.formHeaders.controls['messageResponse'].setValue(res.message);
-      this.formHeaders.controls['success'].setValue(res.success);
+      // this.formHeaders.controls['messageResponse'].setValue(res?.message);
+      // this.formHeaders.controls['success'].setValue(res.success);
 
-      setTimeout(() => {
-        this.formHeaders.controls['success'].setValue(true);
-        this.formHeaders.controls['messageResponse'].setValue('');
-      }, 5000);
+      // setTimeout(() => {
+      //   this.formHeaders.controls['messageResponse'].setValue('');
+      // }, 5000);
+      // console.log(res);
       if (res && res.success) {
         const token = JSON.stringify(res && res?.token);
         localStorage.setItem('token', token);
         this.router.navigate(['/pages/settings/products']);
+        // this.formHeaders.controls['success'].setValue(true);
       } else {
         localStorage.removeItem('token');
       }

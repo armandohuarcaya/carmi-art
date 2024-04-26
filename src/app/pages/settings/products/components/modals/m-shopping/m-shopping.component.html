@@ -1,0 +1,60 @@
+<nb-card  class="scrollModal" style="width: 900px;" [nbSpinner]="loading">
+    <nb-card-header>
+        <div class="d-flex align-items-center justify-content-between">
+            <div>
+                <nb-icon icon="shopping-cart-outline" status="success"></nb-icon>MI CARRITO
+            </div>
+            <button nbButton outline  status="basic" size="tiny" (click)="closeModal()" >
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </nb-card-header>
+    <nb-card-body>
+        <div class="row">
+            <div class="col-md-7">
+                <div class="row">
+                    <div class="col-md-6">
+                        <strong>CESTA</strong>
+                    </div>
+                    <div class="col-md-6" style="text-align: right;">
+                        <nb-checkbox status="primary">Todos</nb-checkbox>
+                    </div>
+                </div>
+                
+                <hr>
+                <nb-card *ngFor="let item of carrito"  style="margin-bottom: 5px;">
+                    <nb-card-body>
+                        <div class="row">
+                            <div class="col-md-2 text-center">
+                                <img src="https://www.pngall.com/wp-content/uploads/7/Gallery-PNG-Images.png" alt="" height="60px">
+                            </div>
+                            <div class="col-md-9">
+                                {{item.name}}
+                            </div>
+                            <div class="col-md-1 text-center">
+                                <nb-checkbox status="priamry"></nb-checkbox>
+                            </div>
+                        </div>
+                    </nb-card-body>
+                    <nb-card-footer>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input type="number" nbInput fieldSize="small" fullWidth value="{{item.cost_pen}}" [(ngModel)]="item.cost_pen" placeholder="Costo">
+                            </div>
+                            <div class="col-md-6" style="text-align: right;">
+                                <nb-form-field>
+                                    <button nbPrefix nbButton size="small" status="danger"><nb-icon  icon="minus-outline" pack="eva"></nb-icon></button>
+                                    <input type="text" nbInput fullWidth fieldSize="small">
+                                    <button nbSuffix nbButton size="small" status="success"><nb-icon nbPrefix icon="plus-outline" pack="eva"></nb-icon></button>
+                                  </nb-form-field>
+                            </div>
+                        </div>
+                    </nb-card-footer>
+                </nb-card>
+            </div>
+            <div class="col-md-5">
+                <strong>RESÚMEN</strong>
+            </div>
+        </div>
+    </nb-card-body>
+</nb-card>

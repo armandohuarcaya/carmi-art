@@ -16,7 +16,7 @@ export class Auth2Guard implements CanActivate {
 
     canActivate(): Observable<boolean> {
         let valid:any = false;
-        const valida:any = localStorage.getItem('autorize');
+        const valida:any = localStorage.getItem('token');
         if (valida) {
             valid = true;
         } else {

@@ -27,9 +27,9 @@ export class ScaffoldComponent implements OnInit {
           pathMatch: "prefix",
         },
         {
-          title: "Usuarios",
+          title: "Ventas rápidas",
           icon: "sync-outline",
-          link: "/pages/settings/users",
+          link: "/pages/settings/sales",
           pathMatch: "prefix",
         },
       ],
@@ -68,7 +68,7 @@ export class ScaffoldComponent implements OnInit {
     //   if (res.success) {
     //     localStorage.removeItem('user');
     //     setTimeout(() => {
-          localStorage.removeItem('autorize');
+          localStorage.removeItem('token');
           this.router.navigate(['/login']);
     //     }, 100);
     //   }

@@ -8,7 +8,8 @@ export const END_POINTS = {
   el_art: { // Proyecto
     filterComun: 'filters-comun',
     settings: {
-      intipaz: 'settings/intipaz',
+      products: 'product',
+      sales: 'sale'
     },
   },
   // contract: { // Proyecto

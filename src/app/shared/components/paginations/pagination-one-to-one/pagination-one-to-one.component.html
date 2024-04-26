@@ -1,0 +1,11 @@
+<div class="row">
+    <span class="col-md-7 label" style="font-size: 12px;"><nb-icon icon="hash-outline"></nb-icon>&nbsp;Total: <strong>{{to}} de {{total}}</strong></span>
+    <div class="col-md-5" style="text-align: right;">
+        <button nbButton size="tiny" shape="round" outline status="info" [disabled]="current_page === 1" (click)="back(current_page)">
+            <nb-icon icon="arrow-back-outline"></nb-icon> {{textButon ? 'Atras' : ''}}
+        </button>&nbsp;&nbsp;
+        <button nbButton size="tiny" shape="round" outline status="info" [disabled]="current_page === last_page" (click)="next(current_page)">
+            {{textButon ? 'Siguiente' : ''}} <nb-icon icon="arrow-forward-outline"></nb-icon>
+        </button>
+    </div>
+</div>

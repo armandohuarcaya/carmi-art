@@ -1,0 +1,30 @@
+<nb-card status="primary" class="scrollModal" style="width: 400px;">
+    <nb-card-header>
+        <div class="d-flex align-items-center justify-content-between">
+            <div>
+                <nb-icon [icon]="icon" [status]="colorIcon"></nb-icon>&nbsp;&nbsp;&nbsp;{{tittle}}
+            </div>
+            <button *ngIf="showCloseButton" nbButton outline status="info" size="tiny" (click)="closeModal()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </nb-card-header>
+    <nb-card-body>
+        <div class="text-center" *ngIf="text">
+            <strong>{{text}}</strong>
+        </div>
+
+        <hr *ngIf="(text && showInputMsg)">
+
+        <form [formGroup]="formHeaders" *ngIf="showInputMsg">
+            <div>
+                <label class="label">{{titleInputlabelMessage}}</label>
+                <textarea nbInput fullWidth fieldSize="small" formControlName="message" placeholder="Ingrese" shape="semi-round" rows="6"></textarea>
+            </div>
+        </form>
+    </nb-card-body>
+    <nb-card-footer style="text-align: center;" *ngIf="(showCancelButton || showConfirmButton)">
+        <button *ngIf="showCancelButton" nbButton size="small" shape="semi-round" status="basic" (click)="closeModal()">{{cancelButtonText}}</button>&nbsp;
+        <button *ngIf="showConfirmButton" nbButton size="small" shape="semi-round" [status]="confirmButtonColor" (click)="save()" [disabled]="formHeaders.invalid">{{confirmButtonText}}</button>
+      </nb-card-footer>
+</nb-card>

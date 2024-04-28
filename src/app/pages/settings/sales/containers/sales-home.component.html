@@ -146,7 +146,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="label">Vuelto:</label><br>
+                                    <label class="label" [ngStyle]="{'color': formHeaders.value.turned>=0 ? '': 'red'}">{{formHeaders.value.turned>=0 ? 'Vuelto': 'Falta pagar'}}:</label><br>
                                     <div>
                                         <input type="number" status="success" class="text-center" nbInput fieldSize="medium" fullWidth formControlName="turned" placeholder="Vuelto" [readOnly]="true" style="color: red;">
                                     </div>

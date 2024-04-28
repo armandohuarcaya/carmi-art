@@ -148,6 +148,7 @@ export class SalesHomeComponent implements OnInit {
       price_parcial: precio,
       price_total: precio
     });
+    this.inputPay();
   }
   saveSales() {
     // if (this.datos_pedido.id_persona !== this.user.id_persona) {
@@ -203,7 +204,7 @@ export class SalesHomeComponent implements OnInit {
     // }
   }
   inputPay() {
-    if (Number(this.formHeaders.value.pay) >= Number(this.formHeaders.value.price_total)) {
+    if (this.formHeaders.value.pay) {
       this.formHeaders.controls['turned'].setValue(Number(this.formHeaders.value.pay) - Number(this.formHeaders.value.price_total));
     } else {
       this.formHeaders.controls['turned'].setValue(0);

@@ -76,7 +76,7 @@ export class SignInComponent implements OnInit, OnDestroy {
       if (res && res.success) {
         const token = JSON.stringify(res && res?.token);
         localStorage.setItem('token', token);
-        this.router.navigate(['/pages/settings/products']);
+        this.router.navigate(['/pages/settings/sales']);
         // this.formHeaders.controls['success'].setValue(true);
       } else {
         localStorage.removeItem('token');

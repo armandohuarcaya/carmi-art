@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NbDialogService } from '@nebular/theme';
 import { GeneralService } from 'src/app/providers';
 import { END_POINTS } from 'src/app/providers/utils';
+import { DatePipe } from '@angular/common';
 import { DialogConfimComponent } from 'src/app/shared/components/dialog-confim/dialog-confim.component';
 
 @Component({
@@ -37,18 +38,22 @@ export class SalesHomeComponent implements OnInit {
       id: '4',
     }
   ];
-  constructor(private service: GeneralService, private formBuilder: FormBuilder, private nbDialogService: NbDialogService) {}
+  constructor(private service: GeneralService, private formBuilder: FormBuilder, private nbDialogService: NbDialogService, private datepipe: DatePipe) {}
   ngOnInit(): void {
     this.fieldReactive();
     // this.getProducts();
   }
   private fieldReactive() {
     const controls = {
-      client_name: ['', [Validators.required]],
+      client_name: [''],
+      client_place: [''],
+      date: [new Date(), [Validators.required]],
       pay_type: ['1', [Validators.required]],
       gasto_envio: [0, [Validators.required]],
       price_parcial: [0, [Validators.required]],
-      price_total: [0, [Validators.required]],
+      price_total: [70, [Validators.required]],
+      pay: [''],
+      turned: [0],
       page: [1],
       per_page: [100],
       name_producto: [''],
@@ -101,7 +106,7 @@ export class SalesHomeComponent implements OnInit {
       this.products$ = res.data || [];
       if (this.products$.length>0) {
         this.products$.map((r:any) => {
-          r.quantity = 0;
+          r.quantity = 1;
           r.subTotal = r.quantity * Number(r.cost_pen);
         });
         const input:any = document.getElementsByClassName('user_avatar');
@@ -179,6 +184,8 @@ export class SalesHomeComponent implements OnInit {
 
         const params = {
           client_name: forms.client_name,
+          client_place: forms.client_place,
+          date: this.datepipe.transform(forms.date, 'yyyy-MM-dd'),
           pay_type: Number(forms.pay_type),
           price_total: forms.price_total,
           details: array
@@ -194,5 +201,12 @@ export class SalesHomeComponent implements OnInit {
           }
       });
     // }
+  }
+  inputPay() {
+    if (Number(this.formHeaders.value.pay) >= Number(this.formHeaders.value.price_total)) {
+      this.formHeaders.controls['turned'].setValue(Number(this.formHeaders.value.pay) - Number(this.formHeaders.value.price_total));
+    } else {
+      this.formHeaders.controls['turned'].setValue(0);
+    }
   }
 }

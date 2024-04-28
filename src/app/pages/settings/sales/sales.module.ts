@@ -5,8 +5,9 @@ import { SalesRoutingModule } from './sales-routing.module';
 import { SalesHomeComponent } from './containers/sales-home.component';
 import { PaginationsModule } from 'src/app/shared/components/paginations/paginations.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NbAutocompleteModule, NbButtonModule, NbCardModule, NbCheckboxModule, NbDialogModule, NbFormFieldModule, NbIconModule, NbInputModule, NbListModule, NbSelectModule, NbSpinnerModule } from '@nebular/theme';
+import { NbAutocompleteModule, NbButtonModule, NbCardModule, NbCheckboxModule, NbDatepickerModule, NbDialogModule, NbFormFieldModule, NbIconModule, NbInputModule, NbListModule, NbSelectModule, NbSpinnerModule } from '@nebular/theme';
 import { DialogConfimModule } from 'src/app/shared/components/dialog-confim/dialog-confim.module';
+import { NbDateFnsDateModule } from '@nebular/date-fns';
 
 const ANGULAR: any[] = [CommonModule, FormsModule, ReactiveFormsModule];
 const NEBULAR: any[] = [
@@ -20,7 +21,9 @@ const NEBULAR: any[] = [
   NbCheckboxModule,
   NbListModule,
   NbAutocompleteModule,
-  NbSelectModule
+  NbSelectModule,
+  NbDatepickerModule.forRoot(),
+  NbDateFnsDateModule,
 ];
 
 @NgModule({

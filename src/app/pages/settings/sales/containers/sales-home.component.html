@@ -13,7 +13,7 @@
                     [nbAutocomplete]="complete" (input)="inputKeyAutocomplete($event)" />
                 </div>
                 <div class="col-md-3">
-                    <button nbButton size="medium" status="warning" fullWidth (click)="filters()">
+                    <button nbButton size="medium" status="warning" fullWidth (click)="filters()" [disabled]="!formHeaders.value.name_producto">
                         <nb-icon  icon="search-outline" pack="eva"></nb-icon> Buscar
                     </button>
                 </div>
@@ -21,7 +21,7 @@
             <nb-autocomplete #complete size="medium">
                 <nb-option *ngFor="let option of products$" [value]="option.name"
                     (click)="changeAutocomplete(option)" [ngStyle]="colorAutocompleteSelect(option)">
-                    {{option.code || option.code_original}} : {{ option.name }} <br> ( {{option.type_name}} )
+                    {{option.code || option.code_original}} : {{ option.name }} <br> ( {{option.type_name}} ) - {{option.size}}
                 </nb-option>
             </nb-autocomplete>
             <hr>
@@ -38,8 +38,8 @@
                                     <th>Código</th>
                                     <th>Nombre</th>
                                     <th style="width: 1px;">Tipo</th>
-                                    <th>Precio</th>
-                                    <th>Cantidad</th>
+                                    <th tyle="width: 140px;">Precio</th>
+                                    <th style="width: 170px;">Cantidad</th>
                                     <th>OPC</th>
                                 </tr>
                             </thead>
@@ -50,14 +50,14 @@
                                     <td>{{item.name}}</td>
                                     <td>{{item.type_name}}</td>
                                     <td class="text-center" style="width: 140px;">
-                                        <input type="number" class="text-center" nbInput fullWidth fieldSize="small" [(ngModel)]="item.cost_pen" (input)="changeBlur()">
+                                        <input type="number" style="width: 140px;" class="text-center" nbInput fullWidth fieldSize="small" [(ngModel)]="item.cost_pen" (input)="changeBlur()">
                                         <!-- {{(item.cost_pen !== null) ? (item.cost_pen | currency: ' ') : item.cost_pen_ref  | currency: ' '}} -->
                                     </td>
                                     <td class="text-center" style="width: 170px;">
                                         <nb-form-field>
                                             <button nbPrefix nbButton size="small" status="danger" (click)="changeCantidad('MINUS', item)" [disabled]="item.quantity<1">
                                                 <nb-icon  icon="minus-outline" pack="eva"></nb-icon></button>
-                                            <input type="text" class="text-center" nbInput fullWidth fieldSize="small" [(ngModel)]="item.quantity" (input)="changeBlur()">
+                                            <input type="text" style="width: 170px;" class="text-center" nbInput fullWidth fieldSize="small" [(ngModel)]="item.quantity" (input)="changeBlur()">
                                             <button nbSuffix nbButton size="small" status="success" (click)="changeCantidad('PLUS', item)">
                                                 <nb-icon nbPrefix icon="plus-outline" pack="eva"></nb-icon></button>
                                           </nb-form-field>
@@ -120,37 +120,67 @@
                             <div class="row">
                                 <label class="label col-md-3">Total parcial:</label>
                                 <div class="col-md-9" style="text-align: right; font-size: 20px; font-weight: bold;">
-                                    {{formHeaders.value.price_parcial | currency: ' '}}
+                                    S/. {{formHeaders.value.price_parcial | currency: ' '}}
                                 </div>
                             </div>
                             <br>
                             <div class="row">
                                 <label class="label col-md-3">Gastos envío:</label>
                                 <div class="col-md-9" style="text-align: right; font-size: 20px; font-weight: bold;">
-                                    {{formHeaders.value.gasto_envio | currency: ' '}}
+                                    S/. {{formHeaders.value.gasto_envio | currency: ' '}}
                                 </div>
                             </div>
                             <br>
                             <div class="row">
                                 <label class="label col-md-3">Total estimado:</label>
                                 <div class="col-md-9" style="text-align: right; font-size: 30px; font-weight: bold;">
-                                    {{formHeaders.value.price_total | currency: ' '}}
+                                    S/. {{formHeaders.value.price_total | currency: ' '}}
                                 </div>
                             </div>
                             <br>
                             <div class="row">
-                                <label class="label col-md-3">Cliente:</label>
-                                <div class="col-md-9">
-                                    <input type="text" nbInput fieldSize="medium" fullWidth formControlName="client_name">
+                                <div class="col-md-6">
+                                    <label class="label">Paga con:</label><br>
+                                    <div>
+                                        <input type="number" status="success" class="text-center" nbInput fieldSize="medium" fullWidth formControlName="pay" placeholder="Paga" (input)="inputPay()">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="label">Vuelto:</label><br>
+                                    <div>
+                                        <input type="number" status="success" class="text-center" nbInput fieldSize="medium" fullWidth formControlName="turned" placeholder="Vuelto" [readOnly]="true" style="color: red;">
+                                    </div>
                                 </div>
                             </div>
-                            <br>
                             <div class="row">
-                                <label class="label col-md-3">Tipo de pago:</label>
-                                <div class="col-md-9">
-                                    <nb-select placeholder="Tipo" size="medium" fullWidth formControlName="pay_type">
-                                        <nb-option *ngFor="let item of typePay" [value]="item.id">{{item.name}}</nb-option>
-                                    </nb-select>
+                                <div class="col-md-6">
+                                    <label class="label">Fecha:</label><br>
+                                    <div>
+                                        <nb-datepicker #fecha format="dd/MM/yyyy"></nb-datepicker>
+                                        <input type="text" nbInput fieldSize="small" fullWidth formControlName="date" placeholder="Nombre cliente" [nbDatepicker]="fecha">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="label">Cliente:</label><br>
+                                    <div >
+                                        <input type="text" nbInput fieldSize="small" fullWidth formControlName="client_name" placeholder="Nombre cliente">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label class="label">Procedéncia:</label><br>
+                                    <div>
+                                        <input type="text" nbInput fieldSize="small" fullWidth formControlName="client_place" placeholder="Lugar">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="label">Tipo de pago:</label><br>
+                                    <div>
+                                        <nb-select placeholder="Tipo" size="small" fullWidth formControlName="pay_type">
+                                            <nb-option *ngFor="let item of typePay" [value]="item.id">{{item.name}}</nb-option>
+                                        </nb-select>
+                                    </div>
                                 </div>
                             </div>
                            
@@ -159,7 +189,7 @@
                     <nb-card-footer>
                         <div class="text-center">
                             <button nbButton size="medium" status="success" 
-                            [disabled]="carrito.length<=0 || formHeaders.invalid" (click)="saveSales()">Pagar</button>
+                            [disabled]="carrito.length<=0 || formHeaders.invalid" (click)="saveSales()">Registrar</button>
                         </div>
                     </nb-card-footer>
                 </nb-card>

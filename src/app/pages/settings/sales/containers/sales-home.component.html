@@ -3,197 +3,179 @@
         <nb-icon icon="save" status="success"></nb-icon>  VENTA DE PRODUCTOS
     </nb-card-header>
     <nb-card-body style="max-height: 90vh;">
-       <div class="row">
-        <div class="col-md-7">
-            <label class="label">Buscar producto: </label><br>
-            <div class="row">
-                <div class="col-md-9">
-                    <input autofocus [formControl]="formHeaders.controls['name_producto']" nbInput fullWidth fieldSize="medium" type="text"
-                    class="user_avatar" placeholder="Buscar producto"
-                    [nbAutocomplete]="complete" (input)="inputKeyAutocomplete($event)" />
-                </div>
-                <div class="col-md-3">
-                    <button nbButton size="medium" status="warning" fullWidth (click)="filters()" [disabled]="!formHeaders.value.name_producto">
-                        <nb-icon  icon="search-outline" pack="eva"></nb-icon> Buscar
-                    </button>
-                </div>
-            </div>
-            <nb-autocomplete #complete size="medium">
-                <nb-option *ngFor="let option of products$" [value]="option.name"
-                    (click)="changeAutocomplete(option)" [ngStyle]="colorAutocompleteSelect(option)">
-                    {{option.code || option.code_original}} : {{ option.name }} <br> ( {{option.type_name}} ) - {{option.size}}
-                </nb-option>
-            </nb-autocomplete>
-            <hr>
-            <nb-card status="info">
-                <nb-card-header>
-                    DETALLE DE VENTA
-                </nb-card-header>
-                <nb-card-body>
-                    <div class="teble-responsive">
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Código</th>
-                                    <th>Nombre</th>
-                                    <th style="width: 1px;">Tipo</th>
-                                    <th tyle="width: 140px;">Precio</th>
-                                    <th style="width: 170px;">Cantidad</th>
-                                    <th>OPC</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let item of carrito; let i = index" style="font-size: 10px; font-weight: bold;">
-                                    <td>{{i+1}}</td>
-                                    <td>{{item.code || item.code_original}}</td>
-                                    <td>{{item.name}}</td>
-                                    <td>{{item.type_name}}</td>
-                                    <td class="text-center" style="width: 140px;">
-                                        <input type="number" style="width: 140px;" class="text-center" nbInput fullWidth fieldSize="small" [(ngModel)]="item.cost_pen" (input)="changeBlur()">
-                                        <!-- {{(item.cost_pen !== null) ? (item.cost_pen | currency: ' ') : item.cost_pen_ref  | currency: ' '}} -->
-                                    </td>
-                                    <td class="text-center" style="width: 170px;">
-                                        <nb-form-field>
-                                            <button nbPrefix nbButton size="small" status="danger" (click)="changeCantidad('MINUS', item)" [disabled]="item.quantity<1">
-                                                <nb-icon  icon="minus-outline" pack="eva"></nb-icon></button>
-                                            <input type="text" style="width: 170px;" class="text-center" nbInput fullWidth fieldSize="small" [(ngModel)]="item.quantity" (input)="changeBlur()">
-                                            <button nbSuffix nbButton size="small" status="success" (click)="changeCantidad('PLUS', item)">
-                                                <nb-icon nbPrefix icon="plus-outline" pack="eva"></nb-icon></button>
-                                          </nb-form-field>
-                                    </td>
-                                    <td style="width: 1px;">
-                                        <button nbButton size="tiny" fullWidth status="danger" (click)="deleteCarr(item, i)">
-                                            <nb-icon icon="trash-outline"></nb-icon>
-                                        </button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+        <nb-tabset>
+            <nb-tab tabTitle="Vender">
+                <div class="row">
+                    <div class="col-md-7">
+                        <label class="label">Buscar producto: </label><br>
+                        <div class="row">
+                            <div class="col-md-9">
+                                <input autofocus [formControl]="formHeaders.controls['name_producto']" nbInput fullWidth fieldSize="medium" type="text"
+                                class="user_avatar" placeholder="Buscar producto"
+                                [nbAutocomplete]="complete" (input)="inputKeyAutocomplete($event)" />
+                            </div>
+                            <div class="col-md-3">
+                                <button nbButton size="medium" status="warning" fullWidth (click)="filters()" [disabled]="!formHeaders.value.name_producto">
+                                    <nb-icon  icon="search-outline" pack="eva"></nb-icon> Buscar
+                                </button>
+                            </div>
+                        </div>
+                        <nb-autocomplete #complete size="medium">
+                            <nb-option *ngFor="let option of products$" [value]="option.name"
+                                (click)="changeAutocomplete(option)" [ngStyle]="colorAutocompleteSelect(option)">
+                                {{option.code || option.code_original}} : {{ option.name }} <br> ( {{option.type_name}} ) - {{option.size}}
+                            </nb-option>
+                        </nb-autocomplete>
+                        <hr>
+                        <nb-card status="info">
+                            <nb-card-header>
+                                DETALLE DE VENTA
+                            </nb-card-header>
+                            <nb-card-body>
+                                <div class="teble-responsive">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Código</th>
+                                                <th>Nombre</th>
+                                                <th style="width: 1px;">Tipo</th>
+                                                <th tyle="width: 140px;">Precio</th>
+                                                <th style="width: 170px;">Cantidad</th>
+                                                <th>OPC</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let item of carrito; let i = index" style="font-size: 10px; font-weight: bold;">
+                                                <td>{{i+1}}</td>
+                                                <td>{{item.code || item.code_original}}</td>
+                                                <td>{{item.name}}</td>
+                                                <td>{{item.type_name}}</td>
+                                                <td class="text-center" style="width: 140px;">
+                                                    <input type="number" style="width: 140px;" class="text-center" nbInput fullWidth fieldSize="small" [(ngModel)]="item.cost_pen" (input)="changeBlur()">
+                                                    <!-- {{(item.cost_pen !== null) ? (item.cost_pen | currency: ' ') : item.cost_pen_ref  | currency: ' '}} -->
+                                                </td>
+                                                <td class="text-center" style="width: 170px;">
+                                                    <nb-form-field>
+                                                        <button nbPrefix nbButton size="small" status="danger" (click)="changeCantidad('MINUS', item)" [disabled]="item.quantity<1">
+                                                            <nb-icon  icon="minus-outline" pack="eva"></nb-icon></button>
+                                                        <input type="text" style="width: 170px;" class="text-center" nbInput fullWidth fieldSize="small" [(ngModel)]="item.quantity" (input)="changeBlur()">
+                                                        <button nbSuffix nbButton size="small" status="success" (click)="changeCantidad('PLUS', item)">
+                                                            <nb-icon nbPrefix icon="plus-outline" pack="eva"></nb-icon></button>
+                                                      </nb-form-field>
+                                                </td>
+                                                <td style="width: 1px;">
+                                                    <button nbButton size="tiny" fullWidth status="danger" (click)="deleteCarr(item, i)">
+                                                        <nb-icon icon="trash-outline"></nb-icon>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                        <tfoot style="text-align: right">
+                                            <tr>
+                                                <td colspan="10">
+                                                    <art-pdf-sales [data]="carrito"></art-pdf-sales>
+                                                </td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </nb-card-body>
+                        </nb-card>
                     </div>
-                </nb-card-body>
-            </nb-card>
-        </div>
-            <!-- <div class="col-md-5">
-                <form [formGroup]="formHeaders">
-                    <div class="row">
-                        <div class="col-md-9">
-                            <input type="text" nbInput fieldSize="medium" fullWidth formControlName="search" placeholder="Buscar">
+                        <div class="col-md-5">
+                            <nb-card status="success">
+                                <nb-card-header>
+                                    RESUMEN DE VENTA
+                                </nb-card-header>
+                                <nb-card-body>
+                                    <form [formGroup]="formHeaders">
+                                        <div class="row">
+                                            <label class="label col-md-3">Total parcial:</label>
+                                            <div class="col-md-9" style="text-align: right; font-size: 20px; font-weight: bold;">
+                                                S/. {{formHeaders.value.price_parcial | currency: ' '}}
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <div class="row">
+                                            <label class="label col-md-3">Gastos envío:</label>
+                                            <div class="col-md-9" style="text-align: right; font-size: 20px; font-weight: bold;">
+                                                S/. {{formHeaders.value.gasto_envio | currency: ' '}}
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <div class="row">
+                                            <label class="label col-md-3">Total estimado:</label>
+                                            <div class="col-md-9" style="text-align: right; font-size: 30px; font-weight: bold;">
+                                                S/. {{formHeaders.value.price_total | currency: ' '}}
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label class="label">Paga con:</label><br>
+                                                <div>
+                                                    <input type="number" status="success" class="text-center" nbInput fieldSize="medium" fullWidth formControlName="pay" placeholder="Paga" (input)="inputPay()">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="label" [ngStyle]="{'color': formHeaders.value.turned>=0 ? '': 'red'}">{{formHeaders.value.turned>=0 ? 'Vuelto': 'Falta pagar'}}:</label><br>
+                                                <div>
+                                                    <input type="number" status="success" class="text-center" nbInput fieldSize="medium" fullWidth formControlName="turned" placeholder="Vuelto" [readOnly]="true" style="color: red;">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label class="label">Fecha:</label><br>
+                                                <div>
+                                                    <nb-datepicker #fecha format="dd/MM/yyyy"></nb-datepicker>
+                                                    <input type="text" nbInput fieldSize="small" fullWidth formControlName="date" placeholder="Nombre cliente" [nbDatepicker]="fecha">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="label">Cliente:</label><br>
+                                                <div >
+                                                    <input type="text" nbInput fieldSize="small" fullWidth formControlName="client_name" placeholder="Nombre cliente">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label class="label">Procedéncia:</label><br>
+                                                <div>
+                                                    <input type="text" nbInput fieldSize="small" fullWidth formControlName="client_place" placeholder="Lugar">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="label">Tipo de pago:</label><br>
+                                                <div>
+                                                    <nb-select placeholder="Tipo" size="small" fullWidth formControlName="pay_type">
+                                                        <nb-option *ngFor="let item of typePay" [value]="item.id">{{item.name}}</nb-option>
+                                                    </nb-select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                       
+                                    </form>
+                                </nb-card-body>
+                                <nb-card-footer>
+                                    <div class="text-center">
+                                        <button nbButton size="medium" status="success" 
+                                        [disabled]="carrito.length<=0 || formHeaders.invalid" (click)="saveSales()">Registrar</button>
+                                    </div>
+                                </nb-card-footer>
+                            </nb-card>
                         </div>
-                        <div class="col-md-3">
-                            <button nbButton fullWidth size="medium" status="warning" (click)="filters()">Buscar</button>
-                        </div>
-                    </div>
-                </form>
-                <hr>
-                <nb-card status="primary">
-                    <nb-card-header>
-                      Productos en stock
-                    </nb-card-header>
-                    <nb-card-body style="padding: 0px;">
-                        <nb-list>
-                          <nb-list-item *ngFor="let item of products$?.data" 
-                          style="padding-top: 8px; padding-bottom: 8px; font-size: 10px; font-weight: bold;" 
-                          class="d-flex align-items-center justify-content-between">
-                
-                                <span>{{item.code || item.code_original}} : {{ item.name }} <br> ( {{item.type_name}} ) {{item.cost_pen}}</span>
-                                <span>
-                                    <button nbButton size="tiny" fullWidth status="primary" (click)="addItem(item)"><nb-icon icon="shopping-cart-outline"></nb-icon> Agregar</button>
-                                </span>
-                          </nb-list-item>
-                        </nb-list>
-                    </nb-card-body>
-                    <nb-card-footer class="d-flex align-items-center justify-content-between">
-                       <span>Página: {{products$?.pageNum}}</span>
-                       <span>{{products$?.data?.length}} de {{products$?.total}}</span>
-                    </nb-card-footer>
-                  </nb-card>
-            </div> -->
-            <div class="col-md-5">
-               
-                <nb-card status="success">
-                    <nb-card-header>
-                        RESUMEN DE VENTA
-                    </nb-card-header>
-                    <nb-card-body>
-                        <form [formGroup]="formHeaders">
-                            <div class="row">
-                                <label class="label col-md-3">Total parcial:</label>
-                                <div class="col-md-9" style="text-align: right; font-size: 20px; font-weight: bold;">
-                                    S/. {{formHeaders.value.price_parcial | currency: ' '}}
-                                </div>
-                            </div>
-                            <br>
-                            <div class="row">
-                                <label class="label col-md-3">Gastos envío:</label>
-                                <div class="col-md-9" style="text-align: right; font-size: 20px; font-weight: bold;">
-                                    S/. {{formHeaders.value.gasto_envio | currency: ' '}}
-                                </div>
-                            </div>
-                            <br>
-                            <div class="row">
-                                <label class="label col-md-3">Total estimado:</label>
-                                <div class="col-md-9" style="text-align: right; font-size: 30px; font-weight: bold;">
-                                    S/. {{formHeaders.value.price_total | currency: ' '}}
-                                </div>
-                            </div>
-                            <br>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label class="label">Paga con:</label><br>
-                                    <div>
-                                        <input type="number" status="success" class="text-center" nbInput fieldSize="medium" fullWidth formControlName="pay" placeholder="Paga" (input)="inputPay()">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="label" [ngStyle]="{'color': formHeaders.value.turned>=0 ? '': 'red'}">{{formHeaders.value.turned>=0 ? 'Vuelto': 'Falta pagar'}}:</label><br>
-                                    <div>
-                                        <input type="number" status="success" class="text-center" nbInput fieldSize="medium" fullWidth formControlName="turned" placeholder="Vuelto" [readOnly]="true" style="color: red;">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label class="label">Fecha:</label><br>
-                                    <div>
-                                        <nb-datepicker #fecha format="dd/MM/yyyy"></nb-datepicker>
-                                        <input type="text" nbInput fieldSize="small" fullWidth formControlName="date" placeholder="Nombre cliente" [nbDatepicker]="fecha">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="label">Cliente:</label><br>
-                                    <div >
-                                        <input type="text" nbInput fieldSize="small" fullWidth formControlName="client_name" placeholder="Nombre cliente">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label class="label">Procedéncia:</label><br>
-                                    <div>
-                                        <input type="text" nbInput fieldSize="small" fullWidth formControlName="client_place" placeholder="Lugar">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="label">Tipo de pago:</label><br>
-                                    <div>
-                                        <nb-select placeholder="Tipo" size="small" fullWidth formControlName="pay_type">
-                                            <nb-option *ngFor="let item of typePay" [value]="item.id">{{item.name}}</nb-option>
-                                        </nb-select>
-                                    </div>
-                                </div>
-                            </div>
-                           
-                        </form>
-                    </nb-card-body>
-                    <nb-card-footer>
-                        <div class="text-center">
-                            <button nbButton size="medium" status="success" 
-                            [disabled]="carrito.length<=0 || formHeaders.invalid" (click)="saveSales()">Registrar</button>
-                        </div>
-                    </nb-card-footer>
-                </nb-card>
-            </div>
-       </div>
+                   </div>
+                   
+            </nb-tab>
+            <nb-tab tabTitle="Mis ventas">
+                <div *ngIf="!loading">
+                    <art-v-my-sales></art-v-my-sales>
+                </div>
+            </nb-tab>
+           </nb-tabset>
+       
     </nb-card-body>
 </nb-card>

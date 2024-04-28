@@ -1,0 +1,45 @@
+<button nbButton size="small" status="success" (click)="generarPDF()">Descargar</button>
+<ng-template #contenidoPDF>
+    <div class="table-responsive">
+        <table class="table table-sm table-bordered">
+            <thead>
+                <tr>
+                    <th colspan="17" class="text-center">CARMI ART - SCRAPBOOK</th>
+                </tr>
+                <tr>
+                    <th style="width: 1px; vertical-align: middle;" rowspan="3">CREATIVA: </th>
+                    <th style="vertical-align: middle;" colspan="3" rowspan="3">CRISTIAN HUARCAYA</th>
+                </tr>
+                <tr>
+                    <th>Fecha</th>
+                    <th>7773/4434/44</th>
+                </tr>
+                <tr>
+                    <th>Lugar</th>
+                    <th>Lima</th>
+                </tr>
+            </thead>
+            <thead>
+                <tr>
+                    <th>CANT.</th>
+                    <th>PRODUCTO</th>
+                    <th>CÓDIGO</th>
+                    <th>MEDIDAS</th>
+                    <th>PRECIO UNI.</th>
+                    <th>PRECIO TOTAL</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of data">
+                    <td>sasasassa</td>
+                    <td>sasasassa</td>
+                    <td>sasasassa</td>
+                    <td>sasasassa</td>
+                    <td>sasasassa</td>
+                    <td>sasasassa</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</ng-template>
+

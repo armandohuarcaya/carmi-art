@@ -38,6 +38,7 @@ export class SalesHomeComponent implements OnInit {
       id: '4',
     }
   ];
+  pdf: boolean = false;
   constructor(private service: GeneralService, private formBuilder: FormBuilder, private nbDialogService: NbDialogService, private datepipe: DatePipe) {}
   ngOnInit(): void {
     this.fieldReactive();
@@ -209,5 +210,11 @@ export class SalesHomeComponent implements OnInit {
     } else {
       this.formHeaders.controls['turned'].setValue(0);
     }
+  }
+  descargar() {
+    this.pdf = true;
+    setTimeout(() => {
+      this.pdf = false;
+    }, 100);
   }
 }

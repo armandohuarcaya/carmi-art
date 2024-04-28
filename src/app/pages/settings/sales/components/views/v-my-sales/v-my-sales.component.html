@@ -1,0 +1,56 @@
+<div [nbSpinner]="loading">
+    <form [formGroup]="formHeaders">
+        <div class="row">
+            <div class="col-md-6"></div>
+            <div class="col-md-5">
+                <input type="text" nbInput fieldSize="small" fullWidth formControlName="name" placeholder="Buscar">
+            </div>
+            <div class="col-md-1">
+                <button nbButton fullWidth size="small" status="warning" (click)="filters()">Buscar</button>
+            </div>
+        </div>
+    </form>
+    <div class="teble-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th style="width: 1px;">#</th>
+                    <th>Cliente</th>
+                    <th>Tipo de pago</th>
+                    <th>Total</th>
+                    <th style="width: 1px;">Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of sales; let i = index" style="font-size: 12px;">
+                    
+                    <td>{{i+1}}</td>
+                    <td>{{item.client_name}}</td>
+                    <td>{{getTypePays(item.pay_type)}}</td>
+                    <td>{{item.price_total | currency: ' '}}</td>
+                    <td class="text-center">{{item?.status}}</td>
+                </tr>
+            </tbody>
+            <tfoot *ngIf="sales?.length > 0">
+                <tr>
+                    <th colspan="5">
+                        <div class="row g-1 row-cols-1 row-cols-lg-3 align-items-center">
+                            <div class="col">
+                                <app-pagination-per [total]="paginate.total" [perPageDefault]="paginate.perPage"
+                                    [currentPerPage]="paginate.perPage" (changePerPage)="changePerPage($event)"></app-pagination-per>
+                            </div>
+                            <div class="col">
+                                <app-pagination [formControl]="page" [paginationOptions]="paginate"
+                                    (changePagePagination)="changePagePaginations($event)"></app-pagination>
+                            </div>
+                            <div class="col">
+                                <app-pagination-detail [paginationDetailOptions]="paginate"></app-pagination-detail>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+                
+            </tfoot>
+        </table>
+    </div>
+</div>

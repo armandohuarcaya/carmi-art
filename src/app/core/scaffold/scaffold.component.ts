@@ -49,6 +49,7 @@ export class ScaffoldComponent implements OnInit {
       ],
     },
   ];
+  user:any = '';
   constructor(private router: Router, private _nbSidebarService: NbSidebarService, private _breakpointService: NbMediaBreakpointsService,
     private _nbThemeService: NbThemeService) { }
 
@@ -60,6 +61,9 @@ export class ScaffoldComponent implements OnInit {
   }
   
   ngOnInit(): void {
+    const tok:any = localStorage.getItem('token') ? localStorage.getItem('token')?.split('.') : '';
+    this.user = JSON.parse(atob(tok[1]));
+    // console.log(this.user.user.full_name);
   }
   logout() {
     // const serviceName = 'logout';

@@ -12,15 +12,18 @@
             </nb-action>
           </nb-actions>
           <nb-actions>
-            <nb-action class="p-0">
-                <button nbButton size="small" (click)="logout()" [nbSpinner]="loading" ghost>Salir</button>
+            <nb-action>
+                <nb-tag status="success" size="tiny" appearance="outline" [text]="user?.user?.full_name"></nb-tag>
+            </nb-action>
+            <nb-action>
+                <button nbButton size="tiny" status="danger" (click)="logout()" [nbSpinner]="loading">Salir</button>
             </nb-action>
     </nb-actions>
     </nb-layout-header>
     <nb-sidebar responsive tag="core-sidebar">
         <nb-menu [items]="MENU_ITEMS" tag="core-menu"></nb-menu>
         <nb-sidebar-footer>
-            <strong style="font-size: 8px;">Create by Cristian Huarcaya 2023</strong>
+            <strong style="font-size: 8px;">Create by Cristian Huarcaya 2024</strong>
         </nb-sidebar-footer>
     </nb-sidebar>
     <nb-layout-column class="found" [nbSpinner]="loading" nbSpinnerSize="tiny" nbSpinnerStatus="primary">

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import {registerLocaleData} from '@angular/common';
 import localePe from '@angular/common/locales/es-PE';
-import { NbActionsModule, NbButtonModule, NbContextMenuModule, NbDatepickerModule, NbDialogModule, NbGlobalLogicalPosition, NbIconModule, NbLayoutModule, NbMediaBreakpoint, NbMenuModule, NbSelectModule, NbSidebarModule, NbSpinnerModule, NbThemeModule, NbToastrModule, NbToastrService, NbToggleModule, NbUserModule } from '@nebular/theme';
+import { NbActionsModule, NbButtonModule, NbContextMenuModule, NbDatepickerModule, NbDialogModule, NbGlobalLogicalPosition, NbIconModule, NbLayoutModule, NbMediaBreakpoint, NbMenuModule, NbSelectModule, NbSidebarModule, NbSpinnerModule, NbTagModule, NbThemeModule, NbToastrModule, NbToastrService, NbToggleModule, NbUserModule } from '@nebular/theme';
 import { RouterModule, Routes } from '@angular/router';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { BrowserModule } from '@angular/platform-browser';
@@ -76,6 +76,7 @@ const mediaBreakpoints: NbMediaBreakpoint[] = [
     RouterModule,
     NbSelectModule,
     NbButtonModule,
+    NbTagModule
         
     ],
     exports: [RouterModule],

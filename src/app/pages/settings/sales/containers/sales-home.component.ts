@@ -51,7 +51,7 @@ export class SalesHomeComponent implements OnInit {
       pay_type: ['1', [Validators.required]],
       gasto_envio: [0, [Validators.required]],
       price_parcial: [0, [Validators.required]],
-      price_total: [70, [Validators.required]],
+      price_total: [0, [Validators.required]],
       pay: [''],
       turned: [0],
       page: [1],

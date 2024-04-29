@@ -32,7 +32,7 @@ const NEBULAR: any[] = [
 @NgModule({
   declarations: [
     SalesHomeComponent,
-    VMySalesComponent
+    VMySalesComponent,
   ],
   imports: [
     SalesRoutingModule,

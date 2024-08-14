@@ -57,7 +57,7 @@ export class ProductsHomeComponent implements OnInit {
     }
     this.service.nameParams$(serviceName, params).subscribe((res:any) => {
       this.products = res.data || [];
-      console.log(this.products);
+      // console.log(this.products);
       setTimeout(() => {
         this.setPaginate(res);
       }, 100);

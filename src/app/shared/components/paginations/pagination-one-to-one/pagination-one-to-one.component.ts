@@ -6,10 +6,11 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
   styleUrls: ['./pagination-one-to-one.component.scss']
 })
 export class PaginationOneToOneComponent implements OnInit {
-  @Input() to:any;
-  @Input() total:any;
-  @Input() current_page:any;
-  @Input() last_page:any;
+  @Input() page:any = 0;
+  @Input() to:any = 0;
+  @Input() total:any = 0;
+  @Input() current_page:any = 0;
+  @Input() last_page:any = 0;
   @Input() textButon:boolean = true;
   @Output() changePaginate: EventEmitter<any> = new EventEmitter();
   constructor() { }

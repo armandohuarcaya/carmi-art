@@ -3,10 +3,10 @@
         <nb-icon icon="save" status="success"></nb-icon>  VENTA DE PRODUCTOS
     </nb-card-header>
     <nb-card-body style="max-height: 90vh;">
-        <nb-tabset>
-            <nb-tab tabTitle="Vender">
+        <nb-tabset (changeTab)="tabChange($event)">
+            <nb-tab tabTitle="Vender" [active]="tabSelected === 'VENDER'" [tabId]="'VENDER'" [tabIcon]="'car-outline'">
                 <div class="row">
-                    <div class="col-md-7">
+                    <div class="col-md-8">
                         <label class="label">Buscar producto: </label><br>
                         <div class="row">
                             <div class="col-md-9">
@@ -28,8 +28,13 @@
                         </nb-autocomplete>
                         <hr>
                         <nb-card status="info">
-                            <nb-card-header>
+                            <nb-card-header class="d-flex align-items-center justify-content-between">
+                              <strong>
                                 DETALLE DE VENTA
+                              </strong>
+                              <span>
+                                <!-- <button nbButton size="tiny" status="warning" (click)="generatePdf()" [disabled]="carrito?.length<=0">Pdf</button> -->
+                              </span>
                             </nb-card-header>
                             <nb-card-body>
                                 <div class="teble-responsive">
@@ -40,6 +45,7 @@
                                                 <th>Código</th>
                                                 <th>Nombre</th>
                                                 <th style="width: 1px;">Tipo</th>
+                                                <th style="width: 1px;">Medida</th>
                                                 <th tyle="width: 140px;">Precio</th>
                                                 <th style="width: 170px;">Cantidad</th>
                                                 <th>OPC</th>
@@ -51,6 +57,7 @@
                                                 <td>{{item.code || item.code_original}}</td>
                                                 <td>{{item.name}}</td>
                                                 <td>{{item.type_name}}</td>
+                                                <td>{{item.measure}}</td>
                                                 <td class="text-center" style="width: 140px;">
                                                     <input type="number" style="width: 140px;" class="text-center" nbInput fullWidth fieldSize="small" [(ngModel)]="item.cost_pen" (input)="changeBlur()">
                                                     <!-- {{(item.cost_pen !== null) ? (item.cost_pen | currency: ' ') : item.cost_pen_ref  | currency: ' '}} -->
@@ -76,7 +83,7 @@
                             </nb-card-body>
                         </nb-card>
                     </div>
-                        <div class="col-md-5">
+                        <div class="col-md-4">
                             <nb-card status="success">
                                 <nb-card-header>
                                     RESUMEN DE VENTA
@@ -149,26 +156,28 @@
                                                 </div>
                                             </div>
                                         </div>
-                                       
                                     </form>
                                 </nb-card-body>
                                 <nb-card-footer>
                                     <div class="text-center">
-                                        <button nbButton size="medium" status="success" 
-                                        [disabled]="carrito.length<=0 || formHeaders.invalid" (click)="saveSales()">Registrar</button>
+                                      <!-- <button nbButton size="medium" status="warning" (click)="generatePdf()" [disabled]="carrito?.length<=0">Proforma</button>&nbsp; -->
+                                        <button nbButton size="small" status="warning"
+                                        [disabled]="carrito.length<=0 || formHeaders.invalid" (click)="saveSales('pending')">Guardar proforma</button>&nbsp;
+                                        <button nbButton size="small" status="success"
+                                        [disabled]="carrito.length<=0 || formHeaders.invalid" (click)="saveSales('processed')">Registrar venta</button>
                                     </div>
                                 </nb-card-footer>
                             </nb-card>
                         </div>
                    </div>
-                   
+
             </nb-tab>
-            <nb-tab tabTitle="Mis ventas">
+            <nb-tab tabTitle="Mis ventas" [active]="tabSelected === 'VENTAS'" [tabId]="'VENTAS'" [tabIcon]="'activity-outline'">
                 <div *ngIf="!loading">
-                    <art-v-my-sales></art-v-my-sales>
+                    <art-v-my-sales (editSale)="saleEdit($event)"></art-v-my-sales>
                 </div>
             </nb-tab>
-           </nb-tabset>
-       
+      </nb-tabset>
+
     </nb-card-body>
 </nb-card>

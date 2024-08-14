@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { NbDialogService } from '@nebular/theme';
 import { GeneralService } from 'src/app/providers';
 import { END_POINTS } from 'src/app/providers/utils';
+import { MMySaleComponent } from '../../modals/m-my-sale/m-my-sale.component';
 
 @Component({
   selector: 'art-v-my-sales',
@@ -11,6 +12,7 @@ import { END_POINTS } from 'src/app/providers/utils';
 })
 export class VMySalesComponent implements OnInit {
   formHeaders: any = FormGroup;
+  @Output() editSale: EventEmitter<any> = new EventEmitter();
   sales:any = [];
   paginate:any = '';
   loading:boolean = false;
@@ -36,6 +38,29 @@ export class VMySalesComponent implements OnInit {
       id: '4',
     }
   ];
+  status:any = [
+    {
+      name: 'Procesado',
+      code: 'processed',
+      id: '1',
+      icon: 'checkmark-circle-2-outline',
+      color: 'success'
+    },
+    {
+      name: 'Pendiente',
+      code: 'pending',
+      id: '2',
+      icon: 'alert-triangle-outline',
+      color: 'warning'
+    },
+    {
+      name: 'Cancelado',
+      code: 'canceled',
+      id: '3',
+      icon: 'close-circle-outline',
+      color: 'danger'
+    }
+  ]
   constructor(private service: GeneralService, private formBuilder: FormBuilder, private nbDialogService: NbDialogService) {}
   ngOnInit(): void {
     this.fieldReactive();
@@ -45,6 +70,7 @@ export class VMySalesComponent implements OnInit {
   private fieldReactive() {
     const controls = {
       name: [''],
+      status: [''],
       page: [1],
       per_page: [20]
     };
@@ -69,12 +95,15 @@ export class VMySalesComponent implements OnInit {
   getMySales() {
     const serviceName = END_POINTS.el_art.settings.sales;
     const forms = this.formHeaders.value;
-    const params = {
+    const params:any = {
       // page: 1,
       // size: 100,
       size: forms.per_page,
       page: forms.page,
       name: forms.name
+    };
+    if (forms.status) {
+      params.status = forms.status
     }
     this.loading = true;
     this.service.nameParams$(serviceName, params).subscribe((res:any) => {
@@ -108,6 +137,34 @@ export class VMySalesComponent implements OnInit {
       return type.name;
     } else {
       return 'Otros';
+    }
+  }
+  openSale(item:any) {
+    this.nbDialogService.open(MMySaleComponent, {
+      dialogClass: 'dialog-limited-height',
+      context: {
+        item: item,
+      },
+      closeOnBackdropClick: false,
+      closeOnEsc: false,
+    })
+    .onClose.subscribe((result:any) => {
+      if (result && result.close === 'ok') {
+        this.formHeaders.controls['page'].setValue(1);
+        this.getMySales();
+      } else if (result && result.close === 'edit') {
+        setTimeout(() => {
+          this.editSale.emit(result.value);
+        }, 1000);
+      }
+    });
+  }
+  getStatus(code:any) {
+    const st = this.status.find((r:any) => r.code === code);
+    if (st) {
+      return st;
+    } else {
+      return {name: 'Otros', icon: '', code: '', color: ''};
     }
   }
 }

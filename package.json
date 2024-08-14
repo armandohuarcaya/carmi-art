@@ -25,6 +25,7 @@
     "angular-cli-ghpages": "^1.0.7",
     "bootstrap": "^5.3.3",
     "eva-icons": "^1.1.3",
+    "pdfmake": "^0.2.10",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.13.0"

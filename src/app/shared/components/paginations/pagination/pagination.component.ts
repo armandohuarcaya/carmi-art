@@ -1,4 +1,4 @@
-import {Component, EventEmitter, forwardRef, Input, Output} from '@angular/core';
+import {Component, EventEmitter, forwardRef, Input, Output, OnChanges, SimpleChanges} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {Page, PaginationOptions} from "./pagination-options";
 
@@ -16,13 +16,19 @@ import {Page, PaginationOptions} from "./pagination-options";
   ]
 
 })
-export class PaginationComponent implements ControlValueAccessor {
+export class PaginationComponent implements ControlValueAccessor, OnChanges {
 
   currentPage = 1;
 
   @Input() paginationOptions: PaginationOptions | undefined;
   @Output() changePagePagination = new EventEmitter<number>();
+  list:Page[]  = [];
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if(changes && changes['paginationOptions'] && changes['paginationOptions'].currentValue) {
+      this.createPageArray(this.currentPage, this.paginationOptions?.pages, 5);
+      }
+  }
   onChange = (_: any) => {
   };
   onTouch = () => {
@@ -55,7 +61,7 @@ export class PaginationComponent implements ControlValueAccessor {
     }
   }
 
-  createPageArray(currentPage: number, totalPages = 0, paginationRange: number): Page[] {
+  createPageArray(currentPage: number, totalPages = 0, paginationRange: number) {
     paginationRange = +paginationRange;
     const pages: Page[] = [];
     const halfWay = Math.ceil(paginationRange / 2);
@@ -64,7 +70,7 @@ export class PaginationComponent implements ControlValueAccessor {
     const isMiddle = !isStart && !isEnd;
     let ellipsesNeeded = paginationRange < totalPages;
     let i = 1;
-    while (i <= totalPages && i <= paginationRange) {
+    while ((i <= totalPages) && (i <= paginationRange)) {
       let label;
       let pageNumber = this.calculatePageNumber(i, currentPage, paginationRange, totalPages);
       let openingEllipsesNeeded = (i === 2 && (isMiddle || isEnd));
@@ -78,9 +84,9 @@ export class PaginationComponent implements ControlValueAccessor {
         label,
         value: pageNumber
       });
-      i++;
+      i = i + 1;
     }
-    return pages;
+    this.list = pages;
   }
 
   calculatePageNumber(i: number, currentPage: number, paginationRange: number, totalPages: number) {

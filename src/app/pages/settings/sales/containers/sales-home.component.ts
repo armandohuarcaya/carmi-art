@@ -5,6 +5,9 @@ import { GeneralService } from 'src/app/providers';
 import { END_POINTS } from 'src/app/providers/utils';
 import { DatePipe } from '@angular/common';
 import { DialogConfimComponent } from 'src/app/shared/components/dialog-confim/dialog-confim.component';
+import pdfMake from 'pdfmake/build/pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
   selector: 'art-sales-home',
@@ -39,6 +42,7 @@ export class SalesHomeComponent implements OnInit {
     }
   ];
   pdf: boolean = false;
+  tabSelected: any = 'VENDER';
   constructor(private service: GeneralService, private formBuilder: FormBuilder, private nbDialogService: NbDialogService, private datepipe: DatePipe) {}
   ngOnInit(): void {
     this.fieldReactive();
@@ -46,8 +50,8 @@ export class SalesHomeComponent implements OnInit {
   }
   private fieldReactive() {
     const controls = {
-      client_name: [''],
-      client_place: [''],
+      client_name: ['Anónimo'],
+      client_place: ['SP'],
       date: [new Date(), [Validators.required]],
       pay_type: ['1', [Validators.required]],
       gasto_envio: [0, [Validators.required]],
@@ -59,6 +63,7 @@ export class SalesHomeComponent implements OnInit {
       per_page: [100],
       name_producto: [''],
       _id: [''],
+      _id_venta: ['']
     };
     this.formHeaders = this.formBuilder.group(controls);
   }
@@ -143,22 +148,22 @@ export class SalesHomeComponent implements OnInit {
       // cantidad = cantidad + a.quantity;
       precio = precio + a.subTotal;
     });
-    console.log(precio);
-    console.table(this.carrito);
+    // console.log(precio);
+    // console.table(this.carrito);
     this.formHeaders.patchValue({
       price_parcial: precio,
       price_total: precio
     });
     this.inputPay();
   }
-  saveSales() {
+  saveSales(option:any) {
     // if (this.datos_pedido.id_persona !== this.user.id_persona) {
       const serviceName = END_POINTS.el_art.settings.sales;
       this.nbDialogService.open(DialogConfimComponent, {
         dialogClass: 'dialog-limited-height',
         context: {
           tittle: 'CONFIRMAR',
-          text: '¿ Desea confirmar el págo ? ',
+          text: option === 'processed' ? '¿ Desea confirmar la venta ?' : 'Se guardará el registro como pendiente',
           icon: 'save-outline',
           colorIcon: 'success',
           showCloseButton: true,
@@ -190,9 +195,11 @@ export class SalesHomeComponent implements OnInit {
           date: this.datepipe.transform(forms.date, 'yyyy-MM-dd'),
           pay_type: Number(forms.pay_type),
           price_total: forms.price_total,
+          status: option,
           details: array
         }
         if (result.isConfirmed && array.length>0) {
+          // console.log(params);
             this.loading = true;
             this.service.addNameData$(serviceName, params).subscribe((res:any) => {
               if (res.success) {
@@ -216,5 +223,99 @@ export class SalesHomeComponent implements OnInit {
     setTimeout(() => {
       this.pdf = false;
     }, 100);
+  }
+  // generatePdf() {
+  //   const newArray = [];
+  //   this.carrito.map((a:any) => {
+  //     const datos = [
+  //       {text: a.quantity, style: 'dataRow', alignment: 'center'},
+  //       {text: a.name, style: 'dataRow'}, {text: (a.code || a.code_original), style: 'dataRow'},
+  //       {text: a.measure, style: 'dataRow'},
+  //       {text: ('S/.' + a.cost_pen), style: 'dataRow', alignment: 'center'},
+  //       {text: ('S/.' + (Number(a.quantity) * Number(a.cost_pen))), style: 'dataRow', alignment: 'center'},
+  //     ];
+  //     newArray.push(datos);
+  //   });
+  //   const pdfGenerate:any = {
+  //     content: [
+  //       {
+  //         table: {
+  //           widths: [40, '*', '*', '*', 80, 80],
+  //           body: [
+  //             [{ text: 'CARMÍ ART - SCRAPBOOK', colSpan: 6, style: 'header', alignment: 'center', fillColor: '#002060' }, {}, {}, {}, {}, {}],
+  //             [
+  //               { text: 'CREATIVA:', style: 'tableHeader', colSpan: 1, fillColor: '#002060', color: 'white' },
+  //               { text: this.formHeaders.value.client_name, style: 'tableHeader', colSpan: 4, fillColor: '#002060', color: 'white', alignment: 'left' },
+  //               {},
+  //               {},
+  //               {},
+  //               { text: (this.datepipe.transform(new Date(), 'dd/MM/yyyy') + ' ' + (this.formHeaders.value.client_place ?? 'SN')), style: 'tableHeader', colSpan: 1, fillColor: '#002060', color: 'white', alignment: 'center' },
+  //             ],
+  //             [
+  //               { text: 'CANT.', style: 'tableHeader', alignment: 'center', fillColor: '#002060', color: 'white' },
+  //               { text: 'PRODUCTO', style: 'tableHeader', alignment: 'center', fillColor: '#002060', color: 'white' },
+  //               { text: 'CÓDIGO', style: 'tableHeader', alignment: 'center', fillColor: '#002060', color: 'white' },
+  //               { text: 'MEDIDAS', style: 'tableHeader', alignment: 'center', fillColor: '#002060', color: 'white' },
+  //               { text: 'PRECIO UNIT.', style: 'tableHeader', alignment: 'center', fillColor: '#002060', color: 'white' },
+  //               { text: 'TOTAL', style: 'tableHeader', alignment: 'center', fillColor: '#002060', color: 'white' }
+  //             ],
+  //             ...newArray,
+  //             [{ text: '', colSpan: 5 }, {}, {}, {}, {}, { text: 'S/.' + this.formHeaders.value.price_parcial, alignment: 'center', style: 'dataRow' }]
+  //           ]
+  //         }
+  //       }
+  //     ],
+  //     styles: {
+  //       header: {
+  //         fontSize: 10,
+  //         bold: true,
+  //         margin: [0, 0, 0, 10],
+  //         color: 'white'
+  //       },
+  //       tableHeader: {
+  //         bold: true,
+  //         fontSize: 8,
+  //         color: 'white'
+  //       },
+  //       dataRow: {
+  //         fontSize: 7,
+  //       }
+  //     }
+  //   };
+  //   const pdf = pdfMake.createPdf(pdfGenerate);
+  //   pdf.open();
+  // }
+  tabChange($event:any) {
+    if ($event) {
+      this.tabSelected = $event.tabId;
+    }
+  }
+  saleEdit($event:any) {
+    this.tabSelected = 'VENDER';
+    this.formHeaders.patchValue({
+      client_name: $event.client_name,
+      client_place: $event.client_place,
+      date: new Date(),
+      pay_type: ($event.pay_type).toString(),
+      gasto_envio: 0,
+      price_parcial: 0,
+      price_total: $event.price_total,
+      _id_venta: $event._id,
+    });
+    const array = [];
+    $event.details.map((f:any) => {
+      const datos = {
+        product_id: f.product_id,
+        quantity: f.amount,
+        cost_pen: f.price,
+        subTotal: f.price_total,
+        sale_id: f.sale_id,
+        _id_detalle: f._id,
+
+      };
+      array.push(datos);
+    });
+    this.carrito = array;
+    console.log($event);
   }
 }

@@ -27,7 +27,7 @@ export class Auth2Guard implements CanActivate {
         //   const userObject = JSON.parse(user);
         //   const token_expired = userObject.token_expired_at;
         //   const expired:any = this.datePipe.transform(token_expired, 'dd-MM-yyyy HH:mm');
-        //   const newDate:any = this.datePipe.transform(new Date(), 'dd-MM-yyyy HH:mm'); 
+        //   const newDate:any = this.datePipe.transform(new Date(), 'dd-MM-yyyy HH:mm');
         // //   console.log(expired, 'Expired', newDate, 'New dates');
         //   if (expired >= newDate) {
         //     valid = true;
@@ -46,7 +46,7 @@ export class Auth2Guard implements CanActivate {
         //     valid = false;
         // }
         return valid;
-      
+
     }
 
 }

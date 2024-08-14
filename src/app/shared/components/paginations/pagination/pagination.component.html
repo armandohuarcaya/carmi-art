@@ -1,19 +1,19 @@
 <div class="d-flex flex-row flex-wrap gap-1 justify-content-lg-center align-items-center">
   <div>
-    <button nbButton size="small" hero (click)="changePage(paginationOptions?.previousPage)"
+    <button nbButton size="tiny" hero (click)="changePage(paginationOptions?.previousPage)" shape="round"
             [disabled]="!paginationOptions?.previousPage">
       <nb-icon icon="arrow-ios-back-outline" [status]="paginationOptions?.previousPage ?'primary':'basic'"></nb-icon>
     </button>
   </div>
-  <div *ngFor="let item of createPageArray(currentPage, paginationOptions?.pages, 6)">
-    <button nbButton size="small" hero [value]="item.value"
+  <div *ngFor="let item of list">
+    <button nbButton size="tiny" hero [value]="item.value" shape="round"
             (click)="changePage(item.value)"
-            [status]="item.value === currentPage?'primary':'basic'">
+            [status]="item.value === currentPage? 'success':'basic'">
       {{item.label}}
     </button>
   </div>
   <div>
-    <button nbButton size="small" hero (click)="changePage(paginationOptions?.nextPage)"
+    <button nbButton size="tiny" hero (click)="changePage(paginationOptions?.nextPage)" shape="round"
             [disabled]="!paginationOptions?.nextPage">
       <nb-icon icon="arrow-ios-forward-outline" [status]="paginationOptions?.nextPage ?'primary':'basic'"></nb-icon>
     </button>

@@ -9,8 +9,8 @@ export const environment = {
       success: ''
   },
   apiUrls: {
-    art: 'http://158.101.102.46:3031',
+    art: 'http://132.145.166.156:3031',
   },
   shellApp: '',
-  auth: 'http://158.101.102.46:3030/api/auth'
+  auth: 'http://132.145.166.156:3030/api/auth'
 };

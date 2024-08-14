@@ -7,6 +7,7 @@ import { DatePipe } from '@angular/common';
 import { DialogConfimComponent } from 'src/app/shared/components/dialog-confim/dialog-confim.component';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
+import { TYPE_PAY } from '../components/static/json';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
@@ -19,28 +20,7 @@ export class SalesHomeComponent implements OnInit {
   products$:any = [];
   carrito:any = [];
   loading:boolean = false;
-  typePay:any = [
-    {
-      name: 'Efectivo',
-      code: 'CASH',
-      id: '1',
-    },
-    {
-      name: 'Transferencia',
-      code: 'TRANSFER',
-      id: '2',
-    },
-    {
-      name: 'Yape',
-      code: 'YAPE',
-      id: '3',
-    },
-    {
-      name: 'Plin',
-      code: 'PLIN',
-      id: '4',
-    }
-  ];
+  typePay:any = TYPE_PAY;
   pdf: boolean = false;
   tabSelected: any = 'VENDER';
   constructor(private service: GeneralService, private formBuilder: FormBuilder, private nbDialogService: NbDialogService, private datepipe: DatePipe) {}

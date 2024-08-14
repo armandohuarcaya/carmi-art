@@ -44,3 +44,4 @@ export const TYPE_PAY = [
     id: '4',
   }
 ];
+export const OTHERS = [];

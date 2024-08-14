@@ -6,6 +6,7 @@ import { END_POINTS } from 'src/app/providers/utils';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { DialogConfimComponent } from 'src/app/shared/components/dialog-confim/dialog-confim.component';
+import { STATUS, TYPE_PAY } from '../../static/json';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
@@ -21,51 +22,8 @@ export class MMySaleComponent implements OnInit {
   };
   @Input() item:any = '';
   sale:any = '';
-  typePay:any = [
-    {
-      name: 'Efectivo',
-      code: 'CASH',
-      id: '1',
-    },
-    {
-      name: 'Transferencia',
-      code: 'TRANSFER',
-      id: '2',
-    },
-    {
-      name: 'Yape',
-      code: 'YAPE',
-      id: '3',
-    },
-    {
-      name: 'Plin',
-      code: 'PLIN',
-      id: '4',
-    }
-  ];
-  status:any = [
-    {
-      name: 'Procesado',
-      code: 'processed',
-      id: '1',
-      icon: 'checkmark-circle-2-outline',
-      color: 'success'
-    },
-    {
-      name: 'Pendiente',
-      code: 'pending',
-      id: '2',
-      icon: 'alert-triangle-outline',
-      color: 'warning'
-    },
-    {
-      name: 'Cancelado',
-      code: 'canceled',
-      id: '3',
-      icon: 'close-circle-outline',
-      color: 'danger'
-    }
-  ]
+  typePay:any = TYPE_PAY;
+  status:any = STATUS;
   totales:any = {
     precio: 0,
     cantidad: 0,

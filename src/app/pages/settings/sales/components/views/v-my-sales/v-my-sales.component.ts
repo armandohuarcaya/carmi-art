@@ -4,6 +4,7 @@ import { NbDialogService } from '@nebular/theme';
 import { GeneralService } from 'src/app/providers';
 import { END_POINTS } from 'src/app/providers/utils';
 import { MMySaleComponent } from '../../modals/m-my-sale/m-my-sale.component';
+import { STATUS, TYPE_PAY } from '../../static/json';
 
 @Component({
   selector: 'art-v-my-sales',
@@ -16,51 +17,8 @@ export class VMySalesComponent implements OnInit {
   sales:any = [];
   paginate:any = '';
   loading:boolean = false;
-  typePay:any = [
-    {
-      name: 'Efectivo',
-      code: 'CASH',
-      id: '1',
-    },
-    {
-      name: 'Transferencia',
-      code: 'TRANSFER',
-      id: '2',
-    },
-    {
-      name: 'Yape',
-      code: 'YAPE',
-      id: '3',
-    },
-    {
-      name: 'Plin',
-      code: 'PLIN',
-      id: '4',
-    }
-  ];
-  status:any = [
-    {
-      name: 'Procesado',
-      code: 'processed',
-      id: '1',
-      icon: 'checkmark-circle-2-outline',
-      color: 'success'
-    },
-    {
-      name: 'Pendiente',
-      code: 'pending',
-      id: '2',
-      icon: 'alert-triangle-outline',
-      color: 'warning'
-    },
-    {
-      name: 'Cancelado',
-      code: 'canceled',
-      id: '3',
-      icon: 'close-circle-outline',
-      color: 'danger'
-    }
-  ]
+  typePay:any = TYPE_PAY;
+  status:any = STATUS;
   constructor(private service: GeneralService, private formBuilder: FormBuilder, private nbDialogService: NbDialogService) {}
   ngOnInit(): void {
     this.fieldReactive();

@@ -49,10 +49,10 @@
                   <thead>
                       <tr>
                           <th>#</th>
-                          <!-- <th>Código</th> -->
+                          <th>Código</th>
                           <th>Nombre</th>
                           <!-- <th style="width: 1px;">Tipo</th> -->
-                          <!-- <th style="width: 1px;">Medida</th> -->
+                          <th style="width: 1px;">Medida</th>
                           <th style="text-align: right;">Precio</th>
                           <th class="text-center">Cantidad</th>
                           <th style="text-align: right;">Sub. Total</th>
@@ -61,10 +61,10 @@
                   <tbody>
                       <tr *ngFor="let item of sale?.details; let i = index" style="font-size: 10px; font-weight: bold;">
                           <td>{{i+1}}</td>
-                          <!-- <td>{{item.code || item.code_original}}</td> -->
-                          <td>{{item.product_id}}</td>
-                          <!-- <td>{{item.type_name}}</td> -->
-                          <!-- <td>{{item.measure}}</td> -->
+                          <td>{{item.product?.code || item.product?.code_original}}</td>
+                          <td>{{item.product?.name}}</td>
+                          <!-- <td>{{item.barcode}}</td> -->
+                          <td>{{item.product?.measure}}</td>
                           <td style="text-align: right;">{{item.price | currency: ' '}}</td>
                           <td class="text-center">{{item.amount}}</td>
                           <td style="text-align: right;">{{item.price_total  | currency: ' '}}</td>
@@ -72,7 +72,7 @@
                   </tbody>
                   <tfoot>
                     <tr>
-                      <th colspan="4"></th>
+                      <th colspan="6"></th>
                       <th style="text-align: right;">{{sale?.price_total | currency: ' '}}</th>
                     </tr>
                   </tfoot>

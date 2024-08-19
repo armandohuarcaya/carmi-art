@@ -159,12 +159,19 @@
                                     </form>
                                 </nb-card-body>
                                 <nb-card-footer>
-                                    <div class="text-center">
+                                    <div class="text-center" *ngIf="!formHeaders.value._id_venta">
                                       <!-- <button nbButton size="medium" status="warning" (click)="generatePdf()" [disabled]="carrito?.length<=0">Proforma</button>&nbsp; -->
                                         <button nbButton size="small" status="warning"
                                         [disabled]="carrito.length<=0 || formHeaders.invalid" (click)="saveSales('pending')">Guardar proforma</button>&nbsp;
                                         <button nbButton size="small" status="success"
                                         [disabled]="carrito.length<=0 || formHeaders.invalid" (click)="saveSales('processed')">Registrar venta</button>
+                                    </div>
+                                    <div class="text-center" *ngIf="formHeaders.value._id_venta">
+                                      <!-- <button nbButton size="medium" status="warning" (click)="generatePdf()" [disabled]="carrito?.length<=0">Proforma</button>&nbsp; -->
+                                        <button nbButton size="small" status="warning"
+                                        [disabled]="carrito.length<=0 || formHeaders.invalid" (click)="updateSales('pending')">Guardar proforma</button>&nbsp;
+                                        <button nbButton size="small" status="success"
+                                        [disabled]="carrito.length<=0 || formHeaders.invalid" (click)="updateSales('processed')">Registrar venta</button>
                                     </div>
                                 </nb-card-footer>
                             </nb-card>

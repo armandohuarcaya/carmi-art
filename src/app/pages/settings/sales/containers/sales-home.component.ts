@@ -191,6 +191,62 @@ export class SalesHomeComponent implements OnInit {
       });
     // }
   }
+  updateSales(option:any) {
+    // if (this.datos_pedido.id_persona !== this.user.id_persona) {
+      const serviceName = END_POINTS.el_art.settings.sales;
+      this.nbDialogService.open(DialogConfimComponent, {
+        dialogClass: 'dialog-limited-height',
+        context: {
+          tittle: 'CONFIRMAR',
+          text: option === 'processed' ? '¿ Desea confirmar la venta ?' : 'Se guardará el registro como pendiente',
+          icon: 'save-outline',
+          colorIcon: 'success',
+          showCloseButton: true,
+          showCancelButton: true,
+          showConfirmButton: true,
+          confirmButtonColor: 'primary',
+          confirmButtonText: 'Si',
+          cancelButtonText: 'No',
+        },
+        closeOnBackdropClick: false,
+        closeOnEsc: false,
+      })
+      .onClose.subscribe((result:any) => {
+        const forms = this.formHeaders.value;
+        const array:any = [];
+        this.carrito.map((f:any) => {
+          const datos = {
+            product_id: f.sale_id ? f.product_id : f._id,
+            amount: f.quantity,
+            price: f.cost_pen,
+            price_total: f.subTotal,
+            _id: f.sale_id ? f._id : ''
+          };
+          array.push(datos);
+        });
+
+        const params = {
+          client_name: forms.client_name,
+          client_place: forms.client_place,
+          date: this.datepipe.transform(forms.date, 'yyyy-MM-dd'),
+          pay_type: Number(forms.pay_type),
+          price_total: forms.price_total,
+          status: option,
+          details: array
+        }
+        if (result.isConfirmed && array.length>0 && this.formHeaders.value._id_venta) {
+          // console.log(params);
+            this.loading = true;
+            this.service.updateNameIdData$(serviceName, this.formHeaders.value._id_venta, params).subscribe((res:any) => {
+              if (res.success) {
+                this.fieldReactive();
+                this.carrito = [];
+              }
+            }, () => {this.loading = false}, () => {this.loading = false});
+          }
+      });
+    // }
+  }
   inputPay() {
     if (this.formHeaders.value.pay) {
       this.formHeaders.controls['turned'].setValue(Number(this.formHeaders.value.pay) - Number(this.formHeaders.value.price_total));
@@ -290,7 +346,11 @@ export class SalesHomeComponent implements OnInit {
         cost_pen: f.price,
         subTotal: f.price_total,
         sale_id: f.sale_id,
-        _id_detalle: f._id,
+        _id: f._id,
+        code: f.product?.code,
+        code_original: f.product?.code_original,
+        name: f.product?.name,
+        measure: f.product?.measure,
 
       };
       array.push(datos);

@@ -65,8 +65,9 @@ export class MMySaleComponent implements OnInit {
     this.sale?.details.map((a:any) => {
       const datos = [
         {text: a.amount, style: 'dataRow', alignment: 'center'},
-        {text: a.product_id, style: 'dataRow'}, {text: '', style: 'dataRow'},
-        {text: '', style: 'dataRow'},
+        {text: a.product?.name, style: 'dataRow'},
+        {text: a.product?.code, style: 'dataRow', alignment: 'center'},
+        {text: a.product?.measure, style: 'dataRow', alignment: 'center'},
         {text: ('S/.' + a.price), style: 'dataRow', alignment: 'center'},
         {text: ('S/.' + a.price_total), style: 'dataRow', alignment: 'center'},
       ];
@@ -89,7 +90,7 @@ export class MMySaleComponent implements OnInit {
               ],
               [
                 { text: 'CANT.', style: 'tableHeader', alignment: 'center', fillColor: '#002060', color: 'white' },
-                { text: 'PRODUCTO', style: 'tableHeader', alignment: 'center', fillColor: '#002060', color: 'white' },
+                { text: 'PRODUCTO', style: 'tableHeader', fillColor: '#002060', color: 'white' },
                 { text: 'CÓDIGO', style: 'tableHeader', alignment: 'center', fillColor: '#002060', color: 'white' },
                 { text: 'MEDIDAS', style: 'tableHeader', alignment: 'center', fillColor: '#002060', color: 'white' },
                 { text: 'PRECIO UNIT.', style: 'tableHeader', alignment: 'center', fillColor: '#002060', color: 'white' },

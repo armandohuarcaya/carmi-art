@@ -50,6 +50,7 @@ export class ScaffoldComponent implements OnInit {
     },
   ];
   user:any = '';
+  isMobile: boolean = false;
   constructor(private router: Router, private _nbSidebarService: NbSidebarService, private _breakpointService: NbMediaBreakpointsService,
     private _nbThemeService: NbThemeService) { }
 
@@ -59,11 +60,21 @@ export class ScaffoldComponent implements OnInit {
       map(([, currentBreakpoint]) => currentBreakpoint.width < xl))
       .subscribe((isLessThanXl: boolean) => this.isLessThanXl = isLessThanXl);
   }
-  
+
   ngOnInit(): void {
     const tok:any = localStorage.getItem('token') ? localStorage.getItem('token')?.split('.') : '';
     this.user = JSON.parse(atob(tok[1]));
-    // console.log(this.user.user.full_name);
+    // console.log(this.user.user);
+    this.isMobile = this.detectMobileDevice();
+    console.log('¿Está usando un dispositivo móvil?', this.isMobile);
+  }
+  detectMobileDevice(): boolean {
+    const userAgent = navigator.userAgent || navigator.vendor;
+    // Detecta si el usuario está en un dispositivo móvil (iOS, Android, Windows Phone)
+    if (/android|iPad|iPhone|iPod|windows phone/i.test(userAgent)) {
+      return true;
+    }
+    return false;
   }
   logout() {
     // const serviceName = 'logout';

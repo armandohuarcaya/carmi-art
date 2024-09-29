@@ -33,7 +33,7 @@ export class SalesHomeComponent implements OnInit {
       client_name: ['Anónimo'],
       client_place: ['SP'],
       date: [new Date(), [Validators.required]],
-      pay_type: ['1', [Validators.required]],
+      pay_type: [''],
       gasto_envio: [0, [Validators.required]],
       price_parcial: [0, [Validators.required]],
       price_total: [0, [Validators.required]],
@@ -46,6 +46,10 @@ export class SalesHomeComponent implements OnInit {
       _id_venta: ['']
     };
     this.formHeaders = this.formBuilder.group(controls);
+  }
+  enterProducts():any {
+    this.formHeaders.controls['page'].setValue(1);
+    this.getProducts();
   }
   filters() {
     this.formHeaders.controls['page'].setValue(1);

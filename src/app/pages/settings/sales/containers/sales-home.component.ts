@@ -363,6 +363,6 @@ export class SalesHomeComponent implements OnInit {
       array.push(datos);
     });
     this.carrito = array;
-    console.log($event);
+    // console.log($event);
   }
 }

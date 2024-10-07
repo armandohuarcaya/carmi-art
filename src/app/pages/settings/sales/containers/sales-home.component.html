@@ -22,8 +22,9 @@
                         </div>
                         <nb-autocomplete #complete size="medium">
                             <nb-option *ngFor="let option of products$" [value]="option.name"
-                                (click)="changeAutocomplete(option)" [ngStyle]="colorAutocompleteSelect(option)">
-                                {{option.code || option.code_original}} : {{ option.name }} <br> ( {{option.type_name}} ) - {{option.size}}
+                                (click)="changeAutocomplete(option)" [ngStyle]="colorAutocompleteSelect(option)" class="hovered">
+                                {{option?.code_original}}  ({{option?.ode}}): {{option?.name}} - {{option?.size}} ({{option?.measure}})
+                                <!-- {{option.code || option.code_original}} : {{ option.name }} <br> ( {{option.type_name}} ) - {{option.size}} -->
                             </nb-option>
                         </nb-autocomplete>
                         <hr>
@@ -37,32 +38,32 @@
                               </span>
                             </nb-card-header>
                             <nb-card-body>
-                                <div class="teble-responsive">
-                                    <table class="table table-striped">
+                                <div class="nb-scrollbars">
+                                    <table class="lb-table lb-table-border-inside">
                                         <thead>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>Código</th>
-                                                <th>Nombre</th>
-                                                <th style="width: 1px;">Tipo</th>
-                                                <th style="width: 1px;">Medida</th>
-                                                <th tyle="width: 140px;">Precio</th>
-                                                <th style="width: 170px;">Cantidad</th>
-                                                <th>OPC</th>
+                                            <tr style="font-size: 12px !important;">
+                                                <th scope="col" data-label="#">#</th>
+                                                <th scope="col" data-label="Código">Código</th>
+                                                <th scope="col" data-label="Nombre">Nombre</th>
+                                                <th scope="col" data-label="Tipo" style="width: 1px;">Tipo</th>
+                                                <th scope="col" data-label="Medida">Medida</th>
+                                                <th scope="col" data-label="Precio" tyle="width: 140px;">Precio</th>
+                                                <th scope="col" data-label="Cantidad" style="width: 170px;">Cantidad</th>
+                                                <th scope="col" data-label="OPC.">OPC</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr *ngFor="let item of carrito; let i = index" style="font-size: 10px; font-weight: bold;">
-                                                <td>{{i+1}}</td>
+                                                <td data-label="#">{{i+1}}</td>
                                                 <td>{{item.code || item.code_original}}</td>
                                                 <td>{{item.name}}</td>
                                                 <td>{{item.type_name}}</td>
                                                 <td>{{item.measure}}</td>
-                                                <td class="text-center" style="width: 140px;">
-                                                    <input type="number" style="width: 140px;" class="text-center" nbInput fullWidth fieldSize="small" [(ngModel)]="item.cost_pen" (input)="changeBlur()">
+                                                <td class="text-center">
+                                                    <input type="number" style="width: 150px;" class="text-center" nbInput fullWidth fieldSize="small" [(ngModel)]="item.cost_pen" (input)="changeBlur()">
                                                     <!-- {{(item.cost_pen !== null) ? (item.cost_pen | currency: ' ') : item.cost_pen_ref  | currency: ' '}} -->
                                                 </td>
-                                                <td class="text-center" style="width: 170px;">
+                                                <td class="text-center">
                                                     <nb-form-field>
                                                         <button nbPrefix nbButton size="small" status="danger" (click)="changeCantidad('MINUS', item)" [disabled]="item.quantity<1">
                                                             <nb-icon  icon="minus-outline" pack="eva"></nb-icon></button>
@@ -71,7 +72,7 @@
                                                             <nb-icon nbPrefix icon="plus-outline" pack="eva"></nb-icon></button>
                                                       </nb-form-field>
                                                 </td>
-                                                <td style="width: 1px;">
+                                                <td>
                                                     <button nbButton size="tiny" fullWidth status="danger" (click)="deleteCarr(item, i)">
                                                         <nb-icon icon="trash-outline"></nb-icon>
                                                     </button>

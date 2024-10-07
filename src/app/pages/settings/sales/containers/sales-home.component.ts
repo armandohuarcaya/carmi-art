@@ -141,6 +141,9 @@ export class SalesHomeComponent implements OnInit {
     this.inputPay();
   }
   saveSales(option:any) {
+    if (option === 'pending') {
+      this.formHeaders.controls['pay_type'].setValue('');
+    }
     // if (this.datos_pedido.id_persona !== this.user.id_persona) {
       const serviceName = END_POINTS.el_art.settings.sales;
       this.nbDialogService.open(DialogConfimComponent, {

@@ -62,9 +62,9 @@ $nb-themes: nb-register-theme((
         //text-button-font-weight:600,
         //text-subtitle-2-font-weight: 500, //
         //text-paragraph-font-size: 0.810rem,
-      
-      
-        
+
+
+
         color-primary-100: #2a7f96,
         color-primary-200: #236f84,
         color-primary-300: #216b7f,
@@ -74,10 +74,10 @@ $nb-themes: nb-register-theme((
         color-primary-700: #023340,
         color-primary-800: #013a49,
         color-primary-900: #012935,
-        color-primary-transparent-100:	rgba(161, 110, 255, 0.08),	
-        color-primary-transparent-200:	rgba(161, 110, 255, 0.16),	
-        color-primary-transparent-300:	rgba(161, 110, 255, 0.24),	
-        color-primary-transparent-400:	rgba(161, 110, 255, 0.32),	
+        color-primary-transparent-100:	rgba(161, 110, 255, 0.08),
+        color-primary-transparent-200:	rgba(161, 110, 255, 0.16),
+        color-primary-transparent-300:	rgba(161, 110, 255, 0.24),
+        color-primary-transparent-400:	rgba(161, 110, 255, 0.32),
         color-primary-transparent-500:	rgba(161, 110, 255, 0.4),
         color-primary-transparent-600:	rgba(161, 110, 255, 0.48),
         color-success-100:	#f0fff5,
@@ -229,3 +229,175 @@ $nb-themes: nb-register-theme((
         color-danger-transparent-500: rgba(196, 52, 39, 0.4),
         color-danger-transparent-600: rgba(196, 52, 39, 0.48)
 ), dark, dark);
+
+.nb-scrollbars {
+  @include nb-scrollbars(var(--scrollbar-color), var(--scrollbar-background-color), var(--scrollbar-width));
+  overflow: auto;
+}
+
+table.lb-table {
+  $lb-table-border-width: var(--tree-grid-cell-border-width);
+  $lb-table-border-style: var(--tree-grid-cell-border-style);
+  $lb-table-border-color: var(--card-divider-color);
+
+  font-size: 0.687rem;
+  table-layout: auto;
+  border-collapse: separate;
+  border-spacing: 0 0;
+  width: 100%;
+  max-width: 100%;
+  overflow: auto;
+  line-height: 1.25 !important;
+
+  & > tbody {
+    vertical-align: inherit;
+  }
+
+  & > thead {
+    vertical-align: bottom;
+  }
+
+  tr {
+    background: var(--tree-grid-row-background-color);
+    color: var(--tree-grid-row-text-color);
+    font-family: var(--tree-grid-row-text-font-family);
+    font-weight: var(--tree-grid-row-text-font-weight);
+
+    th {
+      background: var(--tree-grid-header-background-color);
+      color: var(--tree-grid-header-text-color);
+      font-family: var(--tree-grid-header-text-font-family);
+      font-weight: var(--tree-grid-header-text-font-weight);
+    }
+
+    td, th {
+      padding: 3px 10px;
+    }
+
+  }
+
+  &.lb-table-border-inside {
+    border-collapse: collapse;
+  }
+  &.lb-table-border-inside td,
+  &.lb-table-border-inside th {
+    border: var(--card-divider-width) var(--card-divider-style) var(--card-divider-color);
+  }
+  &.lb-table-border-inside tr:first-child th {
+    border-top: 0;
+  }
+  &.lb-table-border-inside tr:last-child td {
+    border-bottom: 0;
+  }
+  &.lb-table-border-inside tr td:first-child,
+  &.lb-table-border-inside tr th:first-child {
+    border-left: 0;
+  }
+  &.lb-table-border-inside tr td:last-child,
+  &.lb-table-border-inside tr th:last-child {
+    border-right: 0;
+  }
+
+  &.lb-table-border {
+
+    tr td {
+      border-bottom: $lb-table-border-width $lb-table-border-style $lb-table-border-color;
+
+      &:first-child {
+        border-left: $lb-table-border-width $lb-table-border-style $lb-table-border-color;
+      }
+
+      &:last-child {
+        border-right: $lb-table-border-width $lb-table-border-style $lb-table-border-color;
+      }
+    }
+
+    :first-child tr:first-child {
+      th, td {
+        border-top: $lb-table-border-width $lb-table-border-style $lb-table-border-color;
+        border-bottom: $lb-table-border-width $lb-table-border-style $lb-table-border-color;
+
+        &:first-child {
+          border-top-left-radius: var(--card-border-radius);
+          border-left: $lb-table-border-width $lb-table-border-style $lb-table-border-color;
+        }
+
+        &:last-child {
+          border-top-right-radius: var(--card-border-radius);
+          border-right: $lb-table-border-width $lb-table-border-style $lb-table-border-color;
+        }
+      }
+    }
+
+    :last-child tr:last-child {
+      td {
+        &:first-child {
+          border-bottom-left-radius: var(--card-border-radius);
+        }
+
+        &:last-child {
+          border-bottom-right-radius: var(--card-border-radius);
+        }
+      }
+    }
+
+  }
+
+  &.lb-table-index tr {
+    td:first-child, th:first-child {
+      width: 1.5rem !important;
+    }
+  }
+
+  &.lb-table-striped tbody tr {
+    &:nth-child(odd) {
+      background-color: var(--tree-grid-cell-border-color);
+    }
+  }
+
+  &.lb-table-hover tbody tr {
+    &:hover {
+      background-color: var(--tree-grid-cell-border-color);
+    }
+  }
+}
+
+@media screen and (max-width: 767.98px) {
+
+  table.lb-table {
+
+    &.lb-table-index tr {
+      td:first-child, th:first-child {
+        width: auto !important;
+      }
+    }
+
+    thead {
+      overflow: hidden;
+      display: none;
+      background-color: #003264;
+      color: aliceblue;
+    }
+
+    tr {
+      td:last-child {
+        margin-bottom: 1rem !important;
+      }
+
+      td, th {
+        border: 0 !important;
+        display: block;
+        text-align: right;
+
+        &::before {
+          content: attr(data-label);
+          float: left;
+          font-family: var(--tree-grid-header-text-font-family);
+          font-size: var(--tree-grid-header-text-font-size);
+          font-weight: var(--tree-grid-header-text-font-weight);
+          line-height: var(--tree-grid-header-text-line-height);
+        }
+      }
+    }
+  }
+}

@@ -3,12 +3,12 @@
       -ms-flex-pack: justify;
       justify-content: space-between;
     }
-  
+
     ::ng-deep nb-layout-footer.header-actions nav {
       background-color: var(--header-background-color) !important;
       border: none !important;
     }
-  
+
     ::ng-deep nb-layout-footer.header-actions {
       &.fixed {
         position: fixed;
@@ -26,3 +26,6 @@
       background-color: var(--header-background-color) !important;
     }
 }
+// ::ng-deep nb-layout-header  {
+//   background: var(--color-basic-600);
+// }

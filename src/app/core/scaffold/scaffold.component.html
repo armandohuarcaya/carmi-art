@@ -2,7 +2,7 @@
     <nb-layout-header  class="header-actions">
         <nb-actions>
             <nb-action class="text-center" *ngIf="!isLessThanXl">
-                <img src="https://cdn-icons-png.flaticon.com/512/1987/1987925.png" alt="" height="60px">
+                <img *ngIf="!isMobile" src="https://cdn-icons-png.flaticon.com/512/1987/1987925.png" alt="" height="60px">
                 <span style="color: white;">&nbsp;&nbsp; CARMI - ART</span>
             </nb-action>
             <nb-action>
@@ -13,14 +13,19 @@
           </nb-actions>
           <nb-actions>
             <nb-action>
-                <nb-tag status="success" size="tiny" appearance="outline" [text]="user?.user?.full_name"></nb-tag>
+                <nb-tag status="success" size="tiny" appearance="outline" [text]="!isMobile ? user?.user?.full_name : user?.user?.name"></nb-tag>
             </nb-action>
             <nb-action>
                 <button nbButton size="tiny" status="danger" (click)="logout()" [nbSpinner]="loading">Salir</button>
             </nb-action>
     </nb-actions>
     </nb-layout-header>
-    <nb-sidebar responsive tag="core-sidebar">
+
+    <nb-sidebar responsive tag="core-sidebar" >
+      <!-- <nb-sidebar-header style="padding-top: 0px !important;">
+        <img *ngIf="!isMobile" src="https://cdn-icons-png.flaticon.com/512/1987/1987925.png" alt="" height="60px">
+                <span style="color: white;">&nbsp;&nbsp; CARMI - ART</span>
+      </nb-sidebar-header> -->
         <nb-menu [items]="MENU_ITEMS" tag="core-menu"></nb-menu>
         <nb-sidebar-footer>
             <strong style="font-size: 8px;">Create by Cristian Huarcaya 2024</strong>

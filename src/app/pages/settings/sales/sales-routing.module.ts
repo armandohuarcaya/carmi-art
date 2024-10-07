@@ -4,7 +4,7 @@ import { SalesHomeComponent } from './containers/sales-home.component';
 
 const routes: Routes = [
   {
-    path: '', 
+    path: '',
     component: SalesHomeComponent
   }
 ];

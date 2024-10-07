@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { SalesRoutingModule } from './sales-routing.module';
-import { SalesHomeComponent } from './containers/sales-home.component';
 import { PaginationsModule } from 'src/app/shared/components/paginations/paginations.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NbAutocompleteModule, NbBadgeModule, NbButtonModule, NbCardModule, NbCheckboxModule, NbDatepickerModule, NbDialogModule, NbFormFieldModule, NbIconModule, NbInputModule, NbListModule, NbRadioModule, NbSelectModule, NbSpinnerModule, NbTabsetModule } from '@nebular/theme';
@@ -11,6 +10,7 @@ import { NbDateFnsDateModule } from '@nebular/date-fns';
 import { VMySalesComponent } from './components/views/v-my-sales/v-my-sales.component';
 import { PdfSalesModule } from 'src/app/shared/components/generate-pdf/pdf-sales/pdf-sales.module';
 import { MMySaleComponent } from './components/modals/m-my-sale/m-my-sale.component';
+import { SalesHomeComponent } from './containers/sales-home.component';
 
 const ANGULAR: any[] = [CommonModule, FormsModule, ReactiveFormsModule];
 const NEBULAR: any[] = [
@@ -29,14 +29,14 @@ const NEBULAR: any[] = [
   NbDateFnsDateModule,
   NbTabsetModule,
   NbRadioModule,
-  NbBadgeModule
+  NbBadgeModule,
 ];
 
 @NgModule({
   declarations: [
-    SalesHomeComponent,
     VMySalesComponent,
     MMySaleComponent,
+    SalesHomeComponent
   ],
   imports: [
     SalesRoutingModule,

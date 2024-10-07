@@ -2,7 +2,7 @@
     <nb-card-header>
         <nb-icon icon="save" status="success"></nb-icon>  VENTA DE PRODUCTOS
     </nb-card-header>
-    <nb-card-body style="max-height: 90vh;">
+    <nb-card-body style="max-height: 90vh; padding-right: 0px !important;padding-left: 0px !important;">
         <nb-tabset (changeTab)="tabChange($event)">
             <nb-tab tabTitle="Vender" [active]="tabSelected === 'VENDER'" [tabId]="'VENDER'" [tabIcon]="'car-outline'">
                 <div class="row">
@@ -10,7 +10,7 @@
                         <label class="label">Buscar producto: </label><br>
                         <div class="row">
                             <div class="col-md-9">
-                                <input autofocus [formControl]="formHeaders.controls['name_producto']" nbInput fullWidth fieldSize="medium" type="text"
+                                <input autofocus [formControl]="formHeaders.controls['name_producto']" nbInput fullWidth fieldSize="medium" type="text" (keydown.enter)="enterProducts()"
                                 class="user_avatar" placeholder="Buscar producto"
                                 [nbAutocomplete]="complete" (input)="inputKeyAutocomplete($event)" />
                             </div>
@@ -22,8 +22,9 @@
                         </div>
                         <nb-autocomplete #complete size="medium">
                             <nb-option *ngFor="let option of products$" [value]="option.name"
-                                (click)="changeAutocomplete(option)" [ngStyle]="colorAutocompleteSelect(option)">
-                                {{option.code || option.code_original}} : {{ option.name }} <br> ( {{option.type_name}} ) - {{option.size}}
+                                (click)="changeAutocomplete(option)" [ngStyle]="colorAutocompleteSelect(option)" class="hovered">
+                                {{option?.code_original}}  ({{option?.ode}}): {{option?.name}} - {{option?.size}} ({{option?.measure}})
+                                <!-- {{option.code || option.code_original}} : {{ option.name }} <br> ( {{option.type_name}} ) - {{option.size}} -->
                             </nb-option>
                         </nb-autocomplete>
                         <hr>
@@ -37,32 +38,32 @@
                               </span>
                             </nb-card-header>
                             <nb-card-body>
-                                <div class="teble-responsive">
-                                    <table class="table table-striped">
+                                <div class="nb-scrollbars">
+                                    <table class="lb-table lb-table-border-inside">
                                         <thead>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>Código</th>
-                                                <th>Nombre</th>
-                                                <th style="width: 1px;">Tipo</th>
-                                                <th style="width: 1px;">Medida</th>
-                                                <th tyle="width: 140px;">Precio</th>
-                                                <th style="width: 170px;">Cantidad</th>
-                                                <th>OPC</th>
+                                            <tr style="font-size: 12px !important;">
+                                                <th scope="col" data-label="#">#</th>
+                                                <th scope="col" data-label="Código">Código</th>
+                                                <th scope="col" data-label="Nombre">Nombre</th>
+                                                <th scope="col" data-label="Tipo" style="width: 1px;">Tipo</th>
+                                                <th scope="col" data-label="Medida">Medida</th>
+                                                <th scope="col" data-label="Precio" tyle="width: 140px;">Precio</th>
+                                                <th scope="col" data-label="Cantidad" style="width: 170px;">Cantidad</th>
+                                                <th scope="col" data-label="OPC.">OPC</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr *ngFor="let item of carrito; let i = index" style="font-size: 10px; font-weight: bold;">
-                                                <td>{{i+1}}</td>
+                                                <td data-label="#">{{i+1}}</td>
                                                 <td>{{item.code || item.code_original}}</td>
                                                 <td>{{item.name}}</td>
                                                 <td>{{item.type_name}}</td>
                                                 <td>{{item.measure}}</td>
-                                                <td class="text-center" style="width: 140px;">
-                                                    <input type="number" style="width: 140px;" class="text-center" nbInput fullWidth fieldSize="small" [(ngModel)]="item.cost_pen" (input)="changeBlur()">
+                                                <td class="text-center">
+                                                    <input type="number" style="width: 150px;" class="text-center" nbInput fullWidth fieldSize="small" [(ngModel)]="item.cost_pen" (input)="changeBlur()">
                                                     <!-- {{(item.cost_pen !== null) ? (item.cost_pen | currency: ' ') : item.cost_pen_ref  | currency: ' '}} -->
                                                 </td>
-                                                <td class="text-center" style="width: 170px;">
+                                                <td class="text-center">
                                                     <nb-form-field>
                                                         <button nbPrefix nbButton size="small" status="danger" (click)="changeCantidad('MINUS', item)" [disabled]="item.quantity<1">
                                                             <nb-icon  icon="minus-outline" pack="eva"></nb-icon></button>
@@ -71,7 +72,7 @@
                                                             <nb-icon nbPrefix icon="plus-outline" pack="eva"></nb-icon></button>
                                                       </nb-form-field>
                                                 </td>
-                                                <td style="width: 1px;">
+                                                <td>
                                                     <button nbButton size="tiny" fullWidth status="danger" (click)="deleteCarr(item, i)">
                                                         <nb-icon icon="trash-outline"></nb-icon>
                                                     </button>
@@ -92,21 +93,21 @@
                                     <form [formGroup]="formHeaders">
                                         <div class="row">
                                             <label class="label col-md-3">Total parcial:</label>
-                                            <div class="col-md-9" style="text-align: right; font-size: 20px; font-weight: bold;">
+                                            <div class="col-md-9" style="text-align: right; font-size: 15px; font-weight: bold;">
                                                 S/. {{formHeaders.value.price_parcial | currency: ' '}}
                                             </div>
                                         </div>
                                         <br>
                                         <div class="row">
                                             <label class="label col-md-3">Gastos envío:</label>
-                                            <div class="col-md-9" style="text-align: right; font-size: 20px; font-weight: bold;">
+                                            <div class="col-md-9" style="text-align: right; font-size: 15px; font-weight: bold;">
                                                 S/. {{formHeaders.value.gasto_envio | currency: ' '}}
                                             </div>
                                         </div>
                                         <br>
                                         <div class="row">
                                             <label class="label col-md-3">Total estimado:</label>
-                                            <div class="col-md-9" style="text-align: right; font-size: 30px; font-weight: bold;">
+                                            <div class="col-md-9" style="text-align: right; font-size: 20px; font-weight: bold;">
                                                 S/. {{formHeaders.value.price_total | currency: ' '}}
                                             </div>
                                         </div>
@@ -151,6 +152,7 @@
                                                 <label class="label">Tipo de pago:</label><br>
                                                 <div>
                                                     <nb-select placeholder="Tipo" size="small" fullWidth formControlName="pay_type">
+                                                        <nb-option value="">Ninguno</nb-option>
                                                         <nb-option *ngFor="let item of typePay" [value]="item.id">{{item.name}}</nb-option>
                                                     </nb-select>
                                                 </div>
@@ -159,19 +161,25 @@
                                     </form>
                                 </nb-card-body>
                                 <nb-card-footer>
-                                    <div class="text-center" *ngIf="!formHeaders.value._id_venta">
-                                      <!-- <button nbButton size="medium" status="warning" (click)="generatePdf()" [disabled]="carrito?.length<=0">Proforma</button>&nbsp; -->
-                                        <button nbButton size="small" status="warning"
-                                        [disabled]="carrito.length<=0 || formHeaders.invalid" (click)="saveSales('pending')">Guardar proforma</button>&nbsp;
-                                        <button nbButton size="small" status="success"
-                                        [disabled]="carrito.length<=0 || formHeaders.invalid" (click)="saveSales('processed')">Registrar venta</button>
+                                    <div class="text-center row" *ngIf="!formHeaders.value._id_venta">
+                                        <div class="col-md-6">
+                                          <button  nbButton size="small" status="warning" fullWidth
+                                          [disabled]="carrito.length<=0 || formHeaders.invalid" (click)="saveSales('pending')">Guardar proforma</button>
+                                        </div>
+                                        <div class="col-md-6">
+                                          <button class="col-md-6" nbButton size="small" status="success" fullWidth
+                                          [disabled]="carrito.length<=0 || formHeaders.invalid" (click)="saveSales('processed')">Registrar venta</button>
+                                        </div>
                                     </div>
-                                    <div class="text-center" *ngIf="formHeaders.value._id_venta">
-                                      <!-- <button nbButton size="medium" status="warning" (click)="generatePdf()" [disabled]="carrito?.length<=0">Proforma</button>&nbsp; -->
-                                        <button nbButton size="small" status="warning"
-                                        [disabled]="carrito.length<=0 || formHeaders.invalid" (click)="updateSales('pending')">Guardar proforma</button>&nbsp;
-                                        <button nbButton size="small" status="success"
+                                    <div class="text-center row" *ngIf="formHeaders.value._id_venta">
+                                      <div class="col-md-6">
+                                        <button class="col-md-6" nbButton size="small" status="warning" fullWidth
+                                        [disabled]="carrito.length<=0 || formHeaders.invalid" (click)="updateSales('pending')">Guardar proforma</button>
+                                      </div>
+                                      <div class="col-md-6">
+                                        <button class="col-md-6" nbButton size="small" status="success" fullWidth
                                         [disabled]="carrito.length<=0 || formHeaders.invalid" (click)="updateSales('processed')">Registrar venta</button>
+                                      </div>
                                     </div>
                                 </nb-card-footer>
                             </nb-card>

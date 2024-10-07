@@ -33,7 +33,7 @@ export class SalesHomeComponent implements OnInit {
       client_name: ['Anónimo'],
       client_place: ['SP'],
       date: [new Date(), [Validators.required]],
-      pay_type: ['1', [Validators.required]],
+      pay_type: [''],
       gasto_envio: [0, [Validators.required]],
       price_parcial: [0, [Validators.required]],
       price_total: [0, [Validators.required]],
@@ -46,6 +46,10 @@ export class SalesHomeComponent implements OnInit {
       _id_venta: ['']
     };
     this.formHeaders = this.formBuilder.group(controls);
+  }
+  enterProducts():any {
+    this.formHeaders.controls['page'].setValue(1);
+    this.getProducts();
   }
   filters() {
     this.formHeaders.controls['page'].setValue(1);
@@ -137,6 +141,9 @@ export class SalesHomeComponent implements OnInit {
     this.inputPay();
   }
   saveSales(option:any) {
+    if (option === 'pending') {
+      this.formHeaders.controls['pay_type'].setValue('');
+    }
     // if (this.datos_pedido.id_persona !== this.user.id_persona) {
       const serviceName = END_POINTS.el_art.settings.sales;
       this.nbDialogService.open(DialogConfimComponent, {

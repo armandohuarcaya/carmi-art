@@ -42,7 +42,7 @@
 
   </nb-card-footer>
 </nb-card> -->
-<div >
+<div>
   <div class="text-center" style="padding: 0px;">
     <img src="https://www.pngall.com/wp-content/uploads/5/User-Profile-PNG-Image.png" alt="" height="150px" style="border-radius: 3rem;">
   </div>
@@ -52,10 +52,6 @@
         <label class="label" style="color: white; font-weight: bold;">Correo</label>
         <input type="text" status="info" nbInput fullWidth shape="semi-round" formControlName="email" autocomplete="new-email" placeholder="Correo">
       </div>
-      <!-- <div>
-        <label class="label" style="color: white; font-weight: bold;">Usuario</label>
-        <input type="text" status="info" nbInput fullWidth shape="semi-round" formControlName="name" autocomplete="new-name" placeholder="Usuario">
-      </div> -->
       <div>
         <label class="label" style="color: white; font-weight: bold;">Contraseña</label>
         <nb-form-field>
@@ -73,14 +69,15 @@
     </div>
   </form>
   </div>
+  <hr>
   <div class="text-center">
-    <!-- <br>
-    <button nbButton size="small" outline status="warning" shape="semi-round" (click)="init()"
-      [nbSpinner]="loading"><nb-icon icon="home"></nb-icon> Inicio</button>&nbsp; -->
-      <br>
     <button nbButton size="small" status="success" shape="semi-round" (click)="loginSignIn()" [disabled]="formHeaders.invalid"
       [nbSpinner]="loading">Iniciar sesión <nb-icon icon="arrow-forward-outline"></nb-icon></button>
-      <!-- <br><br>
+
+  </div>
+</div>
+
+     <!-- <br><br>
       <div style="text-align: right; padding-top: 0px;">
         <button nbButton size="tiny" status="info" shape="semi-round"
         (click)="typesChange()">
@@ -91,5 +88,3 @@
           <nb-icon icon="sync-outline"></nb-icon>Cambiar contraseña
         </button>
       </div> -->
-  </div>
-</div>

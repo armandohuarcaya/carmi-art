@@ -1,0 +1,86 @@
+<div class="d-flex justify-content-between align-items-center" *ngIf="have_header">
+  <span>
+    <span *ngIf="nombre"><strong>{{ nombre }}</strong></span>
+
+    <label *ngIf="label" class="label m-0" style="height: 20px;">{{ label }}</label>
+  </span>
+  <div class="d-flex justify-content-end" style="height: 20px;" *ngIf="info_file">
+    <span *ngIf="have_file" class="badge rounded-pill text-bg-success" style="height: 20px;">
+      <nb-icon icon="checkmark-circle-2" style="font-size: 9pt"></nb-icon>
+      Almacenado
+    </span>
+    <span *ngIf="!have_file" class="badge rounded-pill text-bg-danger" style="height: 20px;">
+      <nb-icon icon="close-circle" style="font-size: 9pt"></nb-icon>
+      Sin almacenar
+    </span>
+  </div>
+  <div *ngIf="delete_component">
+    <nb-icon icon="trash" status="danger" style="cursor: pointer;" (click)="compoennetDelete()"></nb-icon>
+  </div>
+</div>
+
+<div
+  class="row mt-2"
+  (dragover)="onDragOver($event)"
+  (dragleave)="onDragLeave($event)"
+  (drop)="onDrop($event)"
+>
+  <div class="col-12">
+    <div class="dp">
+      <div class="d-flex justify-content-center">
+        <!-- <span class="material-icons" style="font-size: 30pt">
+          picture_as_pdf
+        </span>
+        <span class="material-icons" style="font-size: 30pt">
+          description
+        </span> -->
+        <span *ngIf="typeDoc === 'pdf-word'">
+          <img src="assets/svg/pdf.svg" alt="" height="45px" width="45px" />
+          <img src="assets/svg/word.svg" alt="" height="45px" width="45px" />
+        </span>
+        <img *ngIf="typeDoc === 'pdf'" src="assets/svg/pdf.svg" alt=""/>
+        <img *ngIf="typeDoc === 'word'" src="assets/svg/word.svg" alt=""/>
+        <img *ngIf="typeDoc === 'imagen'" src="assets/svg/img.svg" alt="" />
+      </div>
+      <div class="d-flex justify-content-center">
+        <font><strong style="font-size: 12px;">Arrastrar archivo aquí </strong></font>
+      </div>
+      <div class="d-flex justify-content-center">
+        <font>{{ filename }}</font>
+      </div>
+      <div class="d-flex justify-content-center mt-2">
+        <button
+          nbButton
+          status="control"
+          size="small"
+          style="
+            text-transform: none;
+            color: #276ca1;
+            border: solid 1px #276ca1;
+          "
+          (click)="fileInput.click()"
+          *ngIf="!file"
+        >
+          <nb-icon icon="attach-outline"></nb-icon> Adjuntar archivo
+        </button>
+        <button
+          nbButton
+          status="danger"
+          size="small"
+          style="margin-left: 5px; text-transform: none"
+          *ngIf="file"
+          (click)="resetFile()"
+        >
+          <nb-icon icon="trash-outline"></nb-icon> Eliminar archivo
+        </button>
+        <input
+          type="file"
+          [accept]="accepts"
+          #fileInput
+          (change)="onFileSelected($event)"
+          hidden
+        />
+      </div>
+    </div>
+  </div>
+</div>

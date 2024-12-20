@@ -7,10 +7,10 @@ export const END_POINTS = {
   },
   el_art: { // Proyecto
     filterComun: 'filters-comun',
-    settings: {
-      products: 'product',
-      sales: 'sale'
-    },
+    // settings: {
+    //   products: 'product',
+    //   sales: 'sale'
+    // },
   },
   // contract: { // Proyecto
   //   comun: 'comun/contract',

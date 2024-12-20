@@ -26,24 +26,18 @@ export class ScaffoldComponent implements OnInit {
           link: "/pages/settings/products",
           pathMatch: "prefix",
         },
-        {
-          title: "Ventas rápidas",
-          icon: "sync-outline",
-          link: "/pages/settings/sales",
-          pathMatch: "prefix",
-        },
       ],
     },
     {
-      title: "Relaciones",
+      title: "Ventas",
       icon: "settings-outline",
-      link: "/pages/relations",
+      link: "/pages/sales",
       pathMatch: "prefix",
       children: [
         {
-          title: "Unir",
+          title: "Ventas rápidas",
           icon: "sync-outline",
-          link: "/pages/relations/union",
+          link: "/pages/sales/sale",
           pathMatch: "prefix",
         },
       ],

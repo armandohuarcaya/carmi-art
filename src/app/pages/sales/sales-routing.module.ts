@@ -3,16 +3,16 @@ import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: 'products',
+    path: 'sale',
     loadChildren: () =>
-      import('./products/products.module').then(
-        (m) => m.ProductsModule
+      import('./sale/sale.module').then(
+        (m) => m.SaleModule
       ),
-  }
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class SettingsRoutingModule { }
+export class SalesRoutingModule { }

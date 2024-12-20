@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { NbDialogService } from '@nebular/theme';
-import { GeneralService } from 'src/app/providers';
-import { END_POINTS } from 'src/app/providers/utils';
 import { MShoppingComponent } from '../components/modals/m-shopping/m-shopping.component';
+import { MProductComponent } from '../components/modals/m-product/m-product.component';
+import { SProductsService } from '../components/services/s-products.service';
 
 @Component({
   selector: 'art-products-home',
@@ -14,8 +14,8 @@ export class ProductsHomeComponent implements OnInit {
   formHeaders: any = FormGroup;
   products:any = [];
   paginate:any = '';
-  carrito:any = [];
-  constructor(private service: GeneralService, private formBuilder: FormBuilder, private nbDialogService: NbDialogService) {}
+  loading:boolean = false;
+  constructor(private sProductsServ: SProductsService, private formBuilder: FormBuilder, private nbDialogService: NbDialogService) {}
   ngOnInit(): void {
     this.fieldReactive();
     this.getProducts();
@@ -25,7 +25,7 @@ export class ProductsHomeComponent implements OnInit {
     const controls = {
       search: [''],
       page: [1],
-      per_page: [20]
+      per_page: [10]
     };
     this.formHeaders = this.formBuilder.group(controls);
   }
@@ -46,7 +46,6 @@ export class ProductsHomeComponent implements OnInit {
     this.getProducts();
   }
   getProducts() {
-    const serviceName = END_POINTS.el_art.settings.products + '/input-output';
     const forms = this.formHeaders.value;
     const params = {
       // page: 1,
@@ -54,15 +53,16 @@ export class ProductsHomeComponent implements OnInit {
       size: forms.per_page,
       page: forms.page,
       name_code_filter: forms.search
-    }
-    this.service.nameParams$(serviceName, params).subscribe((res:any) => {
+    };
+    this.loading = true;
+    this.sProductsServ.products$(params).subscribe((res:any) => {
       this.products = res.data || [];
       // console.log(this.products);
       setTimeout(() => {
         this.setPaginate(res);
       }, 100);
       // this.articuloServ.push({nombre: 'Prueba', codigo: '2010', id_articulo: 1})
-    });
+    }, () => this.loading=false, () => this.loading=false);
   }
   setPaginate(values:any) {
 
@@ -81,14 +81,26 @@ export class ProductsHomeComponent implements OnInit {
       data: values.data
     }
   }
-  addItem(item:any) {
-    this.carrito.push(item);
-  }
   openShopping() {
     this.nbDialogService.open(MShoppingComponent, {
       dialogClass: 'dialog-limited-height',
       context: {
-        carrito: this.carrito,
+        carrito: [],
+      },
+      closeOnBackdropClick: false,
+      closeOnEsc: false,
+    })
+    .onClose.subscribe((result:any) => {
+      if (result === 'ok') {
+        this.formHeaders.controls['page'].setValue(1);
+        this.getProducts();
+      }
+    });
+  }
+  openModal(type:any, item:any) {
+    this.nbDialogService.open(MProductComponent, {
+      dialogClass: 'dialog-limited-height',
+      context: {
       },
       closeOnBackdropClick: false,
       closeOnEsc: false,

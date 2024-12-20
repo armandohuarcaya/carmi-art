@@ -7,6 +7,7 @@ import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { DialogConfimComponent } from 'src/app/shared/components/dialog-confim/dialog-confim.component';
 import { STATUS, TYPE_PAY } from '../../static/json';
+import { SSalesService } from '../../services/s-sales.service';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
@@ -29,7 +30,7 @@ export class MMySaleComponent implements OnInit {
     cantidad: 0,
     subTotal: 0
   };
-  constructor(public activeModal: NbDialogRef<MMySaleComponent>, private service: GeneralService, private datepipe: DatePipe, private nbDialogService: NbDialogService) { }
+  constructor(public activeModal: NbDialogRef<MMySaleComponent>, private sSalesServ: SSalesService, private datepipe: DatePipe, private nbDialogService: NbDialogService) { }
   ngOnInit(): void {
     this.getMySale();
   }
@@ -37,15 +38,14 @@ export class MMySaleComponent implements OnInit {
     this.activeModal.close(this.isClose);
   }
   getMySale() {
-    const serviceName = END_POINTS.el_art.settings.sales;
     this.loading = true;
-    this.service.nameId$(serviceName, this.item._id).subscribe((res:any) => {
+    this.sSalesServ.showSale$(this.item._id).subscribe((res:any) => {
       this.sale = res.data || '';
 
     }, () => this.loading = false, () => this.loading = false);
   }
-  getTypePays(id:any) {
-    const type = this.typePay.find((r:any) => Number(r.id) === Number(id));
+  getTypePays(code:any) {
+    const type = this.typePay.find((r:any) => r.code === code);
     if (type) {
       return type.name;
     } else {
@@ -133,7 +133,7 @@ export class MMySaleComponent implements OnInit {
   }
   finishSale(option:any) {
     // if (this.datos_pedido.id_persona !== this.user.id_persona) {
-      const serviceName = END_POINTS.el_art.settings.sales;
+      // const serviceName = END_POINTS.el_art.settings.sales;
       this.nbDialogService.open(DialogConfimComponent, {
         dialogClass: 'dialog-limited-height',
         context: {
@@ -156,7 +156,7 @@ export class MMySaleComponent implements OnInit {
           client_name: this.sale.client_name,
           client_place: this.sale.client_place,
           date: this.datepipe.transform(new Date(), 'yyyy-MM-dd'),
-          pay_type: Number(this.sale.pay_type),
+          pay_method: this.sale.pay_method,
           price_total: this.sale.price_total,
           status: option,
           details: this.sale.details
@@ -164,7 +164,7 @@ export class MMySaleComponent implements OnInit {
         if (result.isConfirmed && this.sale.details.length>0) {
           // console.log(params);
             this.loading = true;
-            this.service.updateNameIdData$(serviceName, this.sale._id, params).subscribe((res:any) => {
+            this.sSalesServ.updateSale$(this.sale._id, params).subscribe((res:any) => {
               if (res.success) {
                 this.isClose.close = 'ok';
                 this.closeModal();
@@ -177,6 +177,6 @@ export class MMySaleComponent implements OnInit {
   editSale() {
     this.isClose.close = 'edit';
     this.isClose.value = this.sale;
-                this.closeModal();
+    this.closeModal();
   }
 }

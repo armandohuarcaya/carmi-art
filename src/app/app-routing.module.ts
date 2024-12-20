@@ -31,6 +31,10 @@ const routes: Routes = [
             loadChildren: () => import('./pages/settings/settings.module').then(m => m.SettingsModule)
         },
         {
+          path: 'sales',
+          loadChildren: () => import('./pages/sales/sales.module').then(m => m.SalesModule)
+        },
+        {
           path: '**',
           loadChildren: () => import('./pages/not-found/not-found.module').then(m => m.NotFoundModule),
         },

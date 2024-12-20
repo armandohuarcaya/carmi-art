@@ -8,14 +8,15 @@ import { DialogConfimComponent } from 'src/app/shared/components/dialog-confim/d
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { TYPE_PAY } from '../components/static/json';
+import { SSalesService } from '../components/services/s-sales.service';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
-  selector: 'art-sales-home',
-  templateUrl: './sales-home.component.html',
-  styleUrls: ['./sales-home.component.scss']
+  selector: 'art-sale-home',
+  templateUrl: './sale-home.component.html',
+  styleUrls: ['./sale-home.component.scss']
 })
-export class SalesHomeComponent implements OnInit {
+export class SaleHomeComponent implements OnInit {
   formHeaders: any = FormGroup;
   products$:any = [];
   carrito:any = [];
@@ -23,7 +24,7 @@ export class SalesHomeComponent implements OnInit {
   typePay:any = TYPE_PAY;
   pdf: boolean = false;
   tabSelected: any = 'VENDER';
-  constructor(private service: GeneralService, private formBuilder: FormBuilder, private nbDialogService: NbDialogService, private datepipe: DatePipe) {}
+  constructor(private sSalesServ: SSalesService, private formBuilder: FormBuilder, private nbDialogService: NbDialogService, private datepipe: DatePipe) {}
   ngOnInit(): void {
     this.fieldReactive();
     // this.getProducts();
@@ -33,7 +34,7 @@ export class SalesHomeComponent implements OnInit {
       client_name: ['Anónimo'],
       client_place: ['SP'],
       date: [new Date(), [Validators.required]],
-      pay_type: [''],
+      pay_method: ['none'],
       gasto_envio: [0, [Validators.required]],
       price_parcial: [0, [Validators.required]],
       price_total: [0, [Validators.required]],
@@ -83,7 +84,6 @@ export class SalesHomeComponent implements OnInit {
     this.products$ = [];
   }
   getProducts() {
-    const serviceName = END_POINTS.el_art.settings.products + '/input-output';
     const forms = this.formHeaders.value;
     const params = {
       // page: 1,
@@ -92,7 +92,7 @@ export class SalesHomeComponent implements OnInit {
       page: forms.page,
       name_code_filter: forms.name_producto
     }
-    this.service.nameParams$(serviceName, params).subscribe((res:any) => {
+    this.sSalesServ.search$(params).subscribe((res:any) => {
       this.products$ = res.data || [];
       if (this.products$.length>0) {
         this.products$.map((r:any) => {
@@ -142,10 +142,9 @@ export class SalesHomeComponent implements OnInit {
   }
   saveSales(option:any) {
     if (option === 'pending') {
-      this.formHeaders.controls['pay_type'].setValue('');
+      this.formHeaders.controls['pay_method'].setValue('none');
     }
     // if (this.datos_pedido.id_persona !== this.user.id_persona) {
-      const serviceName = END_POINTS.el_art.settings.sales;
       this.nbDialogService.open(DialogConfimComponent, {
         dialogClass: 'dialog-limited-height',
         context: {
@@ -180,7 +179,7 @@ export class SalesHomeComponent implements OnInit {
           client_name: forms.client_name,
           client_place: forms.client_place,
           date: this.datepipe.transform(forms.date, 'yyyy-MM-dd'),
-          pay_type: Number(forms.pay_type),
+          pay_method: forms.pay_method,
           price_total: forms.price_total,
           status: option,
           details: array
@@ -188,7 +187,7 @@ export class SalesHomeComponent implements OnInit {
         if (result.isConfirmed && array.length>0) {
           // console.log(params);
             this.loading = true;
-            this.service.addNameData$(serviceName, params).subscribe((res:any) => {
+            this.sSalesServ.addSale$(params).subscribe((res:any) => {
               if (res.success) {
                 this.fieldReactive();
                 this.carrito = [];
@@ -200,7 +199,6 @@ export class SalesHomeComponent implements OnInit {
   }
   updateSales(option:any) {
     // if (this.datos_pedido.id_persona !== this.user.id_persona) {
-      const serviceName = END_POINTS.el_art.settings.sales;
       this.nbDialogService.open(DialogConfimComponent, {
         dialogClass: 'dialog-limited-height',
         context: {
@@ -236,7 +234,7 @@ export class SalesHomeComponent implements OnInit {
           client_name: forms.client_name,
           client_place: forms.client_place,
           date: this.datepipe.transform(forms.date, 'yyyy-MM-dd'),
-          pay_type: Number(forms.pay_type),
+          pay_method: forms.pay_method,
           price_total: forms.price_total,
           status: option,
           details: array
@@ -244,7 +242,7 @@ export class SalesHomeComponent implements OnInit {
         if (result.isConfirmed && array.length>0 && this.formHeaders.value._id_venta) {
           // console.log(params);
             this.loading = true;
-            this.service.updateNameIdData$(serviceName, this.formHeaders.value._id_venta, params).subscribe((res:any) => {
+            this.sSalesServ.updateSale$(this.formHeaders.value._id_venta, params).subscribe((res:any) => {
               if (res.success) {
                 this.fieldReactive();
                 this.carrito = [];
@@ -339,7 +337,7 @@ export class SalesHomeComponent implements OnInit {
       client_name: $event.client_name,
       client_place: $event.client_place,
       date: new Date(),
-      pay_type: ($event.pay_type).toString(),
+      pay_method: $event.pay_method,
       gasto_envio: 0,
       price_parcial: 0,
       price_total: $event.price_total,
@@ -364,5 +362,9 @@ export class SalesHomeComponent implements OnInit {
     });
     this.carrito = array;
     // console.log($event);
+  }
+  clearVenta() {
+    this.fieldReactive();
+    this.carrito = [];
   }
 }

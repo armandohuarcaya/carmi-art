@@ -5,13 +5,14 @@ import { GeneralService } from 'src/app/providers';
 import { END_POINTS } from 'src/app/providers/utils';
 import { MMySaleComponent } from '../../modals/m-my-sale/m-my-sale.component';
 import { STATUS, TYPE_PAY } from '../../static/json';
+import { SSalesService } from '../../services/s-sales.service';
 
 @Component({
-  selector: 'art-v-my-sales',
-  templateUrl: './v-my-sales.component.html',
-  styleUrls: ['./v-my-sales.component.scss']
+  selector: 'art-v-my-sale',
+  templateUrl: './v-my-sale.component.html',
+  styleUrls: ['./v-my-sale.component.scss']
 })
-export class VMySalesComponent implements OnInit {
+export class VMySaleComponent implements OnInit {
   formHeaders: any = FormGroup;
   @Output() editSale: EventEmitter<any> = new EventEmitter();
   sales:any = [];
@@ -19,7 +20,7 @@ export class VMySalesComponent implements OnInit {
   loading:boolean = false;
   typePay:any = TYPE_PAY;
   status:any = STATUS;
-  constructor(private service: GeneralService, private formBuilder: FormBuilder, private nbDialogService: NbDialogService) {}
+  constructor(private sSalesServ: SSalesService, private formBuilder: FormBuilder, private nbDialogService: NbDialogService) {}
   ngOnInit(): void {
     this.fieldReactive();
     this.getMySales();
@@ -51,7 +52,6 @@ export class VMySalesComponent implements OnInit {
     this.getMySales();
   }
   getMySales() {
-    const serviceName = END_POINTS.el_art.settings.sales;
     const forms = this.formHeaders.value;
     const params:any = {
       // page: 1,
@@ -64,7 +64,7 @@ export class VMySalesComponent implements OnInit {
       params.status = forms.status
     }
     this.loading = true;
-    this.service.nameParams$(serviceName, params).subscribe((res:any) => {
+    this.sSalesServ.listSale$(params).subscribe((res:any) => {
       this.sales = res.data || [];
       setTimeout(() => {
         this.setPaginate(res);

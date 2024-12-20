@@ -1,0 +1,30 @@
+<nb-card
+  status="primary"
+  class="scrollModal"
+  style="width: 780px; border: none"
+>
+  <nb-card-header style="color: white; background-color: #003264">
+    <div class="d-flex align-items-center justify-content-between">
+      <span><nb-icon icon="eye-outline"></nb-icon> Documento </span>
+      <nb-icon
+        icon="close-outline"
+        style="cursor: pointer"
+        (click)="closeModal()"
+      ></nb-icon>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <div *ngIf="type === 'base64'">
+      <object [data]="urlSafe" type="application/pdf" width="100%" height="700">
+        <embed [src]="urlSafe" type="application/pdf" />
+    </object>
+    </div>
+    <div *ngIf="type !== 'base64'">
+      <!-- <ngx-doc-viewer
+        [url]="this.archivo"
+        [viewer]="type"
+        style="width: 100%; height: 80vh"
+      ></ngx-doc-viewer> -->
+    </div>
+  </nb-card-body>
+</nb-card>

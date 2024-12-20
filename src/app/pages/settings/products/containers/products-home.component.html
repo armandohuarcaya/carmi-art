@@ -1,71 +1,76 @@
-<nb-card>
-    <nb-card-header>
-        <div class="row">
-            <div class="col-md-6">
-                <nb-icon icon="save" status="success"></nb-icon>  PRODUCTOS
-            </div>
-            <div class="col-md-6" style="text-align: right;">
-                <button nbButton size="medium" status="primary" (click)="openShopping()"><nb-icon icon="shopping-cart-outline"></nb-icon>{{carrito.length}}</button>
-            </div>
-        </div>
-     
-    </nb-card-header>
-    <nb-card-header style="padding-top: 1px; padding-bottom: 1px;">
-        <form [formGroup]="formHeaders">
+<nb-card [nbSpinner]="loading"status="basic">
+  <nb-card-header>
+      <nb-icon icon="save" status="success"></nb-icon>LÍNEA DE PRODUCTOS
+  </nb-card-header>
+  <nb-card-body>
+    <nb-tabset>
+      <nb-tab tabTitle="Registrar productos">
+        <div>
+          <form [formGroup]="formHeaders">
             <div class="row">
-                <div class="col-md-6"></div>
+                <div class="col-md-5"></div>
                 <div class="col-md-5">
+                  <nb-form-field>
                     <input type="text" nbInput fieldSize="small" fullWidth formControlName="search" placeholder="Buscar">
+                    <button nbSuffix nbButton fullWidth size="small" status="warning" (click)="filters()"><nb-icon icon="search"></nb-icon></button>
+                  </nb-form-field>
                 </div>
-                <div class="col-md-1">
-                    <button nbButton fullWidth size="small" status="warning" (click)="filters()">Buscar</button>
+                <div class="col-md-2">
+                  <button nbButton fullWidth size="small" status="primary" (click)="openModal('NEW', '')">Añadir</button>
                 </div>
             </div>
         </form>
-    </nb-card-header>
-    <nb-card-body style="max-height: 70vh;">
+        </div>
         <div class="teble-responsive">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Código</th>
-                        <th>Nombre</th>
-                        <th>Descripción</th>
-                        <th>Precio</th>
-                        <th>Cantidad</th>
-                        <th>OPC.</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let item of products; let i = index">
-                        <td>{{i+1}}</td>
-                        <td>{{item.code || item.code_original}}</td>
-                        <td>{{item.name}}</td>
-                        <td>{{item.description}}</td>
-                        <td>{{(item.cost_pen !== null) ? (item.cost_pen | currency: ' ') : item.cost_pen_ref  | currency: ' '}}</td>
-                        <td>{{item?.quantity}}</td>
-                        <td style="width: 1px;"><button nbButton size="tiny" fullWidth status="success" (click)="addItem(item)"><nb-icon icon="shopping-cart-outline"></nb-icon> Agregar</button></td>
-                    </tr>
-                </tbody>
-            </table>
+          <table class="table table-striped">
+              <thead>
+                  <tr>
+                      <th>#</th>
+                      <th>Código</th>
+                      <th>Nombre</th>
+                      <th>Descripción</th>
+                      <th>Precio</th>
+                      <th>Cantidad</th>
+                      <th colspan="2" style="width: 1px;">OPC.</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr *ngFor="let item of products; let i = index">
+                      <td>{{i+1}}</td>
+                      <td>{{item.code || item.code_original}}</td>
+                      <td>{{item.name}}</td>
+                      <td>{{item.description}}</td>
+                      <td>{{(item.cost_pen !== null) ? (item.cost_pen | currency: ' ') : item.cost_pen_ref  | currency: ' '}}</td>
+                      <td>{{item?.quantity}}</td>
+                      <td style="width: 1px;"><button nbButton size="tiny" fullWidth status="info"><nb-icon icon="edit-outline"></nb-icon></button></td>
+                      <td style="width: 1px;"><button nbButton size="tiny" fullWidth status="danger"><nb-icon icon="trash-outline"></nb-icon></button></td>
+                  </tr>
+              </tbody>
+          </table>
+      </div>
+      <div class="row g-1 row-cols-1 row-cols-lg-3 align-items-center" *ngIf="products?.length>0">
+        <div class="col">
+            <app-pagination-per [total]="paginate.total" [perPageDefault]="paginate.perPage"
+                [currentPerPage]="paginate.perPage" (changePerPage)="changePerPage($event)"></app-pagination-per>
         </div>
-    </nb-card-body>
-    <nb-card-footer *ngIf="products?.length > 0">
-        <div class="row g-1 row-cols-1 row-cols-lg-3 align-items-center">
-            <div class="col">
-                <app-pagination-per [total]="paginate.total" [perPageDefault]="paginate.perPage"
-                    [currentPerPage]="paginate.perPage" (changePerPage)="changePerPage($event)"></app-pagination-per>
-            </div>
-            <div class="col">
-                <app-pagination [formControl]="page" [paginationOptions]="paginate"
-                    (changePagePagination)="changePagePaginations($event)"></app-pagination>
-            </div>
-            <div class="col">
-                <app-pagination-detail [paginationDetailOptions]="paginate"></app-pagination-detail>
-            </div>
+        <div class="col">
+            <app-pagination [formControl]="page" [paginationOptions]="paginate"
+                (changePagePagination)="changePagePaginations($event)"></app-pagination>
         </div>
-    </nb-card-footer>
+        <div class="col">
+            <app-pagination-detail [paginationDetailOptions]="paginate"></app-pagination-detail>
+        </div>
+    </div>
+      </nb-tab>
+      <nb-tab tabTitle="Estokear productos">
+
+      </nb-tab>
+    </nb-tabset>
+
+  </nb-card-body>
+  <nb-card-footer>
+
+  </nb-card-footer>
 </nb-card>
 <!-- <div class="card">
     <div class="card-header">

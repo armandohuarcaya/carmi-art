@@ -20,7 +20,7 @@ export class SignInComponent implements OnInit, OnDestroy {
   @Output() changeValues: EventEmitter<any> = new EventEmitter();
   constructor(private service: GeneralService, private formBuilder: FormBuilder, private router: Router,
     @Inject(CORE_OPTIONS) protected options: CoreOptions) {
-      
+
     }
 
   ngOnInit(): void {
@@ -76,7 +76,7 @@ export class SignInComponent implements OnInit, OnDestroy {
       if (res && res.success) {
         const token = JSON.stringify(res && res?.token);
         localStorage.setItem('token', token);
-        this.router.navigate(['/pages/settings/sales']);
+        this.router.navigate(['/pages/sales/sale']);
         // this.formHeaders.controls['success'].setValue(true);
       } else {
         localStorage.removeItem('token');

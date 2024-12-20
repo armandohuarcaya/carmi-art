@@ -24,23 +24,33 @@ export const STATUS = [
 
 export const TYPE_PAY = [
   {
+    name: 'Ninguno',
+    code: 'none',
+    id: '0',
+  },
+  {
     name: 'Efectivo',
-    code: 'CASH',
+    code: 'cash',
     id: '1',
   },
   {
     name: 'Transferencia',
-    code: 'TRANSFER',
+    code: 'transfer',
     id: '2',
   },
   {
     name: 'Yape',
-    code: 'YAPE',
+    code: 'yape',
     id: '3',
   },
   {
     name: 'Plin',
-    code: 'PLIN',
+    code: 'plin',
+    id: '4',
+  },
+  {
+    name: 'Tarjeta de crédito',
+    code: 'plin',
     id: '4',
   }
 ];

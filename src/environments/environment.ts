@@ -14,5 +14,6 @@ export const environment = {
         art: API.art.dev,
     },
     shellApp: `${window.location.origin}`,
+    // auth: 'http://132.145.166.156:3030/api/auth'
     auth: 'http://132.145.166.156:3030/api/auth'
 };

@@ -5,6 +5,7 @@ import { GeneralService } from 'src/app/providers';
 import { TYPE_SIZE } from '../../static/json';
 import { SProductsService } from '../../services/s-products.service';
 import { DialogConfimComponent } from 'src/app/shared/components/dialog-confim/dialog-confim.component';
+import {AttachedFile} from "../../../attached-file";
 
 @Component({
   selector: 'art-m-product',
@@ -22,7 +23,7 @@ export class MProductComponent implements OnInit {
   unitMeasury:any = [];
   category:any = [];
   brand:any = [];
-  openFiles:any = [{
+  openFiles:AttachedFile[] = [{
     name: 'Imagen principal',
     file: null,
     delete: false,
@@ -92,15 +93,18 @@ export class MProductComponent implements OnInit {
   }
   setFile($event:any, item:any, i:any) {
     const extension = $event.name.split('.').pop();
+
     let newName = $event.name;
     if (item.code === 'absolute') {
-      newName = 'image_main'+'.'+extension;
+      newName = `image_main.${extension}`;
     } else {
-      newName = 'image_'+i+'.'+extension;
+      newName = `image_.${extension}`;
     }
-    const renamedFile = new File([$event], newName, { type: $event.type });
+    // const renamedFile = new File([$event], newName, { type: $event.type });
     // console.log($event.name);
-    item.file = renamedFile;
+    // item.file = renamedFile;
+    item.file = $event;
+    item.name = newName;
     // console.log(item);
   }
   deleteComp($event:boolean, i:any) {
@@ -130,21 +134,20 @@ export class MProductComponent implements OnInit {
       .onClose.subscribe((result: any) => {
         if (result.isConfirmed) {
           let values = this.formHeaders.value;
-          // let newData:any = {
-          //   category_id: values.category_id,
-          //   brand_id: values.brand_id,
-          //   type_id: values.type_id,
-          //   unit_measure_id: values.unit_measure_id,
-          //   code_original: (values.code_original).toUpperCase(),
-          //   code: (values.code).toUpperCase(),
-          //   name: values.name,
-          //   size: values.size,
-          //   measure: values.measure,
-          //   files: values.files,
-          // }
-          let params = new FormData();
-          // params.append('newData', newData);
-          params.append('category_id', values.category_id);
+          let newData:any = {
+            category_id: values.category_id,
+            brand_id: values.brand_id,
+            type_id: values.type_id,
+            unit_measure_id: values.unit_measure_id,
+            code_original: (values.code_original).toUpperCase(),
+            code: (values.code).toUpperCase(),
+            name: values.name,
+            size: values.size,
+            measure: values.measure,
+            // files: values.files,
+          }
+          const params:FormData = new FormData();
+          params.append('category_id', values.category_id.toString());
           params.append('brand_id', values.brand_id);
           params.append('type_id', values.type_id);
           params.append('unit_measure_id', values.unit_measure_id);
@@ -155,8 +158,9 @@ export class MProductComponent implements OnInit {
           params.append('measure', values.measure);
 
           this.openFiles.forEach(element => {
-            params.append('files', element.file);
+            params.append('files', element.file as Blob, element.name);
           });
+
           // params.forEach((value, key) => {
           //   console.log(`${key}:`, value);
           // });

@@ -101,6 +101,8 @@ export class ProductsHomeComponent implements OnInit {
     this.nbDialogService.open(MProductComponent, {
       dialogClass: 'dialog-limited-height',
       context: {
+        type: type,
+        item: item
       },
       closeOnBackdropClick: false,
       closeOnEsc: false,

@@ -19,8 +19,14 @@ export class SProductsService {
   products$(params: any) {
     return this.httpClient.get(`${this.api.product}`, {params});
   }
+  productsShow$(id: any) {
+    return this.httpClient.get(`${this.api.product}/${id}`);
+  }
   addProducts$(params: any) {
     return this.httpClient.post(`${this.api.product}`, params);
+  }
+  putProductsImages$(params: any, id:any) {
+    return this.httpClient.post(`${this.api.product}/images/${id}`, params);
   }
   productType$(params: any) {
     return this.httpClient.get(`${this.api.type}`, {});

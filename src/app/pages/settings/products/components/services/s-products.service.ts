@@ -40,4 +40,10 @@ export class SProductsService {
   brand$(params: any) {
     return this.httpClient.get(`${this.api.brand}`, {});
   }
+  search$(params: any) {
+    return this.httpClient.get(`${this.api.product}/search`, {params});
+  }
+  addStock$(params: any) {
+    return this.httpClient.post(`${this.api.product}/input`, params);
+  }
 }

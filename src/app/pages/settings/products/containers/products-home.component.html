@@ -4,7 +4,7 @@
   </nb-card-header>
   <nb-card-body>
     <nb-tabset>
-      <nb-tab tabTitle="Registrar productos">
+      <nb-tab tabTitle="Registrar productos" tabIcon="shopping-bag-outline">
         <div>
           <form [formGroup]="formHeaders">
             <div class="row">
@@ -62,8 +62,8 @@
         </div>
     </div>
       </nb-tab>
-      <nb-tab tabTitle="Estokear productos">
-
+      <nb-tab tabTitle="Estokear productos" tabIcon="shopping-bag-outline">
+        <art-v-stock-product></art-v-stock-product>
       </nb-tab>
     </nb-tabset>
 

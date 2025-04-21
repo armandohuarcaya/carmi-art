@@ -10,94 +10,111 @@
       </div>
   </nb-card-header>
   <nb-card-body>
-    <form [formGroup]="formHeaders">
-      <div class="row">
-        <div class="col-md-6">
-          <label class="label">Categoría:</label>
-          <nb-select size="small" fullWidth formControlName="category_id" placeholder="Categoría">
-            <nb-option *ngFor="let item of category" [value]="item._id">{{item.name}}</nb-option>
-          </nb-select>
-        </div>
-        <div class="col-md-6">
-          <label class="label">Tipo producto:</label>
-          <nb-select size="small" fullWidth formControlName="type_id" placeholder="Tipo">
-            <nb-option *ngFor="let item of typeProducts" [value]="item._id">{{item.name}}</nb-option>
-          </nb-select>
-        </div>
+    <nb-tabset>
+      <nb-tab tabTitle="Producto" tabIcon="gift-outline">
+        <form [formGroup]="formHeaders">
+          <div class="row">
+            <div class="col-md-6">
+              <label class="label">Categoría:</label>
+              <nb-select size="small" fullWidth formControlName="category_id" placeholder="Categoría">
+                <nb-option *ngFor="let item of category" [value]="item._id">{{item.name}}</nb-option>
+              </nb-select>
+            </div>
+            <div class="col-md-6">
+              <label class="label">Tipo producto:</label>
+              <nb-select size="small" fullWidth formControlName="type_id" placeholder="Tipo">
+                <nb-option *ngFor="let item of typeProducts" [value]="item._id">{{item.name}}</nb-option>
+              </nb-select>
+            </div>
 
-      </div>
-      <div class="row pt-2">
-        <div class="col-md-6">
-          <label class="label">Marca:</label>
-          <nb-select size="small" fullWidth formControlName="brand_id" placeholder="Marca">
-            <nb-option *ngFor="let item of brand" [value]="item._id">{{item.name}}</nb-option>
-          </nb-select>
-        </div>
-        <div class="col-md-6">
-          <label class="label">Unit. medida:</label>
-          <nb-select size="small" fullWidth formControlName="unit_measure_id" placeholder="Unidad">
-            <nb-option *ngFor="let item of unitMeasury" [value]="item._id">{{item.name}}</nb-option>
-          </nb-select>
-        </div>
-      </div>
-      <div class="row pt-2">
-        <div class="col-md-12">
-          <label class="label">Nombre:</label>
-          <input nbInput fieldSize="small" fullWidth type="text" formControlName="name"  placeholder="Nombre del producto">
-        </div>
-      </div>
-      <div class="row pt-2">
-        <div class="col-md-6">
-          <label class="label">Código:</label>
-          <input nbInput fieldSize="small" fullWidth type="text" formControlName="code" placeholder="Código producto" style="text-transform: uppercase;">
-        </div>
-        <div class="col-md-6">
-          <label class="label">Código importación:</label>
-          <input nbInput fieldSize="small" fullWidth type="text" formControlName="code_original"  placeholder="Código importación" style="text-transform: uppercase;">
-        </div>
-      </div>
+          </div>
+          <div class="row pt-2">
+            <div class="col-md-6">
+              <label class="label">Marca:</label>
+              <nb-select size="small" fullWidth formControlName="brand_id" placeholder="Marca">
+                <nb-option *ngFor="let item of brand" [value]="item._id">{{item.name}}</nb-option>
+              </nb-select>
+            </div>
+            <div class="col-md-6">
+              <label class="label">Unit. medida:</label>
+              <nb-select size="small" fullWidth formControlName="unit_measure_id" placeholder="Unidad">
+                <nb-option *ngFor="let item of unitMeasury" [value]="item._id">{{item.name}}</nb-option>
+              </nb-select>
+            </div>
+          </div>
+          <div class="row pt-2">
+            <div class="col-md-12">
+              <label class="label">Nombre:</label>
+              <input nbInput fieldSize="small" fullWidth type="text" formControlName="name"  placeholder="Nombre del producto">
+            </div>
+          </div>
+          <div class="row pt-2">
+            <div class="col-md-6">
+              <label class="label">Código:</label>
+              <input nbInput fieldSize="small" fullWidth type="text" formControlName="code" placeholder="Código producto" style="text-transform: uppercase;">
+            </div>
+            <div class="col-md-6">
+              <label class="label">Código importación:</label>
+              <input nbInput fieldSize="small" fullWidth type="text" formControlName="code_original"  placeholder="Código importación" style="text-transform: uppercase;">
+            </div>
+          </div>
 
-      <div class="row pt-2">
-        <div class="col-md-6">
-          <label class="label">Tamaño:</label>
-          <nb-select size="small" fullWidth formControlName="size" placeholder="Tamaño">
-            <nb-option *ngFor="let item of size" [value]="item.code">{{item.name}}</nb-option>
-          </nb-select>
+          <div class="row pt-2">
+            <div class="col-md-6">
+              <label class="label">Tamaño:</label>
+              <nb-select size="small" fullWidth formControlName="size" placeholder="Tamaño">
+                <nb-option *ngFor="let item of size" [value]="item.code">{{item.name}}</nb-option>
+              </nb-select>
+            </div>
+            <div class="col-md-6">
+              <label class="label">Medidas:</label>
+              <input nbInput fieldSize="small" fullWidth type="text" formControlName="measure"  placeholder="Medidas">
+            </div>
+          </div>
+        </form>
+        <div class="text-center">
+          <button nbButton size="small" status="basic" shape="semi-round" (click)="closeModal()">
+            Cancelar
+          </button>&nbsp;
+          <button nbButton size="small" status="primary" shape="semi-round" [disabled]="formHeaders.invalid" (click)="save()">
+            Guardar
+          </button>
         </div>
-        <div class="col-md-6">
-          <label class="label">Medidas:</label>
-          <input nbInput fieldSize="small" fullWidth type="text" formControlName="measure"  placeholder="Medidas">
+      </nb-tab>
+      <nb-tab tabTitle="Imagen del producto" tabIcon="image-outline" [disabled]="formHeaders.value._id">
+        <div class="row">
+          <div *ngFor="let preFile of openFiles; let i = index" class="col-md-6">
+            <app-s-add-file
+            [label]="i === 0 ? preFile.name : (preFile.name + ' ' + i)"
+            [delete_component]="preFile.delete"
+            (deleteComponent)="deleteComp($event, i);"
+            [accepts]="'.jpg,.png,.jpeg,.JPG'"
+            [typeDoc]="'imagen'"
+            (set)="setFile($event, preFile, i)"
+          ></app-s-add-file>
+          </div>
+          <div class="col-md-6" *ngIf="openFiles.length < 4">
+            <label class="label">Añadir otra imagen</label>
+            <nb-card status="basic" class="dp mt-2" (click)="addImge()">
+              <nb-card-body class="text-center">
+                <nb-icon icon="plus" status="basic" style="font-size: 60px;"></nb-icon>
+              </nb-card-body>
+            </nb-card>
+          </div>
         </div>
-      </div>
+        <div class="text-center">
+          <button nbButton size="small" status="basic" shape="semi-round" (click)="closeModal()">
+            Cancelar
+          </button>&nbsp;
+          <button nbButton size="small" status="primary" shape="semi-round" [disabled]="formHeaders.invalid" (click)="saveFile()">
+            Guardar
+          </button>
+        </div>
+      </nb-tab>
+     </nb-tabset>
 
-      <div class="row pt-2">
-        <div *ngFor="let preFile of openFiles; let i = index" class="col-md-6">
-          <app-s-add-file
-          [label]="i === 0 ? preFile.name : (preFile.name + ' ' + i)"
-          [delete_component]="preFile.delete"
-          (deleteComponent)="deleteComp($event, i);"
-          [accepts]="'.jpg,.png,.jpeg,.JPG'"
-          [typeDoc]="'imagen'"
-          (set)="setFile($event, preFile, i)"
-        ></app-s-add-file>
-        </div>
-        <div class="col-md-6" *ngIf="openFiles.length < 4">
-          <label class="label">Añadir otra imagen</label>
-          <nb-card status="basic" class="dp mt-2" (click)="addImge()">
-            <nb-card-body class="text-center">
-              <nb-icon icon="plus" status="basic" style="font-size: 60px;"></nb-icon>
-            </nb-card-body>
-          </nb-card>
-        </div>
-      </div>
-    </form>
   </nb-card-body>
-  <nb-card-footer class="text-center">
-    <button nbButton size="small" status="basic" shape="semi-round" (click)="closeModal()">
-      Cancelar
-    </button>&nbsp;
-    <button nbButton size="small" status="primary" shape="semi-round" [disabled]="formHeaders.invalid" (click)="save()">
-      Guardar
-    </button>
-  </nb-card-footer>
+  <!-- <nb-card-footer class="text-center">
+
+  </nb-card-footer> -->
 </nb-card>

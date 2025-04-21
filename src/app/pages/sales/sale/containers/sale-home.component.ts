@@ -58,7 +58,7 @@ export class SaleHomeComponent implements OnInit {
   }
   inputKeyAutocomplete($event:any) {
     if (!this.formHeaders.value.name_producto) {
-      this.clearPersona();
+      this.clearProduct();
     }
   }
   changeAutocomplete($event:any) {
@@ -66,9 +66,9 @@ export class SaleHomeComponent implements OnInit {
       this.formHeaders.controls['_id'].setValue($event._id);
       this.products$ = this.products$.filter((a:any) => a._id === $event._id);
       this.addItem($event);
-      this.clearPersona();
+      this.clearProduct();
     } else {
-     this.clearPersona();
+     this.clearProduct();
     }
   }
   colorAutocompleteSelect(option:any) {
@@ -78,7 +78,7 @@ export class SaleHomeComponent implements OnInit {
       return {'font-size': '11px'};
     }
   }
-  clearPersona() {
+  clearProduct() {
     this.formHeaders.controls['name_producto'].setValue('');
     this.formHeaders.controls['_id'].setValue('');
     this.products$ = [];

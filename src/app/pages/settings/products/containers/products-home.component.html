@@ -4,7 +4,7 @@
   </nb-card-header>
   <nb-card-body>
     <nb-tabset>
-      <nb-tab tabTitle="Registrar productos">
+      <nb-tab tabTitle="Registrar productos" tabIcon="shopping-bag-outline">
         <div>
           <form [formGroup]="formHeaders">
             <div class="row">
@@ -42,7 +42,7 @@
                       <td>{{item.description}}</td>
                       <td>{{(item.cost_pen !== null) ? (item.cost_pen | currency: ' ') : item.cost_pen_ref  | currency: ' '}}</td>
                       <td>{{item?.quantity}}</td>
-                      <td style="width: 1px;"><button nbButton size="tiny" fullWidth status="info"><nb-icon icon="edit-outline"></nb-icon></button></td>
+                      <td style="width: 1px;"><button nbButton size="tiny" fullWidth status="info" (click)="openModal('UPDATE',item)"><nb-icon icon="edit-outline"></nb-icon></button></td>
                       <td style="width: 1px;"><button nbButton size="tiny" fullWidth status="danger"><nb-icon icon="trash-outline"></nb-icon></button></td>
                   </tr>
               </tbody>
@@ -62,8 +62,8 @@
         </div>
     </div>
       </nb-tab>
-      <nb-tab tabTitle="Estokear productos">
-
+      <nb-tab tabTitle="Estokear productos" tabIcon="shopping-bag-outline">
+        <art-v-stock-product></art-v-stock-product>
       </nb-tab>
     </nb-tabset>
 

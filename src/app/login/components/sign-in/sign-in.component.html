@@ -42,18 +42,18 @@
 
   </nb-card-footer>
 </nb-card> -->
-<div>
+<div [nbSpinner]="loading">
   <div class="text-center" style="padding: 0px;">
-    <img src="https://www.pngall.com/wp-content/uploads/5/User-Profile-PNG-Image.png" alt="" height="150px" style="border-radius: 3rem;">
+    <img src="https://www.iconpacks.net/icons/1/free-user-group-icon-296-thumb.png" alt="" height="150px" style="border-radius: 3rem;">
   </div>
   <div>
     <form [formGroup]="formHeaders">
       <div>
-        <label class="label" style="color: white; font-weight: bold;">Correo</label>
+        <!-- <label class="label" style="color: white; font-weight: bold;">Correo</label> -->
         <input type="text" status="info" nbInput fullWidth shape="semi-round" formControlName="email" autocomplete="new-email" placeholder="Correo">
       </div>
-      <div>
-        <label class="label" style="color: white; font-weight: bold;">Contraseña</label>
+      <div class="pt-3">
+        <!-- <label class="label" style="color: white; font-weight: bold;">Contraseña</label> -->
         <nb-form-field>
           <input [type]="getInputType()" status="info" nbInput fullWidth shape="semi-round" formControlName="password" autocomplete="new-password" placeholder="Contraseña">
           <button nbSuffix nbButton ghost (click)="toggleShowPassword()">
@@ -72,7 +72,7 @@
   <hr>
   <div class="text-center">
     <button nbButton size="small" status="success" shape="semi-round" (click)="loginSignIn()" [disabled]="formHeaders.invalid"
-      [nbSpinner]="loading">Iniciar sesión <nb-icon icon="arrow-forward-outline"></nb-icon></button>
+      >Iniciar sesión</button>
 
   </div>
 </div>

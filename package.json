@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build --base-href /carmi/",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
@@ -24,6 +24,7 @@
     "@nebular/theme": "^12.0.0",
     "angular-cli-ghpages": "^1.0.7",
     "bootstrap": "^5.3.3",
+    "date-fns": "^3.6.0",
     "eva-icons": "^1.1.3",
     "pdfmake": "^0.2.10",
     "rxjs": "~7.8.0",

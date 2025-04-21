@@ -4,14 +4,16 @@
 //     justify-content: center;
 //     min-height: 100vh;
 //   }
+// https://img.freepik.com/fotos-premium/imagen-generativa-ia-artesanias-papel-origami-colorido-espacio-blanco-sobre-fondo-madera_467541-3340.jpg
   .found {
     // background: linear-gradient(#2aa1c2, #174551, #063b49, #000f13);
-    background-image: url('https://img.freepik.com/fotos-premium/imagen-generativa-ia-artesanias-papel-origami-colorido-espacio-blanco-sobre-fondo-madera_467541-3340.jpg');
+    background-image: url('https://wallpapers.com/images/hd/dark-theme-background-8xlni5mkdutatc7r.jpg');
     // background-image: url(../../../assets/imgs/IntiPaz2023.png);
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-position: center;
     background-size: cover;
+    object-fit: cover;
     // background-size: contain;
   }
 //   .card-found {

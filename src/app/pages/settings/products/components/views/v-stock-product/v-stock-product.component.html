@@ -1,0 +1,79 @@
+  <div class="row" [nbSpinner]="loading">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+      <nb-card>
+        <nb-card-header>
+          <div>
+            <!-- <label class="label">Buscar producto: </label><br> -->
+            <div class="row">
+                <div class="col-md-9">
+                    <input autofocus [formControl]="formHeaders.controls['name_producto']" nbInput fullWidth fieldSize="medium" type="text" status="success" (keydown.enter)="enterProducts()"
+                    class="user_avatar2" placeholder="Buscar producto"
+                    [nbAutocomplete]="complete" (input)="inputKeyAutocomplete($event)" />
+                </div>
+                <div class="col-md-3">
+                    <button nbButton size="medium" status="warning" fullWidth (click)="filters()" [disabled]="!formHeaders.value.name_producto">
+                        <nb-icon  icon="search-outline" pack="eva"></nb-icon> Buscar
+                    </button>
+                </div>
+            </div>
+            <nb-autocomplete #complete size="medium">
+                <nb-option *ngFor="let option of products$" [value]="option.name"
+                    (click)="changeAutocomplete(option)" [ngStyle]="colorAutocompleteSelect(option)" class="hovered" [disabled]="!option?.enabled">
+                    {{option?.code_original}}  ({{option?.ode}}): {{option?.name}} - {{option?.size}} ({{option?.measure}})
+                    <!-- {{option.code || option.code_original}} : {{ option.name }} <br> ( {{option.type_name}} ) - {{option.size}} -->
+                </nb-option>
+            </nb-autocomplete>
+          </div>
+        </nb-card-header>
+        <nb-card-body>
+          <div class="nb-scrollbars">
+            <table class="lb-table lb-table-border-inside">
+                <thead>
+                    <tr style="font-size: 12px !important;">
+                        <th scope="col" data-label="#">#</th>
+                        <!-- <th scope="col" data-label="Código">Código</th> -->
+                        <th scope="col" data-label="Nombre">Nombre</th>
+                        <!-- <th scope="col" data-label="Tipo" style="width: 1px;">Tipo</th> -->
+                        <th scope="col" data-label="Medida">Medida</th>
+                        <th scope="col" data-label="Precio" tyle="width: 140px;">Precio</th>
+                        <th scope="col" data-label="Cantidad" style="width: 170px;">Cantidad</th>
+                        <th scope="col" data-label="OPC.">OPC</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of carrito; let i = index" style="font-size: 10px; font-weight: bold;">
+                        <td data-label="#">{{i+1}}</td>
+                        <!-- <td>{{item.code || item.code_original}}</td> -->
+                        <td>{{item.name}}</td>
+                        <!-- <td>{{item.type_name}}</td> -->
+                        <td>{{item.measure}}</td>
+                        <td class="text-center">
+                            <input type="number" style="min-width: 250px;" class="text-center" nbInput fullWidth fieldSize="small" [(ngModel)]="item.cost_pen">
+                        </td>
+                        <td class="text-center">
+                            <nb-form-field>
+                                <button nbPrefix nbButton size="small" status="danger" (click)="changeCantidad('MINUS', item)" [disabled]="item.quantity<1">
+                                    <nb-icon  icon="minus-outline" pack="eva"></nb-icon></button>
+                                <input type="text" style="width: 170px;" class="text-center" nbInput fullWidth fieldSize="small" [(ngModel)]="item.quantity">
+                                <button nbSuffix nbButton size="small" status="success" (click)="changeCantidad('PLUS', item)">
+                                    <nb-icon nbPrefix icon="plus-outline" pack="eva"></nb-icon></button>
+                              </nb-form-field>
+                        </td>
+                        <td>
+                            <button nbButton size="tiny" fullWidth status="danger" (click)="deleteCarr(item, i)">
+                                <nb-icon icon="trash-outline"></nb-icon>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        </nb-card-body>
+        <nb-card-footer style="text-align: center;">
+          <button nbButton size="small" status="primary" [disabled]="carrito?.length<=0" (click)="saveStock()">Guardar</button>
+        </nb-card-footer>
+      </nb-card>
+    </div>
+    <div class="col-md-1"></div>
+  </div>

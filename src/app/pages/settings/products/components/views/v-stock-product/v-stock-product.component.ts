@@ -103,8 +103,8 @@ export class VStockProductComponent implements OnInit {
     this.carrito.map((r:any) => {
       const item = {
         product_id: r._id,
-        amount: r.quantity,
-        unit_cost: r.cost_pen,
+        amount: Number(r.quantity),
+        unit_cost: Number(r.cost_pen),
         modified_cost: true,
       };
       data.push(item);

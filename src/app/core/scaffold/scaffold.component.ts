@@ -42,6 +42,20 @@ export class ScaffoldComponent implements OnInit {
         },
       ],
     },
+    {
+      title: "Reportes",
+      icon: "bar-chart-outline",
+      link: "/pages/reports",
+      pathMatch: "prefix",
+      children: [
+        {
+          title: "Ventas",
+          icon: "shopping-bag-outline",
+          link: "/pages/reports/sale",
+          pathMatch: "prefix",
+        },
+      ],
+    },
   ];
   user:any = '';
   isMobile: boolean = false;

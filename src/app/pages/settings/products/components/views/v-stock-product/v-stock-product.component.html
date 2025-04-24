@@ -1,7 +1,4 @@
-  <div class="row" [nbSpinner]="loading">
-    <div class="col-md-1"></div>
-    <div class="col-md-10">
-      <nb-card>
+      <nb-card [nbSpinner]="loading">
         <nb-card-header>
           <div>
             <!-- <label class="label">Buscar producto: </label><br> -->
@@ -20,7 +17,7 @@
             <nb-autocomplete #complete size="medium">
                 <nb-option *ngFor="let option of products$" [value]="option.name"
                     (click)="changeAutocomplete(option)" [ngStyle]="colorAutocompleteSelect(option)" class="hovered" [disabled]="!option?.enabled">
-                    {{option?.code_original}}  ({{option?.ode}}): {{option?.name}} - {{option?.size}} ({{option?.measure}})
+                    {{option?.code_original}}  ({{option?.code}}): {{option?.name}} - {{option?.size}} ({{option?.measure}})
                     <!-- {{option.code || option.code_original}} : {{ option.name }} <br> ( {{option.type_name}} ) - {{option.size}} -->
                 </nb-option>
             </nb-autocomplete>
@@ -36,8 +33,8 @@
                         <th scope="col" data-label="Nombre">Nombre</th>
                         <!-- <th scope="col" data-label="Tipo" style="width: 1px;">Tipo</th> -->
                         <th scope="col" data-label="Medida">Medida</th>
-                        <th scope="col" data-label="Precio" tyle="width: 140px;">Precio</th>
-                        <th scope="col" data-label="Cantidad" style="width: 170px;">Cantidad</th>
+                        <th scope="col" data-label="Precio">Costo</th>
+                        <th scope="col" data-label="Cantidad">Cantidad</th>
                         <th scope="col" data-label="OPC.">OPC</th>
                     </tr>
                 </thead>
@@ -49,13 +46,13 @@
                         <!-- <td>{{item.type_name}}</td> -->
                         <td>{{item.measure}}</td>
                         <td class="text-center">
-                            <input type="number" style="min-width: 250px;" class="text-center" nbInput fullWidth fieldSize="small" [(ngModel)]="item.cost_pen">
+                            <input type="number"  class="text-center" nbInput fullWidth fieldSize="small" [(ngModel)]="item.cost_pen">
                         </td>
                         <td class="text-center">
                             <nb-form-field>
                                 <button nbPrefix nbButton size="small" status="danger" (click)="changeCantidad('MINUS', item)" [disabled]="item.quantity<1">
                                     <nb-icon  icon="minus-outline" pack="eva"></nb-icon></button>
-                                <input type="text" style="width: 170px;" class="text-center" nbInput fullWidth fieldSize="small" [(ngModel)]="item.quantity">
+                                <input type="text" class="text-center" nbInput fullWidth fieldSize="small" [(ngModel)]="item.quantity">
                                 <button nbSuffix nbButton size="small" status="success" (click)="changeCantidad('PLUS', item)">
                                     <nb-icon nbPrefix icon="plus-outline" pack="eva"></nb-icon></button>
                               </nb-form-field>
@@ -74,6 +71,3 @@
           <button nbButton size="small" status="primary" [disabled]="carrito?.length<=0" (click)="saveStock()">Guardar</button>
         </nb-card-footer>
       </nb-card>
-    </div>
-    <div class="col-md-1"></div>
-  </div>

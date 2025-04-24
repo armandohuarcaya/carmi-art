@@ -53,6 +53,8 @@ export class MProductComponent implements OnInit {
       size: ['', [Validators.required]],
       measure: ['', [Validators.required]],
       files: [''],
+      price_pen_ref: [''],
+      price_pen: ['']
     };
     this.formHeaders = this.formBuilder.group(controls);
   }
@@ -148,6 +150,8 @@ export class MProductComponent implements OnInit {
             name: values.name,
             size: values.size,
             measure: values.measure,
+            price_pen_ref: Number(values.price_pen_ref) || '',
+            price_pen: Number(values.price_pen_ref) || '',
             // files: values.files,
           };
           // this.openFiles.forEach(element => {
@@ -176,12 +180,21 @@ export class MProductComponent implements OnInit {
           // params.forEach((value, key) => {
           //   console.log(`${key}:`, value);
           // });
-          this.sProductsServ.addProducts$(params).subscribe((x: any) => {
-            if (x.success) {
-              this.isClose = 'ok';
-              this.closeModal();
-            }
-          });
+          if (this.type === 'NEW') {
+            this.sProductsServ.addProducts$(params).subscribe((x: any) => {
+              if (x.success) {
+                this.isClose = 'ok';
+                this.closeModal();
+              }
+            });
+          } else {
+            this.sProductsServ.putProducts$(this.item._id, params).subscribe((x: any) => {
+              if (x.success) {
+                this.isClose = 'ok';
+                this.closeModal();
+              }
+            });
+          }
         }
       });
   }
@@ -238,6 +251,8 @@ export class MProductComponent implements OnInit {
           name: res.data.name,
           size: res.data.size,
           measure: res.data.measure,
+          price_pen: res.data.price_pen,
+          price_pen_ref: res.data.price_pen_ref,
         });
       }
     });

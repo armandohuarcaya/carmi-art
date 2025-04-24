@@ -2,7 +2,7 @@
   <nb-card-header>
       <div class="d-flex align-items-center justify-content-between">
           <div>
-              <nb-icon icon="save-outline" status="basic"></nb-icon> &nbsp;CREAR
+              <nb-icon icon="save-outline" status="basic"></nb-icon> &nbsp;{{type === 'NEW' ? 'Crear producto' : 'Actualizar producto'}}
           </div>
           <button nbButton outline  status="basic" size="tiny" (click)="closeModal()" >
               <span aria-hidden="true">&times;</span>
@@ -71,7 +71,19 @@
               <input nbInput fieldSize="small" fullWidth type="text" formControlName="measure"  placeholder="Medidas">
             </div>
           </div>
+
+          <div class="row pt-2" *ngIf="type === 'UPDATE'">
+            <div class="col-md-6">
+              <label class="label">Precio ref.:</label>
+              <input nbInput fieldSize="small" fullWidth type="number" formControlName="price_pen_ref"  placeholder="Precio referencial">
+            </div>
+            <div class="col-md-6">
+              <label class="label">Precio:</label>
+              <input nbInput fieldSize="small" fullWidth type="number" formControlName="price_pen"  placeholder="Precio">
+            </div>
+          </div>
         </form>
+        <hr>
         <div class="text-center">
           <button nbButton size="small" status="basic" shape="semi-round" (click)="closeModal()">
             Cancelar
@@ -102,6 +114,7 @@
             </nb-card>
           </div>
         </div>
+        <hr>
         <div class="text-center">
           <button nbButton size="small" status="basic" shape="semi-round" (click)="closeModal()">
             Cancelar

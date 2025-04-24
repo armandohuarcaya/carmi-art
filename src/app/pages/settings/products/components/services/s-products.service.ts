@@ -25,6 +25,9 @@ export class SProductsService {
   addProducts$(params: any) {
     return this.httpClient.post(`${this.api.product}`, params);
   }
+  putProducts$(id: any, params: any) {
+    return this.httpClient.put(`${this.api.product}/${id}`, params);
+  }
   putProductsImages$(params: any, id:any) {
     return this.httpClient.post(`${this.api.product}/images/${id}`, params);
   }

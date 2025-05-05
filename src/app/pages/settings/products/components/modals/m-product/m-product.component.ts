@@ -151,7 +151,7 @@ export class MProductComponent implements OnInit {
             size: values.size,
             measure: values.measure,
             price_pen_ref: Number(values.price_pen_ref) || '',
-            price_pen: Number(values.price_pen_ref) || '',
+            price_pen: Number(values.price_pen) || '',
             // files: values.files,
           };
           // this.openFiles.forEach(element => {

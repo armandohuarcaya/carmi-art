@@ -31,7 +31,7 @@
                       <th>Descripción</th>
                       <th>Costo</th>
                       <th>Precio</th>
-                      <th>Cantidad</th>
+                      <!-- <th>Cantidad</th> -->
                       <th class="text-center">Stock</th>
                       <th colspan="2" style="width: 1px;">OPC.</th>
                   </tr>
@@ -44,7 +44,7 @@
                       <td>{{item.description}}</td>
                       <td>{{item.cost_pen | currency: ' '}}</td>
                       <td>{{(item.price_pen !== null) ? (item.price_pen | currency: ' ') : item.price_pen_ref  | currency: ' '}}</td>
-                      <td>{{item?.quantity}}</td>
+                      <!-- <td>{{item?.quantity}}</td> -->
                       <td class="text-center">{{item?.in_stock}}</td>
                       <td style="width: 1px;"><button nbButton size="tiny" fullWidth status="info" (click)="openModal('UPDATE',item)"><nb-icon icon="edit-outline"></nb-icon></button></td>
                       <td style="width: 1px;"><button nbButton size="tiny" fullWidth status="danger"><nb-icon icon="trash-outline"></nb-icon></button></td>

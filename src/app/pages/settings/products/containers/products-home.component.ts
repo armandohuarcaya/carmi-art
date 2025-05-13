@@ -3,7 +3,7 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { NbDialogService } from '@nebular/theme';
 import { MShoppingComponent } from '../components/modals/m-shopping/m-shopping.component';
 import { MProductComponent } from '../components/modals/m-product/m-product.component';
-import { SProductsService } from '../components/services/s-products.service';
+import { SProductsService } from '../services/s-products.service';
 
 @Component({
   selector: 'art-products-home',

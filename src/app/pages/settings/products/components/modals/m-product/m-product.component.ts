@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NbDialogRef, NbDialogService } from '@nebular/theme';
 import { GeneralService } from 'src/app/providers';
 import { TYPE_SIZE } from '../../static/json';
-import { SProductsService } from '../../services/s-products.service';
+import { SProductsService } from '../../../services/s-products.service';
 import { DialogConfimComponent } from 'src/app/shared/components/dialog-confim/dialog-confim.component';
 import {AttachedFile} from "../../interfaces/attached-file";
 
@@ -45,7 +45,7 @@ export class MProductComponent implements OnInit {
       _id: [''],
       category_id: ['', [Validators.required]],
       brand_id: ['', [Validators.required]],
-      type_id: ['', [Validators.required]],
+      subcategory_id: ['', [Validators.required]],
       unit_measure_id: ['', [Validators.required]],
       code_original: [''],
       code: [''],
@@ -143,7 +143,7 @@ export class MProductComponent implements OnInit {
           let params:any = {
             category_id: values.category_id,
             brand_id: values.brand_id,
-            type_id: values.type_id,
+            subcategory_id: values.subcategory_id,
             unit_measure_id: values.unit_measure_id,
             code_original: (values.code_original).toUpperCase(),
             code: (values.code).toUpperCase(),
@@ -163,7 +163,7 @@ export class MProductComponent implements OnInit {
           // });
           // params.append('category_id', values.category_id.toString());
           // params.append('brand_id', values.brand_id);
-          // params.append('type_id', values.type_id);
+          // params.append('subcategory_id', values.subcategory_id);
           // params.append('unit_measure_id', values.unit_measure_id);
           // params.append('code_original', (values.code_original).toUpperCase());
           // params.append('code', (values.code).toUpperCase());
@@ -244,7 +244,7 @@ export class MProductComponent implements OnInit {
           _id: res.data._id,
           category_id: res.data.category_id,
           brand_id: res.data.brand_id,
-          type_id: res.data.type_id,
+          subcategory_id: res.data.subcategory_id,
           unit_measure_id: res.data.unit_measure_id,
           code_original: res.data.code_original,
           code: res.data.code,

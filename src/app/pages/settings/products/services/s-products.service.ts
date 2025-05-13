@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment';
 export class SProductsService {
   api = {
     product: `${environment.apiUrls.art}/api/product`,
-    type: `${environment.apiUrls.art}/api/type`,
+    type: `${environment.apiUrls.art}/api/sub-category`,
     unitMeasure: `${environment.apiUrls.art}/api/unit-measure`,
     category: `${environment.apiUrls.art}/api/category`,
     brand: `${environment.apiUrls.art}/api/brand`,

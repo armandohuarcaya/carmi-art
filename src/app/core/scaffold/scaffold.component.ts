@@ -23,7 +23,25 @@ export class ScaffoldComponent implements OnInit {
         {
           title: "Productos",
           icon: "sync-outline",
-          link: "/pages/settings/products",
+          link: "/pages/settings/product",
+          pathMatch: "prefix",
+        },
+        {
+          title: "Marcas",
+          icon: "sync-outline",
+          link: "/pages/settings/brand",
+          pathMatch: "prefix",
+        },
+        {
+          title: "Categorías",
+          icon: "sync-outline",
+          link: "/pages/settings/category",
+          pathMatch: "prefix",
+        },
+        {
+          title: "Sub categoría",
+          icon: "sync-outline",
+          link: "/pages/settings/sub-category",
           pathMatch: "prefix",
         },
       ],

@@ -7,7 +7,7 @@ import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { DialogConfimComponent } from 'src/app/shared/components/dialog-confim/dialog-confim.component';
 import { STATUS, TYPE_PAY } from '../../static/json';
-import { SSalesService } from '../../services/s-sales.service';
+import { SSalesService } from '../../../services/s-sales.service';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({

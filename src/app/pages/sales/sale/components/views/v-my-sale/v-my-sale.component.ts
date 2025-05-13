@@ -5,7 +5,7 @@ import { GeneralService } from 'src/app/providers';
 import { END_POINTS } from 'src/app/providers/utils';
 import { MMySaleComponent } from '../../modals/m-my-sale/m-my-sale.component';
 import { STATUS, TYPE_PAY } from '../../static/json';
-import { SSalesService } from '../../services/s-sales.service';
+import { SSalesService } from '../../../services/s-sales.service';
 
 @Component({
   selector: 'art-v-my-sale',

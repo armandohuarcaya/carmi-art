@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { SProductsService } from '../../services/s-products.service';
+import { SProductsService } from '../../../services/s-products.service';
 import { NbDialogService } from '@nebular/theme';
 
 @Component({

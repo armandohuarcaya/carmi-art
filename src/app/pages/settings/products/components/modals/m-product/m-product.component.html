@@ -22,7 +22,7 @@
             </div>
             <div class="col-md-6">
               <label class="label">Tipo producto:</label>
-              <nb-select size="small" fullWidth formControlName="type_id" placeholder="Tipo">
+              <nb-select size="small" fullWidth formControlName="subcategory_id" placeholder="Tipo">
                 <nb-option *ngFor="let item of typeProducts" [value]="item._id">{{item.name}}</nb-option>
               </nb-select>
             </div>

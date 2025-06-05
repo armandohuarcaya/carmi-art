@@ -3,6 +3,24 @@
       <nb-icon icon="save" status="success"></nb-icon>SUB CATEGORÍAS
   </nb-card-header>
   <nb-card-body>
+    <form [formGroup]="formHeaders">
+      <div class="row">
+        <div class="col-md-3">
+          <nb-select size="small" fullWidth formControlName="category_id" placeholder="Categoría">
+            <nb-option value="">Todas las categorías</nb-option>
+            <nb-option *ngFor="let item of category" [value]="item._id">{{item.name}}</nb-option>
+          </nb-select>
+        </div>
+        <div class="col-md-5"></div>
+        <div class="col-md-2">
+          <button nbButton size="small" status="warning" fullWidth (click)="filterList()">Filtrar</button>
+        </div>
+        <div class="col-md-2">
+          <button nbButton size="small" status="primary" fullWidth (click)="openSubCategory('', 'NEW')">Crear</button>
+        </div>
+      </div>
+    </form>
+    <hr>
     <div class="teble-responsive">
       <table class="table table-striped">
           <thead>
@@ -28,8 +46,8 @@
                   <td>
                     <nb-icon [icon]="item.enabled ? 'checkmark-square-2-outline' : 'alert-triangle-outline'" [status]="item.enabled ? 'success' : 'danger'"></nb-icon>
                   </td>
-                  <td style="width: 1px;"><button nbButton size="tiny" fullWidth status="info"><nb-icon icon="edit-outline"></nb-icon></button></td>
-                  <td style="width: 1px;"><button nbButton size="tiny" fullWidth status="danger"><nb-icon icon="trash-outline"></nb-icon></button></td>
+                  <td style="width: 1px;"><button nbButton size="tiny" fullWidth status="info" (click)="openSubCategory(item, 'UPDATE')"><nb-icon icon="edit-outline"></nb-icon></button></td>
+                  <td style="width: 1px;"><button nbButton size="tiny" fullWidth status="danger" (click)="onDelete(item);"><nb-icon icon="trash-outline"></nb-icon></button></td>
               </tr>
           </tbody>
       </table>

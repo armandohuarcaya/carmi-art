@@ -47,7 +47,7 @@
                       <!-- <td>{{item?.quantity}}</td> -->
                       <td class="text-center">{{item?.in_stock}}</td>
                       <td style="width: 1px;"><button nbButton size="tiny" fullWidth status="info" (click)="openModal('UPDATE',item)"><nb-icon icon="edit-outline"></nb-icon></button></td>
-                      <td style="width: 1px;"><button nbButton size="tiny" fullWidth status="danger"><nb-icon icon="trash-outline"></nb-icon></button></td>
+                      <td style="width: 1px;"><button nbButton size="tiny" fullWidth status="danger" (click)="onDelete(item)"><nb-icon icon="trash-outline"></nb-icon></button></td>
                   </tr>
               </tbody>
           </table>

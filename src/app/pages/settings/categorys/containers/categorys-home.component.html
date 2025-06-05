@@ -3,6 +3,13 @@
       <nb-icon icon="save" status="success"></nb-icon>CATEGORÍAS
   </nb-card-header>
   <nb-card-body>
+    <div class="row">
+      <div class="col-md-10"></div>
+      <div class="col-md-2">
+        <button nbButton size="small" status="primary" fullWidth (click)="openCategory('', 'NEW')">Crear</button>
+      </div>
+    </div>
+    <hr>
     <div class="teble-responsive">
       <table class="table table-striped">
           <thead>
@@ -26,8 +33,8 @@
                   <td>
                     <nb-icon [icon]="item.enabled ? 'checkmark-square-2-outline' : 'alert-triangle-outline'" [status]="item.enabled ? 'success' : 'danger'"></nb-icon>
                   </td>
-                  <td style="width: 1px;"><button nbButton size="tiny" fullWidth status="info"><nb-icon icon="edit-outline"></nb-icon></button></td>
-                  <td style="width: 1px;"><button nbButton size="tiny" fullWidth status="danger"><nb-icon icon="trash-outline"></nb-icon></button></td>
+                  <td style="width: 1px;"><button nbButton size="tiny" fullWidth status="info" (click)="openCategory(item, 'UPDATE')"><nb-icon icon="edit-outline"></nb-icon></button></td>
+                  <td style="width: 1px;"><button nbButton size="tiny" fullWidth status="danger" (click)="onDelete(item)"><nb-icon icon="trash-outline"></nb-icon></button></td>
               </tr>
           </tbody>
       </table>

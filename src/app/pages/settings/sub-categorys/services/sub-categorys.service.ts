@@ -7,7 +7,8 @@ import { environment } from 'src/environments/environment';
 })
 export class SubCategorysService {
   api = {
-    subCategorys: `${environment.apiUrls.art}/api/sub-category`,
+    subCategorys: `${environment.apiUrls.art}/api/subcategory`,
+    categorys: `${environment.apiUrls.art}/api/category`,
   };
 
   constructor(private httpClient: HttpClient) {}
@@ -26,5 +27,8 @@ export class SubCategorysService {
   }
   deleteSubCategorys$(id: any) {
     return this.httpClient.delete(`${this.api.subCategorys}/${id}`);
+  }
+  categorys$(params: any) {
+    return this.httpClient.get(`${this.api.categorys}`, {params});
   }
 }

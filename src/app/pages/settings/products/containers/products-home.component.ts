@@ -4,6 +4,7 @@ import { NbDialogService } from '@nebular/theme';
 import { MShoppingComponent } from '../components/modals/m-shopping/m-shopping.component';
 import { MProductComponent } from '../components/modals/m-product/m-product.component';
 import { SProductsService } from '../services/s-products.service';
+import { DialogConfimComponent } from 'src/app/shared/components/dialog-confim/dialog-confim.component';
 
 @Component({
   selector: 'art-products-home',
@@ -113,5 +114,36 @@ export class ProductsHomeComponent implements OnInit {
         this.getProducts();
       }
     });
+  }
+  onDelete(item: any){
+    this.nbDialogService
+      .open(DialogConfimComponent, {
+        dialogClass: 'dialog-limited-height',
+        context: {
+          tittle: 'ELIMINAR',
+          text: '¿ Estás seguro ? ',
+          icon: 'trash-outline',
+          colorIcon: 'danger',
+          showCloseButton: true,
+          showCancelButton: true,
+          showConfirmButton: true,
+          confirmButtonColor: 'primary',
+          confirmButtonText: 'Si',
+          cancelButtonText: 'No',
+        },
+        closeOnBackdropClick: false,
+        closeOnEsc: false,
+      })
+      .onClose.subscribe((result: any) => {
+        if (result.isConfirmed) {
+          this.loading = true;
+          this.sProductsServ.deleteProduct$(item._id).subscribe((res:any) => {
+            if (res.success) {
+              this.formHeaders.controls['page'].setValue(1);
+              this.getProducts();
+            }
+          }, () => this.loading = false, () => this.loading = false);
+        }
+      });
   }
 }

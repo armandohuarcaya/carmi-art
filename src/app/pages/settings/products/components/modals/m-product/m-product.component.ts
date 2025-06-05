@@ -14,7 +14,6 @@ import {AttachedFile} from "../../interfaces/attached-file";
 })
 export class MProductComponent implements OnInit {
   loading:boolean = false;
-  isClose:any = 'close';
   @Input() item:any = '';
   @Input() type:any = 'NEW'
   formHeaders: any = FormGroup;
@@ -32,7 +31,6 @@ export class MProductComponent implements OnInit {
   constructor(public activeModal: NbDialogRef<MProductComponent>, private sProductsServ: SProductsService, private formBuilder: FormBuilder,  private dialogService: NbDialogService) { }
   ngOnInit(): void {
     this.fieldReactive();
-    this.getTypeProduct();
     this.getUnitMeasury();
     this.getCategory();
     this.getBrand();
@@ -59,14 +57,7 @@ export class MProductComponent implements OnInit {
     this.formHeaders = this.formBuilder.group(controls);
   }
   closeModal() {
-    this.activeModal.close(this.isClose);
-  }
-  getTypeProduct() {
-    // const forms = this.formHeaders.value;
-    const params = {};
-    this.sProductsServ.productType$(params).subscribe((res:any) => {
-      this.typeProducts = res.data || [];
-    });
+    this.activeModal.close('close');
   }
   getUnitMeasury() {
     // const forms = this.formHeaders.value;
@@ -80,6 +71,20 @@ export class MProductComponent implements OnInit {
     const params = {};
     this.sProductsServ.category$(params).subscribe((res:any) => {
       this.category = res.data || [];
+    });
+  }
+  changeCategory() {
+    this.typeProducts = [];
+    this.formHeaders.controls['subcategory_id'].setValue('');
+    this.getTypeProduct();
+  }
+  getTypeProduct() {
+    // const forms = this.formHeaders.value;
+    const params = {
+      category_id: this.formHeaders.value.category_id
+    };
+    this.sProductsServ.subCategory$(params).subscribe((res:any) => {
+      this.typeProducts = res.data || [];
     });
   }
   getBrand() {
@@ -181,19 +186,19 @@ export class MProductComponent implements OnInit {
           //   console.log(`${key}:`, value);
           // });
           if (this.type === 'NEW') {
+            this.loading = true;
             this.sProductsServ.addProducts$(params).subscribe((x: any) => {
               if (x.success) {
-                this.isClose = 'ok';
-                this.closeModal();
+                this.activeModal.close('close');
               }
-            });
+            }, () => this.loading = false, () => this.loading = false);
           } else {
+            this.loading = true;
             this.sProductsServ.putProducts$(this.item._id, params).subscribe((x: any) => {
               if (x.success) {
-                this.isClose = 'ok';
-                this.closeModal();
+                this.activeModal.close('close');
               }
-            });
+            }, () => this.loading = false, () => this.loading = false);
           }
         }
       });
@@ -230,8 +235,7 @@ export class MProductComponent implements OnInit {
           });
           this.sProductsServ.putProductsImages$(formData, values._id).subscribe((x: any) => {
             if (x.success) {
-              this.isClose = 'ok';
-              this.closeModal();
+              this.activeModal.close('close');
             }
           });
         }
@@ -254,6 +258,9 @@ export class MProductComponent implements OnInit {
           price_pen: res.data.price_pen,
           price_pen_ref: res.data.price_pen_ref,
         });
+        if (res.data.category_id) {
+          this.getTypeProduct();
+        }
       }
     });
 

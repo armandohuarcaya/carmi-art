@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment';
 export class SProductsService {
   api = {
     product: `${environment.apiUrls.art}/api/product`,
-    type: `${environment.apiUrls.art}/api/sub-category`,
+    subCategory: `${environment.apiUrls.art}/api/subcategory`,
     unitMeasure: `${environment.apiUrls.art}/api/unit-measure`,
     category: `${environment.apiUrls.art}/api/category`,
     brand: `${environment.apiUrls.art}/api/brand`,
@@ -28,11 +28,14 @@ export class SProductsService {
   putProducts$(id: any, params: any) {
     return this.httpClient.put(`${this.api.product}/${id}`, params);
   }
+  deleteProduct$(id: any) {
+    return this.httpClient.delete(`${this.api.product}/${id}`);
+  }
   putProductsImages$(params: any, id:any) {
     return this.httpClient.post(`${this.api.product}/images/${id}`, params);
   }
-  productType$(params: any) {
-    return this.httpClient.get(`${this.api.type}`, {});
+  subCategory$(params: any) {
+    return this.httpClient.get(`${this.api.subCategory}`, {params});
   }
   unitMeasery$(params: any) {
     return this.httpClient.get(`${this.api.unitMeasure}`, {});

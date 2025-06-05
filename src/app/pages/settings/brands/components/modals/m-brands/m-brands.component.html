@@ -1,1 +1,30 @@
-<p>m-brands works!</p>
+<nb-card  class="scrollModal" style="width: 300px;" [nbSpinner]="loading" status="primary">
+  <nb-card-header>
+      <div class="d-flex align-items-center justify-content-between">
+          <div>
+              <nb-icon icon="shopping-cart-outline" status="success"></nb-icon>MARCAS
+          </div>
+          <button nbButton outline  status="basic" size="tiny" (click)="closeModal()" >
+              <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+  </nb-card-header>
+  <nb-card-body>
+    <form [formGroup]="formHeaders">
+      <div>
+        <label class="label">Nombre</label><br>
+        <input type="text" nbInput fullWidth placeholder="Ingresa nombre" formControlName="name">
+      </div>
+    </form>
+  </nb-card-body>
+  <nb-card-footer>
+    <div class="text-center">
+      <button nbButton size="small" status="basic" shape="semi-round" (click)="closeModal()">
+        Cancelar
+      </button>&nbsp;
+      <button nbButton size="small" status="primary" shape="semi-round" [disabled]="formHeaders.invalid" (click)="saveBrands()">
+        Guardar
+      </button>
+    </div>
+  </nb-card-footer>
+</nb-card>

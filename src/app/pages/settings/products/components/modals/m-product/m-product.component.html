@@ -16,7 +16,7 @@
           <div class="row">
             <div class="col-md-6">
               <label class="label">Categoría:</label>
-              <nb-select size="small" fullWidth formControlName="category_id" placeholder="Categoría">
+              <nb-select size="small" fullWidth formControlName="category_id" placeholder="Categoría" (selectedChange)="changeCategory()">
                 <nb-option *ngFor="let item of category" [value]="item._id">{{item.name}}</nb-option>
               </nb-select>
             </div>
@@ -51,7 +51,7 @@
           <div class="row pt-2">
             <div class="col-md-6">
               <label class="label">Código:</label>
-              <input nbInput fieldSize="small" fullWidth type="text" formControlName="code" placeholder="Código producto" style="text-transform: uppercase;">
+              <input nbInput fieldSize="small" fullWidth type="text" formControlName="code" placeholder="Código producto" style="text-transform: uppercase;" [readOnly]="true">
             </div>
             <div class="col-md-6">
               <label class="label">Código importación:</label>

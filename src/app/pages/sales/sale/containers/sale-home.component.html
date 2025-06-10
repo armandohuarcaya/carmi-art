@@ -18,20 +18,22 @@
                       <label class="label">Buscar producto: </label><br>
                       <div class="row">
                           <div class="col-md-9">
-                              <input autofocus [formControl]="formHeaders.controls['name_producto']" nbInput fullWidth fieldSize="medium" type="text" (keydown.enter)="enterProducts()"
+                              <input autofocus [formControl]="formHeaders.controls['name_producto']" nbInput fullWidth fieldSize="large" type="text" (keydown.enter)="enterProducts()"
                               class="user_avatar" placeholder="Buscar producto"
                               [nbAutocomplete]="complete" (input)="inputKeyAutocomplete($event)" />
                           </div>
                           <div class="col-md-3">
-                              <button nbButton size="medium" status="warning" fullWidth (click)="filters()" [disabled]="!formHeaders.value.name_producto">
+                              <button nbButton size="large" status="warning" fullWidth (click)="filters()" [disabled]="!formHeaders.value.name_producto">
                                   <nb-icon  icon="search-outline" pack="eva"></nb-icon> Buscar
                               </button>
                           </div>
                       </div>
-                      <nb-autocomplete #complete size="medium">
+                      <nb-autocomplete #complete size="large">
                           <nb-option *ngFor="let option of products$" [value]="option.name"
-                              (click)="changeAutocomplete(option)" [ngStyle]="colorAutocompleteSelect(option)" class="hovered" [disabled]="!option?.enabled">
+                              (click)="changeAutocomplete(option)" [ngStyle]="colorAutocompleteSelect(option)" class="hovered" [disabled]="!option?.in_stock">
                               {{option?.code_original}}  ({{option?.code}}): {{option?.name}} - {{option?.size}} ({{option?.measure}})
+                              -&nbsp; <code *ngIf="!option?.in_stock">Sin stock</code>
+                                <strong *ngIf="option?.in_stock">Stock: &nbsp;{{option?.in_stock}}</strong>
                               <!-- {{option.code || option.code_original}} : {{ option.name }} <br> ( {{option.type_name}} ) - {{option.size}} -->
                           </nb-option>
                       </nb-autocomplete>
@@ -76,7 +78,7 @@
                                                       <button nbPrefix nbButton size="small" status="danger" (click)="changeCantidad('MINUS', item)" [disabled]="item.quantity<1">
                                                           <nb-icon  icon="minus-outline" pack="eva"></nb-icon></button>
                                                       <input type="text"  class="text-center" nbInput fullWidth fieldSize="small" [(ngModel)]="item.quantity" (input)="changeBlur()">
-                                                      <button nbSuffix nbButton size="small" status="success" (click)="changeCantidad('PLUS', item)">
+                                                      <button nbSuffix nbButton size="small" status="success" (click)="changeCantidad('PLUS', item)" [disabled]="item.quantity===item?.in_stock">
                                                           <nb-icon nbPrefix icon="plus-outline" pack="eva"></nb-icon></button>
                                                     </nb-form-field>
                                               </td>
@@ -135,14 +137,14 @@
                                           </div>
                                       </div>
                                       <div class="row">
-                                          <div class="col-md-6">
+                                          <div class="col-md-12">
                                               <label class="label">Fecha:</label><br>
                                               <div>
                                                   <nb-datepicker #fecha format="dd/MM/yyyy"></nb-datepicker>
                                                   <input type="text" nbInput fieldSize="small" fullWidth formControlName="date" placeholder="Nombre cliente" [nbDatepicker]="fecha">
                                               </div>
                                           </div>
-                                          <div class="col-md-6">
+                                          <div class="col-md-12">
                                               <label class="label">Cliente:</label><br>
                                               <div >
                                                   <input type="text" nbInput fieldSize="small" fullWidth formControlName="client_name" placeholder="Nombre cliente">
@@ -150,13 +152,13 @@
                                           </div>
                                       </div>
                                       <div class="row">
-                                          <div class="col-md-6">
+                                          <div class="col-md-12">
                                               <label class="label">Procedéncia:</label><br>
                                               <div>
                                                   <input type="text" nbInput fieldSize="small" fullWidth formControlName="client_place" placeholder="Lugar">
                                               </div>
                                           </div>
-                                          <div class="col-md-6">
+                                          <div class="col-md-12">
                                               <label class="label">Tipo de pago:</label><br>
                                               <div>
                                                   <nb-select placeholder="Tipo" size="small" fullWidth formControlName="pay_method">

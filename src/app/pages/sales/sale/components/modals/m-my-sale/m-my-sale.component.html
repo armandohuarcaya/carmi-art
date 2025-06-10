@@ -1,4 +1,4 @@
-<nb-card  class="scrollModal" style="width: 700px;" [nbSpinner]="loading">
+<nb-card  class="scrollModal" style="width: 900px;" [nbSpinner]="loading">
   <nb-card-header style="position: relative;">
       <div class="d-flex align-items-center justify-content-between">
           <div>
@@ -12,28 +12,38 @@
       <nb-badge [text]="getStatus(sale?.status)?.name" [status]="getStatus(sale?.status)?.color" position="bottom end"></nb-badge>
   </nb-card-header>
   <nb-card-body>
-    <div>
-      <label class="label">Cliente:&nbsp;&nbsp;</label> <strong>{{sale?.client_name}}</strong>
+    <div class="row">
+      <div class="col-md-6">
+      <label class="label">Cliente:&nbsp;&nbsp;</label>
+      <input type="text" nbInput fullWidth fieldSize="small" [(ngModel)]="sale.client_name" [readOnly]="sale?.status !== 'pending'">
+      <!-- <strong>{{sale?.client_name}}</strong> -->
+      </div>
+      <div class="col-md-6">
+        <label class="label">Procedencia:&nbsp;&nbsp;</label>
+        <input type="text" nbInput fullWidth fieldSize="small" [(ngModel)]="sale.client_place" [readOnly]="sale?.status !== 'pending'">
+        <!-- <strong>{{sale?.client_place}}</strong> -->
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <label class="label">Tipo de pago:&nbsp;&nbsp;</label> <br>
+        <nb-select placeholder="Tipo" size="small" fullWidth [(ngModel)]="sale.pay_method">
+          <nb-option *ngFor="let item of typePay" [value]="item.code" [disabled]="sale?.status !== 'pending'">{{item.name}}</nb-option>
+      </nb-select>
+        <!-- <strong>{{getTypePays(sale?.pay_method)}}</strong> -->
+      </div>
+
     </div>
     <hr>
     <div class="row">
-      <div class="col-md-6">
-        <label class="label">Procedencia:&nbsp;&nbsp;</label> <strong>{{sale?.client_place}}</strong>
-      </div>
       <div class="col-md-6">
         <label class="label">Fecha:&nbsp;&nbsp;</label> <strong>{{sale?.created_at | date: 'dd/MM/yyyy HH:mm:ss'}}</strong>
-      </div>
-    </div>
-    <hr>
-    <div class="row">
-      <div class="col-md-6">
-        <label class="label">Tipo de pago:&nbsp;&nbsp;</label> <strong>{{getTypePays(sale?.pay_method)}}</strong>
       </div>
       <div class="col-md-6">
         <label class="label">Total:&nbsp;&nbsp;</label> <strong>{{sale?.price_total | currency: ' '}}</strong>
       </div>
     </div>
-    <br>
+    <hr>
     <nb-card status="info">
       <nb-card-header class="d-flex align-items-center justify-content-between">
         <strong>
@@ -87,7 +97,7 @@
     <span *ngIf="sale?.status === 'pending'">
       &nbsp;<button nbButton size="small" status="danger" (click)="finishSale('canceled')">Anular<nb-icon icon="close-circle-outline"></nb-icon></button>&nbsp;
       <button nbButton size="small" status="primary" (click)="editSale()">Editar<nb-icon icon="edit"></nb-icon></button>&nbsp;
-      <button nbButton size="small" status="primary" (click)="finishSale('processed')">Registrar<nb-icon icon="save"></nb-icon></button>
+      <button nbButton size="small" status="primary" (click)="finishSale('processed')" [disabled]="sale.pay_method === 'none'">Finalizar venta<nb-icon icon="save"></nb-icon></button>
     </span>
 
   </nb-card-footer>

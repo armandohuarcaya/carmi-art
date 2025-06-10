@@ -155,8 +155,8 @@ export class MProductComponent implements OnInit {
             name: values.name,
             size: values.size,
             measure: values.measure,
-            price_pen_ref: Number(values.price_pen_ref) || '',
-            price_pen: Number(values.price_pen) || '',
+            price_pen_ref: Number(values.price_pen_ref) || 0,
+            price_pen: Number(values.price_pen) || 0,
             // files: values.files,
           };
           // this.openFiles.forEach(element => {
@@ -189,14 +189,14 @@ export class MProductComponent implements OnInit {
             this.loading = true;
             this.sProductsServ.addProducts$(params).subscribe((x: any) => {
               if (x.success) {
-                this.activeModal.close('close');
+                this.activeModal.close('ok');
               }
             }, () => this.loading = false, () => this.loading = false);
           } else {
             this.loading = true;
             this.sProductsServ.putProducts$(this.item._id, params).subscribe((x: any) => {
               if (x.success) {
-                this.activeModal.close('close');
+                this.activeModal.close('ok');
               }
             }, () => this.loading = false, () => this.loading = false);
           }

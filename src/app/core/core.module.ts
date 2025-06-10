@@ -77,7 +77,7 @@ const mediaBreakpoints: NbMediaBreakpoint[] = [
     NbSelectModule,
     NbButtonModule,
     NbTagModule
-        
+
     ],
     exports: [RouterModule],
     providers: [
@@ -86,6 +86,7 @@ const mediaBreakpoints: NbMediaBreakpoint[] = [
         // AppDataService,
         CatchErrorInterceptor,
         {provide: LOCALE_ID, useValue: 'es-Pe'},
+
         // {provide: HTTP_INTERCEPTORS, useClass: NbAuthSimpleInterceptor, multi: true},
         // {provide: HTTP_INTERCEPTORS, useClass: CatchErrorInterceptor, multi: true, deps: [NbToastrService]},
         {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},

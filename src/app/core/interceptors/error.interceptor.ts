@@ -36,7 +36,7 @@ export class ErrorInterceptor implements HttpInterceptor {
     );
   }
   private interceptResponse(event: HttpEvent<any>, method: any): any {
-      const $event:any =  event;
+    const $event:any =  event;
       if (event && $event['status']) {
         var data: any = status[$event['status']];
           let msg = data.description;
@@ -50,7 +50,8 @@ export class ErrorInterceptor implements HttpInterceptor {
   }
   private throwErrorToast(err: any): void {
     if (showStatusCodes.includes(err.status)) {
-      this.toast(`${err.message}`, err.name);
+      // this.toast(`${err.message}`, err.name);
+      this.toast(`Error en el servicio`, 'Error');
     }
   }
 

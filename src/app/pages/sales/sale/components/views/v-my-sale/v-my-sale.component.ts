@@ -89,8 +89,8 @@ export class VMySaleComponent implements OnInit {
       data: values.data
     }
   }
-  getTypePays(id:any) {
-    const type = this.typePay.find((r:any) => Number(r.id) === Number(id));
+  getTypePays(code:any) {
+    const type = this.typePay.find((r:any) => r.code === code);
     if (type) {
       return type.name;
     } else {

@@ -16,15 +16,51 @@
         </div>
     </form>
     </div>
+    <hr>
+    <div class="row">
+      <div class="col-md-6"></div>
+      <div class="col-md-2">
+        <nb-card class="text-center" status="success">
+          <nb-card-header>
+            Venta total
+          </nb-card-header>
+          <nb-card-body>
+            {{sumTotal?.total_sale | currency: ' '}}
+          </nb-card-body>
+        </nb-card>
+      </div>
+      <div class="col-md-2">
+        <nb-card class="text-center" status="warning">
+          <nb-card-header>
+            Ganancia total
+          </nb-card-header>
+          <nb-card-body>
+            {{sumTotal?.total_revenue | currency: ' '}}
+          </nb-card-body>
+        </nb-card>
+      </div>
+      <div class="col-md-2">
+        <nb-card class="text-center" status="primary">
+          <nb-card-header>
+            Diezmo total
+          </nb-card-header>
+          <nb-card-body>
+            {{sumTotal?.total_tithe | currency: ' '}}
+          </nb-card-body>
+        </nb-card>
+      </div>
+    </div>
     <div class="teble-responsive">
-      <table class="table table-striped">
+      <table class="table table-striped table-bordered">
           <thead>
               <tr>
                   <th>#</th>
                   <th>Cliente</th>
                   <th>Procedencia</th>
                   <th>Fecha</th>
-                  <th class="text-center">Total</th>
+                  <th style="text-align: right;">Venta total</th>
+                  <th style="text-align: right;">Ganancia</th>
+                  <th style="text-align: right;">Diezmo</th>
               </tr>
           </thead>
           <tbody>
@@ -33,15 +69,11 @@
                   <td>{{item.sale_client_name}}</td>
                   <td>{{item.sale_client_place}}</td>
                   <td>{{item.sale_date}}</td>
-                  <td class="text-center" style="font-weight: bold;">{{item.sale_price_total | currency: ' '}}</td>
+                  <td style="font-weight: bold; text-align: right;">{{item.sum_price_total | currency: ' '}}</td>
+                  <td style="font-weight: bold; text-align: right;">{{item.sum_revenue | currency: ' '}}</td>
+                  <td style="font-weight: bold; text-align: right;">{{item.sum_tithe | currency: ' '}}</td>
               </tr>
           </tbody>
-          <tfoot>
-            <tr>
-              <th colspan="4" style="text-align: right;">Total</th>
-              <th class="text-center" style="font-weight: bold;">{{sumTotal?.total_price | currency: ' '}}</th>
-            </tr>
-          </tfoot>
       </table>
   </div>
   <div class="row g-1 row-cols-1 row-cols-lg-3 align-items-center" *ngIf="sales?.length>0">

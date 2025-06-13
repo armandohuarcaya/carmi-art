@@ -168,9 +168,9 @@ export class SaleHomeComponent implements OnInit {
         this.carrito.map((f:any) => {
           const datos = {
             product_id: f._id,
-            amount: f.quantity,
-            price: f.price_pen,
-            price_total: f.subTotal,
+            amount: Number(f.quantity) || 0,
+            price: Number(f.price_pen) || 0,
+            price_total: Number(f.subTotal) || 0,
           };
           array.push(datos);
         });
@@ -180,7 +180,7 @@ export class SaleHomeComponent implements OnInit {
           client_place: forms.client_place,
           date: this.datepipe.transform(forms.date, 'yyyy-MM-dd'),
           pay_method: forms.pay_method,
-          price_total: forms.price_total,
+          price_total: Number(forms.price_total) || 0,
           status: option,
           details: array
         }

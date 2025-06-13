@@ -1,4 +1,4 @@
-<nb-card  class="scrollModal" style="width: 900px;" [nbSpinner]="loading">
+<nb-card  class="scrollModal" style="width: 900px;" [nbSpinner]="loading" status="primary">
     <nb-card-header>
         <div class="d-flex align-items-center justify-content-between">
             <div>
@@ -20,7 +20,7 @@
                         <nb-checkbox status="primary">Todos</nb-checkbox>
                     </div>
                 </div>
-                
+
                 <hr>
                 <nb-card *ngFor="let item of carrito"  style="margin-bottom: 5px;">
                     <nb-card-body>

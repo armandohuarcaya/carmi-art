@@ -77,7 +77,7 @@
                                                   <nb-form-field>
                                                       <button nbPrefix nbButton size="small" status="danger" (click)="changeCantidad('MINUS', item)" [disabled]="item.quantity<1">
                                                           <nb-icon  icon="minus-outline" pack="eva"></nb-icon></button>
-                                                      <input type="text"  class="text-center" nbInput fullWidth fieldSize="small" [(ngModel)]="item.quantity" (input)="changeBlur()">
+                                                      <input type="number"  class="text-center" nbInput fullWidth fieldSize="small" [(ngModel)]="item.quantity" (input)="changeBlur()">
                                                       <button nbSuffix nbButton size="small" status="success" (click)="changeCantidad('PLUS', item)" [disabled]="item.quantity===item?.in_stock">
                                                           <nb-icon nbPrefix icon="plus-outline" pack="eva"></nb-icon></button>
                                                     </nb-form-field>

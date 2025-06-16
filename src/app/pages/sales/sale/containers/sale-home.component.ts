@@ -97,7 +97,7 @@ export class SaleHomeComponent implements OnInit {
       if (this.products$.length>0) {
         this.products$.map((r:any) => {
           r.quantity = 1;
-          r.subTotal = r.quantity * Number(r.price_pen);
+          r.subTotal = Number(r.quantity) * Number(r.price_pen);
         });
         const input:any = document.getElementsByClassName('user_avatar');
         input[0].click();
@@ -128,7 +128,7 @@ export class SaleHomeComponent implements OnInit {
     // let cantidad:any = 0;
     let precio = 0;
     this.carrito.map((a:any) => {
-      a.subTotal = a.quantity * Number(a.price_pen);
+      a.subTotal = Number(a.quantity) * Number(a.price_pen);
       // cantidad = cantidad + a.quantity;
       precio = precio + a.subTotal;
     });
@@ -222,9 +222,9 @@ export class SaleHomeComponent implements OnInit {
         this.carrito.map((f:any) => {
           const datos = {
             product_id: f.sale_id ? f.product_id : f._id,
-            amount: f.quantity,
-            price: f.price_pen,
-            price_total: f.subTotal,
+            amount: Number(f.quantity) || 0,
+            price: Number(f.price_pen) || 0,
+            price_total: Number(f.subTotal) || 0,
             _id: f.sale_id ? f._id : ''
           };
           array.push(datos);
@@ -347,9 +347,9 @@ export class SaleHomeComponent implements OnInit {
     $event.details.map((f:any) => {
       const datos = {
         product_id: f.product_id,
-        quantity: f.amount,
-        price_pen: f.price,
-        subTotal: f.price_total,
+        quantity: Number(f.amount) || 0,
+        price_pen: Number(f.price) || 0,
+        subTotal: Number(f.price_total) || 0,
         sale_id: f.sale_id,
         _id: f._id,
         code: f.product?.code,

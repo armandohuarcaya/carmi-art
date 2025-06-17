@@ -77,7 +77,7 @@ export class VStockProductComponent implements OnInit {
       if (this.products$.length>0) {
         this.products$.map((r:any) => {
           r.quantity = 1;
-          r.subTotal = r.quantity * Number(r.cost_pen);
+          r.subTotal = Number(r.quantity) * Number(r.cost_pen);
         });
         const input:any = document.getElementsByClassName('user_avatar2');
         input[0].click();
@@ -103,8 +103,8 @@ export class VStockProductComponent implements OnInit {
     this.carrito.map((r:any) => {
       const item = {
         product_id: r._id,
-        amount: Number(r.quantity),
-        unit_cost: Number(r.cost_pen),
+        amount: Number(r.quantity) || 0,
+        unit_cost: Number(r.cost_pen) || 0,
         modified_cost: true,
       };
       data.push(item);

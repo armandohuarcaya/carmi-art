@@ -6,8 +6,18 @@
     <div>
       <form [formGroup]="formHeaders">
         <div class="row">
-            <div class="col-md-7"></div>
-            <div class="col-md-5">
+            <div class="col-md-3">
+              <label class="label">Fecha inicio</label><br>
+              <input nbInput placeholder="Fecha inicio" fieldSize="small" fullWidth [nbDatepicker]="dateStart" formControlName="date_begin">
+              <nb-datepicker #dateStart format="dd/MM/yyyy"></nb-datepicker>
+            </div>
+            <div class="col-md-3">
+              <label class="label">Fecha fin</label><br>
+              <input nbInput placeholder="Fecha fin" fieldSize="small" fullWidth [nbDatepicker]="dateEnd" formControlName="date_end">
+              <nb-datepicker #dateEnd format="dd/MM/yyyy"></nb-datepicker>
+            </div>
+            <div class="col-md-6">
+              <label class="label">Buscar</label><br>
               <nb-form-field>
                 <input type="text" nbInput fieldSize="small" fullWidth formControlName="search" placeholder="Buscar">
                 <button nbSuffix nbButton fullWidth size="small" status="warning" (click)="filters()"><nb-icon icon="search"></nb-icon></button>
@@ -25,7 +35,7 @@
             Venta total
           </nb-card-header>
           <nb-card-body>
-            {{sumTotal?.total_sale | currency: ' '}}
+            <strong style="font-size: 25px;">{{sumTotal?.total_sale | currency: ' '}}</strong>
           </nb-card-body>
         </nb-card>
       </div>
@@ -35,7 +45,7 @@
             Ganancia total
           </nb-card-header>
           <nb-card-body>
-            {{sumTotal?.total_revenue | currency: ' '}}
+            <strong style="font-size: 25px;">{{sumTotal?.total_revenue | currency: ' '}}</strong>
           </nb-card-body>
         </nb-card>
       </div>
@@ -45,27 +55,27 @@
             Diezmo total
           </nb-card-header>
           <nb-card-body>
-            {{sumTotal?.total_tithe | currency: ' '}}
+            <strong style="font-size: 25px;">{{sumTotal?.total_tithe | currency: ' '}}</strong>
           </nb-card-body>
         </nb-card>
       </div>
     </div>
-    <div class="teble-responsive">
-      <table class="table table-striped table-bordered">
+    <div class="nb-scrollbars">
+      <table class="lb-table lb-table-border-inside lb-table-striped">
           <thead>
               <tr>
-                  <th>#</th>
-                  <th>Cliente</th>
-                  <th>Procedencia</th>
-                  <th>Fecha</th>
-                  <th style="text-align: right;">Venta total</th>
-                  <th style="text-align: right;">Ganancia</th>
-                  <th style="text-align: right;">Diezmo</th>
+                  <th scope="col" data-label="#">#</th>
+                  <th scope="col" data-label="Cliente">Cliente</th>
+                  <th scope="col" data-label="Procedencia">Procedencia</th>
+                  <th scope="col" data-label="Fecha">Fecha</th>
+                  <th scope="col" data-label="Venta total" style="text-align: right;">Venta total</th>
+                  <th scope="col" data-label="Ganancia" style="text-align: right;">Ganancia</th>
+                  <th scope="col" data-label="Diezmo" style="text-align: right;">Diezmo</th>
               </tr>
           </thead>
           <tbody>
               <tr *ngFor="let item of sales; let i = index">
-                  <td>{{i+1}}</td>
+                  <td data-label="#">{{i+1}}</td>
                   <td>{{item.sale_client_name}}</td>
                   <td>{{item.sale_client_place}}</td>
                   <td>{{item.sale_date}}</td>
@@ -76,6 +86,7 @@
           </tbody>
       </table>
   </div>
+  <hr>
   <div class="row g-1 row-cols-1 row-cols-lg-3 align-items-center" *ngIf="sales?.length>0">
     <div class="col">
         <app-pagination-per [total]="paginate.total" [perPageDefault]="paginate.perPage"

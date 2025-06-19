@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SRSalesService } from '../services/s-r-sales.service';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NbDialogService } from '@nebular/theme';
 import { DatePipe } from '@angular/common';
 
@@ -15,6 +15,8 @@ export class RSalesHomeComponent implements OnInit {
   paginate:any = '';
   loading:boolean = false;
   sumTotal:any = '';
+  fechaAct:any = new Date();
+  fechaInicioMes = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
   constructor(private sRSalesServ: SRSalesService, private formBuilder: FormBuilder,
     private nbDialogService: NbDialogService, private datepipe: DatePipe) {
 
@@ -25,6 +27,8 @@ export class RSalesHomeComponent implements OnInit {
   }
   private fieldReactive() {
     const controls = {
+      date_begin: [this.fechaInicioMes, [Validators.required]],
+      date_end: [this.fechaAct, [Validators.required]],
       search: [''],
       page: [1],
       per_page: [10]
@@ -52,6 +56,8 @@ export class RSalesHomeComponent implements OnInit {
     const params = {
       // page: 1,
       // size: 100,
+      date_begin: this.datepipe.transform(forms.date_begin, 'yyyy-MM-dd'),
+      date_end: this.datepipe.transform(forms.date_end, 'yyyy-MM-dd'),
       size: forms.per_page,
       page: forms.page,
       name_code_filter: forms.search

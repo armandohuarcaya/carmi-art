@@ -14,6 +14,7 @@ export const environment = {
         art: API.art.dev,
     },
     shellApp: `${window.location.origin}`,
-    auth: 'http://132.145.166.156:3030/api/auth'
+    // auth: 'https://ms-auth-6tie.onrender.com/api/auth'
     // auth: 'http://132.145.166.156:3030/api/auth'
+    auth: 'http://localhost:3030/api/auth'
 };

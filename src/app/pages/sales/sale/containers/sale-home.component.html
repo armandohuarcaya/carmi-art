@@ -171,23 +171,23 @@
                               </nb-card-body>
                               <nb-card-footer>
                                   <div class="text-center" *ngIf="!formHeaders.value._id_venta">
-                                      <div *ngIf="formHeaders.value.pay_method === 'none'">
+                                      <div *ngIf="formHeaders.value.pay_method === 'NONE'">
                                         <button  nbButton size="small" status="warning" fullWidth
-                                        [disabled]="carrito.length<=0 || formHeaders.invalid" (click)="saveSales('pending')">Guardar proforma</button>
+                                        [disabled]="carrito.length<=0 || formHeaders.invalid" (click)="saveSales('PENDING')">Guardar proforma</button>
                                       </div>
-                                      <div *ngIf="formHeaders.value.pay_method !== 'none'">
+                                      <div *ngIf="formHeaders.value.pay_method !== 'NONE'">
                                         <button nbButton size="small" status="success" fullWidth
-                                        [disabled]="carrito.length<=0 || formHeaders.invalid" (click)="saveSales('processed')">Registrar venta</button>
+                                        [disabled]="carrito.length<=0 || formHeaders.invalid" (click)="saveSales('PROCESSED')">Registrar venta</button>
                                       </div>
                                   </div>
                                   <div class="text-center" *ngIf="formHeaders.value._id_venta">
-                                    <div *ngIf="formHeaders.value.pay_method === 'none'">
+                                    <div *ngIf="formHeaders.value.pay_method === 'NONE'">
                                       <button nbButton size="small" status="warning" fullWidth
-                                      [disabled]="carrito.length<=0 || formHeaders.invalid" (click)="updateSales('pending')">Guardar proforma</button>
+                                      [disabled]="carrito.length<=0 || formHeaders.invalid" (click)="updateSales('PENDING')">Guardar proforma</button>
                                     </div>
-                                    <div *ngIf="formHeaders.value.pay_method !== 'none'">
+                                    <div *ngIf="formHeaders.value.pay_method !== 'NONE'">
                                       <button nbButton size="small" status="success" fullWidth
-                                      [disabled]="carrito.length<=0 || formHeaders.invalid" (click)="updateSales('processed')">Registrar venta</button>
+                                      [disabled]="carrito.length<=0 || formHeaders.invalid" (click)="updateSales('PROCESSED')">Registrar venta</button>
                                     </div>
                                   </div>
                               </nb-card-footer>

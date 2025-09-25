@@ -34,7 +34,7 @@ export class SaleHomeComponent implements OnInit {
       client_name: ['Anónimo'],
       client_place: ['SP'],
       date: [new Date(), [Validators.required]],
-      pay_method: ['none'],
+      pay_method: ['NONE'],
       gasto_envio: [0, [Validators.required]],
       price_parcial: [0, [Validators.required]],
       price_total: [0, [Validators.required]],
@@ -141,15 +141,15 @@ export class SaleHomeComponent implements OnInit {
     this.inputPay();
   }
   saveSales(option:any) {
-    if (option === 'pending') {
-      this.formHeaders.controls['pay_method'].setValue('none');
+    if (option === 'PENDING') {
+      this.formHeaders.controls['pay_method'].setValue('NONE');
     }
     // if (this.datos_pedido.id_persona !== this.user.id_persona) {
       this.nbDialogService.open(DialogConfimComponent, {
         dialogClass: 'dialog-limited-height',
         context: {
           tittle: 'CONFIRMAR',
-          text: option === 'processed' ? '¿ Desea confirmar la venta ?' : 'Se guardará el registro como pendiente',
+          text: option === 'PROCESSED' ? '¿ Desea confirmar la venta ?' : 'Se guardará el registro como pendiente',
           icon: 'save-outline',
           colorIcon: 'success',
           showCloseButton: true,

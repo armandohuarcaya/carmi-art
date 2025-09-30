@@ -1,15 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NbDialogService } from '@nebular/theme';
-import { GeneralService } from 'src/app/providers';
-import { END_POINTS } from 'src/app/providers/utils';
 import { DatePipe } from '@angular/common';
 import { DialogConfimComponent } from 'src/app/shared/components/dialog-confim/dialog-confim.component';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { TYPE_PAY } from '../components/static/json';
 import { SSalesService } from '../services/s-sales.service';
-import { MClientComponent } from '../components/modals/m-client/m-client.component';
+import { MClientSaleComponent } from '../components/modals/m-client-sale/m-client-sale.component';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
@@ -178,8 +176,10 @@ export class SaleHomeComponent implements OnInit {
           };
           array.push(datos);
         });
-
+console.log('clients$',this.clients$);
+console.log('forms',forms);
         const params = {
+          customer_id: forms.customer_id,
           client_name: forms.client_name,
           client_place: forms.client_place,
           date: this.datepipe.transform(forms.date, 'yyyy-MM-dd'),
@@ -425,7 +425,7 @@ export class SaleHomeComponent implements OnInit {
   }
   openClient(item:any, type:any) {
     this.clearClient();
-    this.nbDialogService.open(MClientComponent, {
+    this.nbDialogService.open(MClientSaleComponent, {
       dialogClass: 'dialog-limited-height',
       context: {
         type: type,

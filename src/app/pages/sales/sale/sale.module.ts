@@ -11,7 +11,7 @@ import { DialogConfimModule } from 'src/app/shared/components/dialog-confim/dial
 import { PdfSalesModule } from 'src/app/shared/components/generate-pdf/pdf-sales/pdf-sales.module';
 import { VMySaleComponent } from './components/views/v-my-sale/v-my-sale.component';
 import { MMySaleComponent } from './components/modals/m-my-sale/m-my-sale.component';
-import { MClientComponent } from './components/modals/m-client/m-client.component';
+import { MClientSaleComponent } from './components/modals/m-client-sale/m-client-sale.component';
 
 
 const ANGULAR: any[] = [CommonModule, FormsModule, ReactiveFormsModule];
@@ -40,7 +40,7 @@ const NEBULAR: any[] = [
     VMySaleComponent,
     MMySaleComponent,
     SaleHomeComponent,
-    MClientComponent
+    MClientSaleComponent
   ],
   imports: [
     SaleRoutingModule,

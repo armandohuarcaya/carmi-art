@@ -1,0 +1,52 @@
+<nb-card  class="scrollModal" style="width: 500px;" [nbSpinner]="loading" status="primary">
+  <nb-card-header>
+      <div class="d-flex align-items-center justify-content-between">
+          <div>
+              <nb-icon icon="person-outline" status="success"></nb-icon>NUEVO CLIENTE
+          </div>
+          <button nbButton outline  status="basic" size="tiny" (click)="closeModal()" >
+              <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+  </nb-card-header>
+  <nb-card-body>
+    <form [formGroup]="formHeaders">
+      <div>
+        <label class="label">Nombres</label><br>
+        <input type="text" nbInput fullWidth placeholder="Ingresa nombre" formControlName="name">
+      </div>
+      <div>
+        <label class="label">Apellidos</label><br>
+        <input type="text" nbInput fullWidth placeholder="Ingresa apellido" formControlName="lastname">
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <label class="label">Documento</label><br>
+          <input type="number" nbInput fullWidth placeholder="Ingresa documento" formControlName="document">
+        </div>
+        <div class="col-md-6">
+          <label class="label">Celular</label><br>
+          <input type="number" nbInput fullWidth placeholder="Ingresa celular" formControlName="cellphone">
+        </div>
+      </div>
+      <div>
+        <label class="label">Correo</label><br>
+        <input type="email" nbInput fullWidth placeholder="Ingresa correo" formControlName="email">
+      </div>
+      <div>
+        <label class="label">Dirección</label><br>
+        <input type="text" nbInput fullWidth placeholder="Ingresa direccion" formControlName="address">
+      </div>
+    </form>
+  </nb-card-body>
+  <nb-card-footer>
+    <div class="text-center">
+      <button nbButton size="small" status="basic" shape="semi-round" (click)="closeModal()">
+        Cancelar
+      </button>&nbsp;
+      <button nbButton size="small" status="primary" shape="semi-round" [disabled]="formHeaders.invalid" (click)="saveCliente()">
+        Guardar
+      </button>
+    </div>
+  </nb-card-footer>
+</nb-card>

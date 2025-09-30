@@ -9,6 +9,7 @@ export class SSalesService {
   api = {
     sale: `${environment.apiUrls.art}/api/sale`,
     product: `${environment.apiUrls.art}/api/product`,
+    client: `${environment.apiUrls.art}/api/client`,
   };
 
   constructor(private httpClient: HttpClient) {}
@@ -32,5 +33,12 @@ export class SSalesService {
     return this.httpClient.post(`${this.api.sale}/generate-pdf/${id}`,{}, {
       responseType: 'blob'  // 👈 Importante
     });
+  }
+
+  addClient$(params: any) {
+    return this.httpClient.post(`${this.api.client}`, params);
+  }
+  listClient$(params: any) {
+    return this.httpClient.get(`${this.api.client}`, {params});
   }
 }

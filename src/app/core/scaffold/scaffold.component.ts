@@ -44,6 +44,12 @@ export class ScaffoldComponent implements OnInit {
           link: "/pages/settings/sub-category",
           pathMatch: "prefix",
         },
+        {
+          title: "Clientes",
+          icon: "people-outline",
+          link: "/pages/settings/client",
+          pathMatch: "prefix",
+        },
       ],
     },
     {

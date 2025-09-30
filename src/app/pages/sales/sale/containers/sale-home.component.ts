@@ -178,8 +178,10 @@ export class SaleHomeComponent implements OnInit {
           };
           array.push(datos);
         });
-
+console.log('clients$',this.clients$);
+console.log('forms',forms);
         const params = {
+          customer_id: forms.customer_id,
           client_name: forms.client_name,
           client_place: forms.client_place,
           date: this.datepipe.transform(forms.date, 'yyyy-MM-dd'),

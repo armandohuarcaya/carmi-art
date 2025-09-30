@@ -29,7 +29,14 @@ const routes: Routes = [
       import('./sub-categorys/sub-categorys.module').then(
         (m) => m.SubCategorysModule
       ),
-  }
+  },
+  {
+    path: 'client',
+    loadChildren: () =>
+      import('./clients/clients.module').then(
+        (m) => m.ClientsModule
+      ),
+  },
 ];
 
 @NgModule({

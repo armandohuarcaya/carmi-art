@@ -4,16 +4,16 @@ import { NbDialogRef, NbDialogService } from '@nebular/theme';
 import { SSalesService } from '../../../services/s-sales.service';
 
 @Component({
-  selector: 'art-m-client',
-  templateUrl: './m-client.component.html',
-  styleUrls: ['./m-client.component.scss']
+  selector: 'art-m-client-sale',
+  templateUrl: './m-client-sale.component.html',
+  styleUrls: ['./m-client-sale.component.scss']
 })
-export class MClientComponent implements OnInit {
+export class MClientSaleComponent implements OnInit {
   loading:boolean = false;
   @Input() item:any = '';
   @Input() type:any = 'NEW'
   formHeaders: any = FormGroup;
-  constructor(public activeModal: NbDialogRef<MClientComponent>, private formBuilder: FormBuilder,
+  constructor(public activeModal: NbDialogRef<MClientSaleComponent>, private formBuilder: FormBuilder,
     private dialogService: NbDialogService, private sSalesServ: SSalesService) { }
   ngOnInit(): void {
     this.fieldReactive();

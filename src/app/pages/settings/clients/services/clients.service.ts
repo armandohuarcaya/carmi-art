@@ -22,7 +22,7 @@ export class ClientsService {
     return this.httpClient.post(`${this.api.clients}`, params);
   }
   putClients$(id: any, params: any) {
-    return this.httpClient.put(`${this.api.clients}/${id}`, params);
+    return this.httpClient.patch(`${this.api.clients}/${id}`, params);
   }
   deleteClients$(id: any) {
     return this.httpClient.delete(`${this.api.clients}/${id}`);

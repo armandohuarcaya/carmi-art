@@ -34,7 +34,7 @@ export class SaleHomeComponent implements OnInit {
   private fieldReactive() {
     const controls = {
       client_name: ['', [Validators.required]],
-      client_id: ['', [Validators.required]],
+      customer_id: ['', [Validators.required]],
       client_place: ['', [Validators.required]],
 
       date: [new Date(), [Validators.required]],
@@ -235,6 +235,7 @@ export class SaleHomeComponent implements OnInit {
         });
 
         const params = {
+          customer_id: forms.customer_id,
           client_name: forms.client_name,
           client_place: forms.client_place,
           date: this.datepipe.transform(forms.date, 'yyyy-MM-dd'),
@@ -338,6 +339,7 @@ export class SaleHomeComponent implements OnInit {
   saleEdit($event:any) {
     this.tabSelected = 'VENDER';
     this.formHeaders.patchValue({
+      customer_id: $event.customer_id,
       client_name: $event.client_name,
       client_place: $event.client_place,
       date: new Date(),
@@ -380,7 +382,7 @@ export class SaleHomeComponent implements OnInit {
   }
   changeAutocompleteClient($event:any) {
     if ($event && $event._id) {
-      this.formHeaders.controls['client_id'].setValue($event._id);
+      this.formHeaders.controls['customer_id'].setValue($event._id);
       this.formHeaders.controls['client_place'].setValue($event.address);
       this.clients$ = this.clients$.filter((a:any) => a._id === $event._id);
     } else {
@@ -388,7 +390,7 @@ export class SaleHomeComponent implements OnInit {
     }
   }
   colorAutocompleteSelectClient(option:any) {
-    if (this.formHeaders.value.client_id === option._id) {
+    if (this.formHeaders.value.customer_id === option._id) {
       return {'background': 'var(--color-primary-500)', 'color': 'white', 'font-size': '11px'};
     } else {
       return {'font-size': '11px'};
@@ -396,7 +398,7 @@ export class SaleHomeComponent implements OnInit {
   }
   clearClient() {
     this.formHeaders.controls['client_name'].setValue('');
-    this.formHeaders.controls['client_id'].setValue('');
+    this.formHeaders.controls['customer_id'].setValue('');
     this.formHeaders.controls['client_place'].setValue('');
     this.clients$ = [];
   }
@@ -434,7 +436,7 @@ export class SaleHomeComponent implements OnInit {
     })
     .onClose.subscribe((result:any) => {
       if (result && result.close === 'ok') {
-        this.formHeaders.controls['client_id'].setValue(result.value._id);
+        this.formHeaders.controls['customer_id'].setValue(result.value._id);
         this.formHeaders.controls['client_name'].setValue(result.value.name + ' ' + result.value.lastname);
         this.formHeaders.controls['client_place'].setValue(result.value.address);
       }

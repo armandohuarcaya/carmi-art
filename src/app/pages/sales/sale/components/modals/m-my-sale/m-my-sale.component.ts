@@ -167,6 +167,7 @@ export class MMySaleComponent implements OnInit {
       })
       .onClose.subscribe((result:any) => {
         const params = {
+          customer_id: this.sale.customer_id,
           client_name: this.sale.client_name,
           client_place: this.sale.client_place,
           date: this.datepipe.transform(new Date(), 'yyyy-MM-dd'),

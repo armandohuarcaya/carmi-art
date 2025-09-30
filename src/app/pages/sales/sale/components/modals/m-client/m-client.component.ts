@@ -20,12 +20,12 @@ export class MClientComponent implements OnInit {
   }
   private fieldReactive() {
     const controls = {
-      document: ['', [Validators.required]],
+      document: [''],
       name: ['', [Validators.required]],
       lastname: ['', [Validators.required]],
       address: ['', [Validators.required]],
-      email: ['', [Validators.required, Validators.email]],
-      cellphone: ['', [Validators.required]],
+      email: [''],
+      cellphone: [''],
     };
     this.formHeaders = this.formBuilder.group(controls);
   }

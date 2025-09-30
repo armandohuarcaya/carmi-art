@@ -1,20 +1,20 @@
 ::ng-deep nb-select.ng-invalid {
     // campo requerido
-    border-left: 1px solid #e74c3c !important;
+    border-left: 3px solid #e74c3c !important;
 }
 
 ::ng-deep input.ng-invalid {
-    border-left: 1px solid #e74c3c !important;
+    border-left: 3px solid #e74c3c !important;
 }
 
 ::ng-deep select.ng-invalid {
     // campo requerido
-    border-left: 1px solid #e74c3c !important;
+    border-left: 3px solid #e74c3c !important;
 }
 
 ::ng-deep textarea.ng-invalid {
     // campo requerido
-    border-left: 1px solid #e74c3c !important;
+    border-left: 3px solid #e74c3c !important;
 }
 
 ::ng-deep .scrollModal {
@@ -120,7 +120,7 @@
     input {
       padding-right: 6.9rem !important;
     }
-  
+
     .nb-form-field-suffix-medium, .nb-form-field-suffix-small {
       width: 6.9rem !important;
       margin-left: calc(6.9rem * -1) !important;
@@ -132,25 +132,25 @@
     animation-duration: 1s;
     animation-timing-function: linear;
     animation-iteration-count: infinite;
-  
+
     -webkit-animation-name:parpadeo;
     -webkit-animation-duration: 1s;
     -webkit-animation-timing-function: linear;
     -webkit-animation-iteration-count: infinite;
   }
-  
+
   @-moz-keyframes parpadeo{
     0% { opacity: 1.0; }
     50% { opacity: 0.0; }
     100% { opacity: 1.0; }
   }
-  
+
   @-webkit-keyframes parpadeo {
     0% { opacity: 1.0; }
     50% { opacity: 0.0; }
      100% { opacity: 1.0; }
   }
-  
+
   @keyframes parpadeo {
     0% { opacity: 1.0; }
      50% { opacity: 0.0; }

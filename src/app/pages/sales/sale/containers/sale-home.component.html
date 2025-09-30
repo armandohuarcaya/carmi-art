@@ -4,7 +4,7 @@
   </nb-card-header>
   <nb-card-body style="max-height: 90vh; padding-right: 0px !important;padding-left: 0px !important;">
       <nb-tabset (changeTab)="tabChange($event)">
-          <nb-tab tabTitle="Vender" [active]="tabSelected === 'VENDER'" [tabId]="'VENDER'" [tabIcon]="'car-outline'">
+          <nb-tab tabTitle="Vender" [active]="tabSelected === 'VENDER'" [tabId]="'VENDER'" [tabIcon]="'car-outline'" style="padding: 15px !important;">
               <div class="row">
                   <div class="col-md-8">
                     <nb-alert status="warning" *ngIf="formHeaders.value._id_venta">
@@ -15,6 +15,8 @@
                         </div>
                       </div>
                     </nb-alert>
+                    <div>
+
                       <label class="label">Buscar producto: </label><br>
                       <div class="row">
                           <div class="col-md-9">
@@ -37,6 +39,7 @@
                               <!-- {{option.code || option.code_original}} : {{ option.name }} <br> ( {{option.type_name}} ) - {{option.size}} -->
                           </nb-option>
                       </nb-autocomplete>
+                    </div>
                       <hr>
                       <nb-card status="info">
                           <nb-card-header class="d-flex align-items-center justify-content-between">
@@ -141,27 +144,49 @@
                                               <label class="label">Fecha:</label><br>
                                               <div>
                                                   <nb-datepicker #fecha format="dd/MM/yyyy"></nb-datepicker>
-                                                  <input type="text" nbInput fieldSize="small" fullWidth formControlName="date" placeholder="Nombre cliente" [nbDatepicker]="fecha">
+                                                  <input type="text" nbInput fieldSize="medium" fullWidth formControlName="date" placeholder="Nombre cliente" [nbDatepicker]="fecha">
                                               </div>
                                           </div>
+
                                           <div class="col-md-12">
-                                              <label class="label">Cliente:</label><br>
+                                            <label class="label">Cliente:</label><br>
+                                              <nb-form-field>
+                                                  <input autofocus [formControl]="formHeaders.controls['client_name']" nbInput fullWidth fieldSize="medium" type="text"
+                                                  class="person_addd" placeholder="Buscar cliente"
+                                                  [nbAutocomplete]="completeCli" (input)="inputKeyAutocompleteClient($event)" />
+
+                                                  <button nbSuffix nbButton size="medium" status="warning" fullWidth (click)="filtersClient()" [disabled]="!formHeaders.value.client_name">
+                                                    <nb-icon  icon="search-outline" pack="eva"></nb-icon>
+                                                </button>
+                                                <button nbPrefix  nbButton size="medium" status="primary" fullWidth (click)="openClient('', 'NEW')">
+                                                  <nb-icon  icon="person-add-outline" pack="eva"></nb-icon>
+                                              </button>
+                                              </nb-form-field>
+                                          </div>
+                                          <nb-autocomplete #completeCli size="medium">
+                                              <nb-option *ngFor="let option of clients$" [value]="(option.name + ' ' + option?.lastname)"
+                                                  (click)="changeAutocompleteClient(option)" [ngStyle]="colorAutocompleteSelectClient(option)" class="hovered">
+                                                  {{option?.name}}&nbsp;{{option?.lastname}} - {{option?.document}}
+                                              </nb-option>
+                                          </nb-autocomplete>
+
+                                              <!-- <label class="label">Cliente:</label><br>
                                               <div >
                                                   <input type="text" nbInput fieldSize="small" fullWidth formControlName="client_name" placeholder="Nombre cliente">
-                                              </div>
-                                          </div>
+                                              </div> -->
+                                          <!-- </div> -->
                                       </div>
                                       <div class="row">
                                           <div class="col-md-12">
                                               <label class="label">Procedéncia:</label><br>
                                               <div>
-                                                  <input type="text" nbInput fieldSize="small" fullWidth formControlName="client_place" placeholder="Lugar">
+                                                  <input type="text" nbInput fieldSize="medium" fullWidth formControlName="client_place" placeholder="Lugar" [readOnly]="true">
                                               </div>
                                           </div>
                                           <div class="col-md-12">
                                               <label class="label">Tipo de pago:</label><br>
                                               <div>
-                                                  <nb-select placeholder="Tipo" size="small" fullWidth formControlName="pay_method">
+                                                  <nb-select placeholder="Tipo" size="medium" fullWidth formControlName="pay_method">
                                                       <nb-option *ngFor="let item of typePay" [value]="item.code">{{item.name}}</nb-option>
                                                   </nb-select>
                                               </div>
@@ -171,23 +196,23 @@
                               </nb-card-body>
                               <nb-card-footer>
                                   <div class="text-center" *ngIf="!formHeaders.value._id_venta">
-                                      <div *ngIf="formHeaders.value.pay_method === 'none'">
+                                      <div *ngIf="formHeaders.value.pay_method === 'NONE'">
                                         <button  nbButton size="small" status="warning" fullWidth
-                                        [disabled]="carrito.length<=0 || formHeaders.invalid" (click)="saveSales('pending')">Guardar proforma</button>
+                                        [disabled]="carrito.length<=0 || formHeaders.invalid" (click)="saveSales('PENDING')">Guardar proforma</button>
                                       </div>
-                                      <div *ngIf="formHeaders.value.pay_method !== 'none'">
+                                      <div *ngIf="formHeaders.value.pay_method !== 'NONE'">
                                         <button nbButton size="small" status="success" fullWidth
-                                        [disabled]="carrito.length<=0 || formHeaders.invalid" (click)="saveSales('processed')">Registrar venta</button>
+                                        [disabled]="carrito.length<=0 || formHeaders.invalid" (click)="saveSales('PROCESSED')">Registrar venta</button>
                                       </div>
                                   </div>
                                   <div class="text-center" *ngIf="formHeaders.value._id_venta">
-                                    <div *ngIf="formHeaders.value.pay_method === 'none'">
+                                    <div *ngIf="formHeaders.value.pay_method === 'NONE'">
                                       <button nbButton size="small" status="warning" fullWidth
-                                      [disabled]="carrito.length<=0 || formHeaders.invalid" (click)="updateSales('pending')">Guardar proforma</button>
+                                      [disabled]="carrito.length<=0 || formHeaders.invalid" (click)="updateSales('PENDING')">Guardar proforma</button>
                                     </div>
-                                    <div *ngIf="formHeaders.value.pay_method !== 'none'">
+                                    <div *ngIf="formHeaders.value.pay_method !== 'NONE'">
                                       <button nbButton size="small" status="success" fullWidth
-                                      [disabled]="carrito.length<=0 || formHeaders.invalid" (click)="updateSales('processed')">Registrar venta</button>
+                                      [disabled]="carrito.length<=0 || formHeaders.invalid" (click)="updateSales('PROCESSED')">Registrar venta</button>
                                     </div>
                                   </div>
                               </nb-card-footer>

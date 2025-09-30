@@ -55,7 +55,7 @@ export class SignInComponent implements OnInit, OnDestroy {
     const serviceName = environment.auth +  '/login';
     const params = {
       email: forms.email,
-      provider: 'carmi',
+      provider: 'CARMI',
       password: forms.password,
     }
     // if (forms.email === 'admin@admin' && forms.password === '1234567891') {

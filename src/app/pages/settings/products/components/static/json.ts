@@ -1,22 +1,22 @@
 export const TYPE_SIZE = [
   {
     name: 'Pequeño',
-    code: 'small',
+    code: 'SMALL',
     id: '1',
   },
   {
     name: 'Mediano',
-    code: 'medium',
+    code: 'MEDIUM',
     id: '2',
   },
   {
     name: 'Grande',
-    code: 'big',
+    code: 'BIG',
     id: '3',
   },
   {
     name: 'Estándar',
-    code: 'standard',
+    code: 'STANDARD',
     id: '4',
   },
 ];

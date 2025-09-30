@@ -61,75 +61,89 @@ export class MMySaleComponent implements OnInit {
     }
   }
   generatePdf(viewDownload:any) {
-    const newArray = [];
-    this.sale?.details.map((a:any) => {
-      const datos = [
-        {text: a.amount, style: 'dataRow', alignment: 'center'},
-        {text: a.product?.name, style: 'dataRow'},
-        {text: a.product?.code, style: 'dataRow', alignment: 'center'},
-        {text: a.product?.measure, style: 'dataRow', alignment: 'center'},
-        {text: ('S/.' + a.price), style: 'dataRow', alignment: 'center'},
-        {text: ('S/.' + a.price_total), style: 'dataRow', alignment: 'center'},
-      ];
-      newArray.push(datos);
-    });
-    const pdfGenerate:any = {
-      content: [
-        {
-          table: {
-            widths: [40, '*', '*', '*', 80, 80],
-            body: [
-              [{ text: 'CARMÍ ART - SCRAPBOOK', colSpan: 6, style: 'header', alignment: 'center', fillColor: '#002060' }, {}, {}, {}, {}, {}],
-              [
-                { text: 'CREATIVA:', style: 'tableHeader', colSpan: 1, fillColor: '#002060', color: 'white' },
-                { text: this.sale.client_name, style: 'tableHeader', colSpan: 4, fillColor: '#002060', color: 'white', alignment: 'left' },
-                {},
-                {},
-                {},
-                { text: (this.datepipe.transform(new Date(), 'dd/MM/yyyy') + ' ' + (this.sale.client_place ?? 'SN')), style: 'tableHeader', colSpan: 1, fillColor: '#002060', color: 'white', alignment: 'center' },
-              ],
-              [
-                { text: 'CANT.', style: 'tableHeader', alignment: 'center', fillColor: '#002060', color: 'white' },
-                { text: 'PRODUCTO', style: 'tableHeader', fillColor: '#002060', color: 'white' },
-                { text: 'CÓDIGO', style: 'tableHeader', alignment: 'center', fillColor: '#002060', color: 'white' },
-                { text: 'MEDIDAS', style: 'tableHeader', alignment: 'center', fillColor: '#002060', color: 'white' },
-                { text: 'PRECIO UNIT.', style: 'tableHeader', alignment: 'center', fillColor: '#002060', color: 'white' },
-                { text: 'TOTAL', style: 'tableHeader', alignment: 'center', fillColor: '#002060', color: 'white' }
-              ],
-              ...newArray,
-              // ['1', 'TROQUEL - LOGO CONQUISTADORES', 'TA-02', '11*11', 'S/.25,00'],
-              // ['1', 'TROQUEL - CAJA CORAZÓN - GRANDE', 'H-287', '11*19', 'S/.30,00'],
-              // ['1', 'STENCIL - M12', 'M12', '13*13', 'S/.5,00'],
-              // ['1', 'STENCIL - M14', 'M14', '13*13', 'S/.5,00'],
-              // ['1', 'STENCIL - M40', 'M40', '13*13', 'S/.5,00'],
-              [{ text: '', colSpan: 5 }, {}, {}, {}, {}, { text: 'S/.' + this.sale.price_total, alignment: 'center', style: 'dataRow' }]
-            ]
-          }
-        }
-      ],
-      styles: {
-        header: {
-          fontSize: 10,
-          bold: true,
-          margin: [0, 0, 0, 10],
-          color: 'white'
-        },
-        tableHeader: {
-          bold: true,
-          fontSize: 8,
-          color: 'white'
-        },
-        dataRow: {
-          fontSize: 7,
-        }
-      }
-    };
-    const pdf = pdfMake.createPdf(pdfGenerate);
-    if (viewDownload === 'DOWNLOAD') {
-      pdf.download('Carmi-Art.pdf');
-    } else {
-      pdf.open();
-    }
+    this.sSalesServ.generatePdf$(this.sale._id).subscribe((res:Blob) => {
+      // Crear blob
+      const blob = new Blob([res], { type: 'application/pdf' });
+
+      // Crear enlace de descarga
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = this.sale?.client_name + '-CARMIART.pdf'; // Nombre del archivo
+      a.click();
+      window.URL.revokeObjectURL(url);
+    }, () => {this.loading = false}, () => {this.loading = false});
+
+
+    // const newArray = [];
+    // this.sale?.details.map((a:any) => {
+    //   const datos = [
+    //     {text: a.amount, style: 'dataRow', alignment: 'center'},
+    //     {text: a.product?.name, style: 'dataRow'},
+    //     {text: a.product?.code, style: 'dataRow', alignment: 'center'},
+    //     {text: a.product?.measure, style: 'dataRow', alignment: 'center'},
+    //     {text: ('S/.' + a.price), style: 'dataRow', alignment: 'center'},
+    //     {text: ('S/.' + a.price_total), style: 'dataRow', alignment: 'center'},
+    //   ];
+    //   newArray.push(datos);
+    // });
+    // const pdfGenerate:any = {
+    //   content: [
+    //     {
+    //       table: {
+    //         widths: [40, '*', '*', '*', 80, 80],
+    //         body: [
+    //           [{ text: 'CARMÍ ART - SCRAPBOOK', colSpan: 6, style: 'header', alignment: 'center', fillColor: '#002060' }, {}, {}, {}, {}, {}],
+    //           [
+    //             { text: 'CREATIVA:', style: 'tableHeader', colSpan: 1, fillColor: '#002060', color: 'white' },
+    //             { text: this.sale.client_name, style: 'tableHeader', colSpan: 4, fillColor: '#002060', color: 'white', alignment: 'left' },
+    //             {},
+    //             {},
+    //             {},
+    //             { text: (this.datepipe.transform(new Date(), 'dd/MM/yyyy') + ' ' + (this.sale.client_place ?? 'SN')), style: 'tableHeader', colSpan: 1, fillColor: '#002060', color: 'white', alignment: 'center' },
+    //           ],
+    //           [
+    //             { text: 'CANT.', style: 'tableHeader', alignment: 'center', fillColor: '#002060', color: 'white' },
+    //             { text: 'PRODUCTO', style: 'tableHeader', fillColor: '#002060', color: 'white' },
+    //             { text: 'CÓDIGO', style: 'tableHeader', alignment: 'center', fillColor: '#002060', color: 'white' },
+    //             { text: 'MEDIDAS', style: 'tableHeader', alignment: 'center', fillColor: '#002060', color: 'white' },
+    //             { text: 'PRECIO UNIT.', style: 'tableHeader', alignment: 'center', fillColor: '#002060', color: 'white' },
+    //             { text: 'TOTAL', style: 'tableHeader', alignment: 'center', fillColor: '#002060', color: 'white' }
+    //           ],
+    //           ...newArray,
+    //           // ['1', 'TROQUEL - LOGO CONQUISTADORES', 'TA-02', '11*11', 'S/.25,00'],
+    //           // ['1', 'TROQUEL - CAJA CORAZÓN - GRANDE', 'H-287', '11*19', 'S/.30,00'],
+    //           // ['1', 'STENCIL - M12', 'M12', '13*13', 'S/.5,00'],
+    //           // ['1', 'STENCIL - M14', 'M14', '13*13', 'S/.5,00'],
+    //           // ['1', 'STENCIL - M40', 'M40', '13*13', 'S/.5,00'],
+    //           [{ text: '', colSpan: 5 }, {}, {}, {}, {}, { text: 'S/.' + this.sale.price_total, alignment: 'center', style: 'dataRow' }]
+    //         ]
+    //       }
+    //     }
+    //   ],
+    //   styles: {
+    //     header: {
+    //       fontSize: 10,
+    //       bold: true,
+    //       margin: [0, 0, 0, 10],
+    //       color: 'white'
+    //     },
+    //     tableHeader: {
+    //       bold: true,
+    //       fontSize: 8,
+    //       color: 'white'
+    //     },
+    //     dataRow: {
+    //       fontSize: 7,
+    //     }
+    //   }
+    // };
+    // const pdf = pdfMake.createPdf(pdfGenerate);
+    // if (viewDownload === 'DOWNLOAD') {
+    //   pdf.download('Carmi-Art.pdf');
+    // } else {
+    //   pdf.open();
+    // }
   }
   finishSale(option:any) {
     // if (this.datos_pedido.id_persona !== this.user.id_persona) {
@@ -138,7 +152,7 @@ export class MMySaleComponent implements OnInit {
         dialogClass: 'dialog-limited-height',
         context: {
           tittle: 'CONFIRMAR',
-          text: option === 'processed' ? '¿ Desea confirmar la venta ?' : 'Se anulará o cancelará la venta',
+          text: option === 'PROCESSED' ? '¿ Desea confirmar la venta ?' : 'Se anulará o cancelará la venta',
           icon: 'save-outline',
           colorIcon: 'success',
           showCloseButton: true,
@@ -153,6 +167,7 @@ export class MMySaleComponent implements OnInit {
       })
       .onClose.subscribe((result:any) => {
         const params = {
+          customer_id: this.sale.customer_id,
           client_name: this.sale.client_name,
           client_place: this.sale.client_place,
           date: this.datepipe.transform(new Date(), 'yyyy-MM-dd'),

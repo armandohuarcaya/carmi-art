@@ -15,12 +15,12 @@
     <div class="row">
       <div class="col-md-6">
       <label class="label">Cliente:&nbsp;&nbsp;</label>
-      <input type="text" nbInput fullWidth fieldSize="small" [(ngModel)]="sale.client_name" [readOnly]="sale?.status !== 'pending'">
+      <input type="text" nbInput fullWidth fieldSize="small" [(ngModel)]="sale.client_name" [readOnly]="sale?.status !== 'PENDING'">
       <!-- <strong>{{sale?.client_name}}</strong> -->
       </div>
       <div class="col-md-6">
         <label class="label">Procedencia:&nbsp;&nbsp;</label>
-        <input type="text" nbInput fullWidth fieldSize="small" [(ngModel)]="sale.client_place" [readOnly]="sale?.status !== 'pending'">
+        <input type="text" nbInput fullWidth fieldSize="small" [(ngModel)]="sale.client_place" [readOnly]="sale?.status !== 'PENDING'">
         <!-- <strong>{{sale?.client_place}}</strong> -->
       </div>
     </div>
@@ -28,7 +28,7 @@
       <div class="col-md-12">
         <label class="label">Tipo de pago:&nbsp;&nbsp;</label> <br>
         <nb-select placeholder="Tipo" size="small" fullWidth [(ngModel)]="sale.pay_method">
-          <nb-option *ngFor="let item of typePay" [value]="item.code" [disabled]="sale?.status !== 'pending'">{{item.name}}</nb-option>
+          <nb-option *ngFor="let item of typePay" [value]="item.code" [disabled]="sale?.status !== 'PENDING'">{{item.name}}</nb-option>
       </nb-select>
         <!-- <strong>{{getTypePays(sale?.pay_method)}}</strong> -->
       </div>
@@ -94,10 +94,10 @@
   <nb-card-footer class="text-center">
     <button nbButton size="small" status="info" (click)="generatePdf('VIEW')" [disabled]="!sale">Ver doc.<nb-icon icon="eye"></nb-icon></button>&nbsp;
     <button nbButton size="small" status="success" (click)="generatePdf('DOWNLOAD')" [disabled]="!sale">Descargar doc.<nb-icon icon="download"></nb-icon></button>
-    <span *ngIf="sale?.status === 'pending'">
-      &nbsp;<button nbButton size="small" status="danger" (click)="finishSale('canceled')">Anular<nb-icon icon="close-circle-outline"></nb-icon></button>&nbsp;
+    <span *ngIf="sale?.status === 'PENDING'">
+      &nbsp;<button nbButton size="small" status="danger" (click)="finishSale('CANCELED')">Anular<nb-icon icon="close-circle-outline"></nb-icon></button>&nbsp;
       <button nbButton size="small" status="primary" (click)="editSale()">Editar<nb-icon icon="edit"></nb-icon></button>&nbsp;
-      <button nbButton size="small" status="primary" (click)="finishSale('processed')" [disabled]="sale.pay_method === 'none'">Finalizar venta<nb-icon icon="save"></nb-icon></button>
+      <button nbButton size="small" status="primary" (click)="finishSale('PROCESSED')" [disabled]="sale.pay_method === 'NONE'">Finalizar venta<nb-icon icon="save"></nb-icon></button>
     </span>
 
   </nb-card-footer>

@@ -1,0 +1,63 @@
+<nb-card [nbSpinner]="loading"status="basic">
+  <nb-card-header >
+      <nb-icon icon="save" status="success"></nb-icon>CLIENTES
+  </nb-card-header>
+  <nb-card-body>
+    <form [formGroup]="formHeaders">
+      <div class="row">
+        <div class="col-md-5"></div>
+        <div class="col-md-3">
+          <input type="text" nbInput fullWidth fieldSize="small" formControlName="search" placeholder="Buscar cliente">
+        </div>
+        <div class="col-md-2">
+          <button nbButton size="small" status="warning" fullWidth (click)="filters()">Filtrar</button>
+        </div>
+        <div class="col-md-2">
+          <button nbButton size="small" status="primary" fullWidth (click)="openClient('', 'NEW')">Crear</button>
+        </div>
+      </div>
+    </form>
+    <hr>
+    <div class="teble-responsive">
+      <table class="table table-striped table-bordered">
+          <thead>
+              <tr>
+                  <th>#</th>
+                  <th>Nombres</th>
+                  <th>Documento</th>
+                  <th>Celular</th>
+                  <th>Correo</th>
+                  <th>Dirección</th>
+                  <th colspan="2" style="width: 1px;">OPC.</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr *ngFor="let item of clients; let i = index">
+                  <td>{{i+1}}</td>
+                  <td>{{item.name + ' ' + item.lastname}}</td>
+                  <td>{{item.document_type + ' ' +item.document}}</td>
+                  <td>{{item.cellphone}}</td>
+                  <td>{{item.correo}}</td>
+                  <td>{{item.address}}</td>
+                  <td style="width: 1px;"><button nbButton size="tiny" fullWidth status="info" (click)="openClient(item, 'UPDATE')"><nb-icon icon="edit-outline"></nb-icon></button></td>
+                  <td style="width: 1px;"><button nbButton size="tiny" fullWidth status="danger" (click)="onDelete(item)"><nb-icon icon="trash-outline"></nb-icon></button></td>
+              </tr>
+          </tbody>
+      </table>
+  </div>
+  <hr>
+        <div class="row g-1 row-cols-1 row-cols-lg-3 align-items-center" *ngIf="clients?.length>0">
+          <div class="col">
+              <app-pagination-per [total]="paginate.total" [perPageDefault]="paginate.perPage"
+                  [currentPerPage]="paginate.perPage" (changePerPage)="changePerPage($event)"></app-pagination-per>
+          </div>
+          <div class="col">
+              <app-pagination [formControl]="page" [paginationOptions]="paginate"
+                  (changePagePagination)="changePagePaginations($event)"></app-pagination>
+          </div>
+          <div class="col">
+              <app-pagination-detail [paginationDetailOptions]="paginate"></app-pagination-detail>
+          </div>
+      </div>
+  </nb-card-body>
+</nb-card>

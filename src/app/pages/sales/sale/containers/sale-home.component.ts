@@ -9,6 +9,7 @@ import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { TYPE_PAY } from '../components/static/json';
 import { SSalesService } from '../services/s-sales.service';
+import { MClientComponent } from '../components/modals/m-client/m-client.component';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
@@ -19,6 +20,7 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
 export class SaleHomeComponent implements OnInit {
   formHeaders: any = FormGroup;
   products$:any = [];
+  clients$:any = [];
   carrito:any = [];
   loading:boolean = false;
   typePay:any = TYPE_PAY;
@@ -31,8 +33,10 @@ export class SaleHomeComponent implements OnInit {
   }
   private fieldReactive() {
     const controls = {
-      client_name: ['Anónimo'],
-      client_place: ['SP'],
+      client_name: ['', [Validators.required]],
+      client_id: ['', [Validators.required]],
+      client_place: ['', [Validators.required]],
+
       date: [new Date(), [Validators.required]],
       pay_method: ['NONE'],
       gasto_envio: [0, [Validators.required]],
@@ -366,5 +370,74 @@ export class SaleHomeComponent implements OnInit {
   clearVenta() {
     this.fieldReactive();
     this.carrito = [];
+  }
+
+  // cliente
+  inputKeyAutocompleteClient($event:any) {
+    if (!this.formHeaders.value.client_name) {
+      this.clearClient();
+    }
+  }
+  changeAutocompleteClient($event:any) {
+    if ($event && $event._id) {
+      this.formHeaders.controls['client_id'].setValue($event._id);
+      this.formHeaders.controls['client_place'].setValue($event.address);
+      this.clients$ = this.clients$.filter((a:any) => a._id === $event._id);
+    } else {
+     this.clearClient();
+    }
+  }
+  colorAutocompleteSelectClient(option:any) {
+    if (this.formHeaders.value.client_id === option._id) {
+      return {'background': 'var(--color-primary-500)', 'color': 'white', 'font-size': '11px'};
+    } else {
+      return {'font-size': '11px'};
+    }
+  }
+  clearClient() {
+    this.formHeaders.controls['client_name'].setValue('');
+    this.formHeaders.controls['client_id'].setValue('');
+    this.formHeaders.controls['client_place'].setValue('');
+    this.clients$ = [];
+  }
+  getClient() {
+    const forms = this.formHeaders.value;
+    const params = {
+      // page: 1,
+      // size: 100,
+      filter: forms.client_name,
+      page: 1,
+      pageSize: 20,
+    }
+    this.sSalesServ.listClient$(params).subscribe((res:any) => {
+      this.clients$ = res.data && res.data.data || [];
+      if (this.clients$.length>0) {
+        const input:any = document.getElementsByClassName('person_addd');
+        input[0].click();
+      }
+    });
+  }
+  filtersClient() {
+    // this.formHeaders.controls['page'].setValue(1);
+    this.getClient();
+  }
+  openClient(item:any, type:any) {
+    this.clearClient();
+    this.nbDialogService.open(MClientComponent, {
+      dialogClass: 'dialog-limited-height',
+      context: {
+        type: type,
+        item: item
+      },
+      closeOnBackdropClick: false,
+      closeOnEsc: false,
+    })
+    .onClose.subscribe((result:any) => {
+      if (result && result.close === 'ok') {
+        this.formHeaders.controls['client_id'].setValue(result.value._id);
+        this.formHeaders.controls['client_name'].setValue(result.value.name + ' ' + result.value.lastname);
+        this.formHeaders.controls['client_place'].setValue(result.value.address);
+      }
+    });
   }
 }

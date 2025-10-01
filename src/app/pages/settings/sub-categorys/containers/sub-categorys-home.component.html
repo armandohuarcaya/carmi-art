@@ -11,23 +11,21 @@
             <nb-option *ngFor="let item of category" [value]="item._id">{{item.name}}</nb-option>
           </nb-select>
         </div>
-        <div class="col-md-5">
-          <nb-form-field>
-            <input type="text" nbInput fieldSize="small" fullWidth formControlName="search" placeholder="Buscar">
-            <button nbSuffix nbButton fullWidth size="small" status="warning" (click)="filters()"><nb-icon icon="search"></nb-icon></button>
-          </nb-form-field>
+        <div class="col-md-3">
+            <input type="text" nbInput fieldSize="small" fullWidth formControlName="filter" placeholder="Buscar">
         </div>
-        <div class="col-md-5"></div>
+        <div class="col-md-2"></div>
         <div class="col-md-2">
           <button nbButton size="small" status="warning" fullWidth (click)="filterList()">Filtrar</button>
         </div>
         <div class="col-md-2">
-          <button nbButton size="small" status="primary" fullWidth (click)="openSubCategory('', 'NEW')">Crear</button>
+          <button nbButton size="small" status="primary" fullWidth (click)="openSubCategory('', 'NEW')">Añadir</button>
         </div>
       </div>
     </form>
     <hr>
-    <div class="teble-responsive">
+
+    <div class="table-responsive">
       <table class="table table-striped table-bordered">
           <thead>
               <tr>

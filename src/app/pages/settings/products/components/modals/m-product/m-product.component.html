@@ -82,6 +82,20 @@
               <input nbInput fieldSize="small" fullWidth type="number" formControlName="price_pen"  placeholder="Precio">
             </div>
           </div>
+          <div *ngIf="type === 'NEW'">
+            <br>
+            Estoker _______________________
+            <div class="row pt-2">
+              <div class="col-md-6">
+                <label class="label">Costo:</label>
+                <input nbInput fieldSize="small" fullWidth type="number" formControlName="cost"  placeholder="Costo">
+              </div>
+              <div class="col-md-6">
+                <label class="label">Cantidad:</label>
+                <input nbInput fieldSize="small" fullWidth type="number" formControlName="amount"  placeholder="Cantidad">
+              </div>
+            </div>
+          </div>
         </form>
         <hr>
         <div class="text-center">

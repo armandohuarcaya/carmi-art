@@ -72,8 +72,8 @@
             </div>
           </div>
 
-          <div class="row pt-2" *ngIf="type === 'UPDATE'">
-            <div class="col-md-6">
+          <div class="row pt-2" >
+            <div class="col-md-6" *ngIf="type === 'UPDATE'">
               <label class="label">Precio ref.:</label>
               <input nbInput fieldSize="small" fullWidth type="number" formControlName="price_pen_ref"  placeholder="Precio referencial">
             </div>
@@ -88,7 +88,7 @@
             <div class="row pt-2">
               <div class="col-md-6">
                 <label class="label">Costo:</label>
-                <input nbInput fieldSize="small" fullWidth type="number" formControlName="cost"  placeholder="Costo">
+                <input nbInput fieldSize="small" fullWidth type="number" formControlName="unit_cost"  placeholder="Costo">
               </div>
               <div class="col-md-6">
                 <label class="label">Cantidad:</label>

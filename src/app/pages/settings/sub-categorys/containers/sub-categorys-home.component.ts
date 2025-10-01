@@ -22,9 +22,14 @@ export class SubCategorysHomeComponent implements OnInit {
     this.getCategory();
     this.getList();
   }
+  filters() {
+    this.formHeaders.controls['page'].setValue(1);
+    this.filterList();
+  }
   private fieldReactive() {
     const controls = {
       category_id: [''],
+      filter: [''],
     };
     this.formHeaders = this.formBuilder.group(controls);
   }
@@ -41,10 +46,12 @@ export class SubCategorysHomeComponent implements OnInit {
   getList() {
     const params = {
       category_id: this.formHeaders.value.category_id,
+      filter: this.formHeaders.value.filter,
     };
+    this.loading = true;
     this.subCategorysServ.subCategorys$(params).subscribe((res:any) => {
       this.subCategorys = res.data || [];
-    });
+    }, () => this.loading = false, () => this.loading = false);
   }
   openSubCategory(item:any, type:any) {
     this.nbDialogService.open(MSubCategorysComponent, {

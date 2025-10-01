@@ -52,7 +52,9 @@ export class MProductComponent implements OnInit {
       measure: ['', [Validators.required]],
       files: [''],
       price_pen_ref: [''],
-      price_pen: ['']
+      price_pen: [''],
+      cost: [''],
+      amount: ['']
     };
     this.formHeaders = this.formBuilder.group(controls);
   }
@@ -157,6 +159,8 @@ export class MProductComponent implements OnInit {
             measure: values.measure,
             price_pen_ref: Number(values.price_pen_ref) || 0,
             price_pen: Number(values.price_pen) || 0,
+            cost: Number(values.cost) || 0,
+            amount: Number(values.amount) || 0,
             // files: values.files,
           };
           // this.openFiles.forEach(element => {
@@ -257,6 +261,8 @@ export class MProductComponent implements OnInit {
           measure: res.data.measure,
           price_pen: res.data.price_pen,
           price_pen_ref: res.data.price_pen_ref,
+          cost: res.data.cost || '',
+          amount: res.data.amount || '',
         });
         if (res.data.category_id) {
           this.getTypeProduct();

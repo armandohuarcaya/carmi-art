@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SubCategorysService } from '../services/sub-categorys.service';
 import { MSubCategorysComponent } from '../components/modals/m-sub-categorys/m-sub-categorys.component';
 import { NbDialogService } from '@nebular/theme';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DialogConfimComponent } from 'src/app/shared/components/dialog-confim/dialog-confim.component';
 
 @Component({
@@ -15,6 +15,7 @@ export class SubCategorysHomeComponent implements OnInit {
   category:any = [];
   subCategorys:any = [];
   formHeaders: any = FormGroup;
+  paginate:any = '';
   constructor(private subCategorysServ: SubCategorysService, private nbDialogService: NbDialogService,
     private formBuilder: FormBuilder){}
   ngOnInit(): void {
@@ -30,8 +31,13 @@ export class SubCategorysHomeComponent implements OnInit {
     const controls = {
       category_id: [''],
       filter: [''],
+      page: [1],
+      per_page: [10]
     };
     this.formHeaders = this.formBuilder.group(controls);
+  }
+  get page():any {
+    return this.formHeaders.get('page') as FormControl;
   }
   getCategory() {
     // const forms = this.formHeaders.value;
@@ -40,18 +46,51 @@ export class SubCategorysHomeComponent implements OnInit {
       this.category = res.data || [];
     });
   }
+  changePerPage($event:any) {
+    this.formHeaders.controls['per_page'].setValue($event);
+    this.formHeaders.controls['page'].setValue(1);
+    this.getList();
+  }
+  changePagePaginations($event:any) {
+    this.formHeaders.controls['page'].setValue($event);
+    this.getList();
+  }
   filterList() {
+    this.formHeaders.controls['page'].setValue(1);
     this.getList();
   }
   getList() {
+    const forms = this.formHeaders.value;
     const params = {
-      category_id: this.formHeaders.value.category_id,
-      filter: this.formHeaders.value.filter,
+      category_id: forms.category_id,
+      filter: forms.filter,
+      size: forms.per_page,
+      page: forms.page,
     };
     this.loading = true;
     this.subCategorysServ.subCategorys$(params).subscribe((res:any) => {
       this.subCategorys = res.data || [];
+      setTimeout(() => {
+        this.setPaginate(res);
+      }, 100);
     }, () => this.loading = false, () => this.loading = false);
+  }
+  setPaginate(values:any) {
+
+    // const next = values.next_page_url ? values.next_page_url.split('=') : [];
+    // const previus = values.prev_page_url ? values.prev_page_url.split('=') : [];
+
+    this.paginate = {
+      from: values.pageNum,
+      to: values.pageSize,
+      page: values.pageNum,
+      pages: values.pages,
+      perPage: values.pageSize,
+      nextPage: (Number(values.pageNum) < Number(values.pages)) ? Number(values.pageNum) + 1 : null,
+      previousPage:  (Number(values.pageNum) > 1) ? Number(values.pages) - 1 : null,
+      total: values.total,
+      data: values.data
+    }
   }
   openSubCategory(item:any, type:any) {
     this.nbDialogService.open(MSubCategorysComponent, {

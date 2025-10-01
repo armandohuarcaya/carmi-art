@@ -22,6 +22,10 @@ export class SubCategorysHomeComponent implements OnInit {
     this.getCategory();
     this.getList();
   }
+  filters() {
+    this.formHeaders.controls['page'].setValue(1);
+    this.filterList();
+  }
   private fieldReactive() {
     const controls = {
       category_id: [''],

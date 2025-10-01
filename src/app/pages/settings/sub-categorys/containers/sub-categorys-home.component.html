@@ -11,6 +11,12 @@
             <nb-option *ngFor="let item of category" [value]="item._id">{{item.name}}</nb-option>
           </nb-select>
         </div>
+        <div class="col-md-5">
+          <nb-form-field>
+            <input type="text" nbInput fieldSize="small" fullWidth formControlName="search" placeholder="Buscar">
+            <button nbSuffix nbButton fullWidth size="small" status="warning" (click)="filters()"><nb-icon icon="search"></nb-icon></button>
+          </nb-form-field>
+        </div>
         <div class="col-md-5"></div>
         <div class="col-md-2">
           <button nbButton size="small" status="warning" fullWidth (click)="filterList()">Filtrar</button>
@@ -26,11 +32,12 @@
           <thead>
               <tr>
                   <th>#</th>
+                  <th>Categoría</th>
                   <th>Nombre</th>
-                  <th>Creado</th>
-                  <th>Usuario</th>
                   <th>Nomenglatura</th>
                   <th>Código</th>
+                  <th>Creado</th>
+                  <th>Usuario</th>
                   <th>Estado</th>
                   <th colspan="2" style="width: 1px;">OPC.</th>
               </tr>
@@ -38,11 +45,12 @@
           <tbody>
               <tr *ngFor="let item of subCategorys; let i = index">
                   <td>{{i+1}}</td>
+                  <td>{{item.category.name}}</td>
                   <td>{{item.name}}</td>
-                  <td>{{item.created_at | date: 'dd/MM/yyyy hh:mm:ss a'}}</td>
-                  <td>{{item.created_user}}</td>
                   <td>{{item.code_nomenclature}}</td>
                   <td>{{item.code_number}}</td>
+                  <td>{{item.created_at | date: 'dd/MM/yyyy hh:mm:ss a'}}</td>
+                  <td>{{item.created_user}}</td>
                   <td>
                     <nb-icon [icon]="item.enabled ? 'checkmark-square-2-outline' : 'alert-triangle-outline'" [status]="item.enabled ? 'success' : 'danger'"></nb-icon>
                   </td>

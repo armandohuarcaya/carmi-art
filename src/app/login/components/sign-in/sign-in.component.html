@@ -44,16 +44,16 @@
 </nb-card> -->
 <div [nbSpinner]="loading">
   <div class="text-center" style="padding: 0px;">
-    <img src="https://www.iconpacks.net/icons/1/free-user-group-icon-296-thumb.png" alt="" height="150px" style="border-radius: 3rem;">
+    <img src="assets/img/login_carmi.png" alt="" height="180px" style="border-radius: 3rem;">
   </div>
   <div>
     <form [formGroup]="formHeaders">
-      <div>
-        <!-- <label class="label" style="color: white; font-weight: bold;">Correo</label> -->
+      <div style="text-align: left;">
+        <!-- <label class="label" style="font-weight: bold;">Correo</label> -->
         <input type="text" status="info" nbInput fullWidth shape="semi-round" formControlName="email" autocomplete="new-email" placeholder="Correo">
       </div>
-      <div class="pt-3">
-        <!-- <label class="label" style="color: white; font-weight: bold;">Contraseña</label> -->
+      <div class="pt-3" style="text-align: left;">
+        <!-- <label class="label" style="font-weight: bold;">Contraseña</label> -->
         <nb-form-field>
           <input [type]="getInputType()" status="info" nbInput fullWidth shape="semi-round" formControlName="password" autocomplete="new-password" placeholder="Contraseña">
           <button nbSuffix nbButton ghost (click)="toggleShowPassword()">
@@ -71,7 +71,7 @@
   </div>
   <hr>
   <div class="text-center">
-    <button nbButton size="small" status="success" shape="semi-round" (click)="loginSignIn()" [disabled]="formHeaders.invalid"
+    <button nbButton size="small" status="primary" shape="semi-round" (click)="loginSignIn()" [disabled]="formHeaders.invalid"
       >Iniciar sesión</button>
 
   </div>

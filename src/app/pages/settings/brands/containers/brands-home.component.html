@@ -10,21 +10,21 @@
       </div>
     </div>
     <hr>
-    <div class="teble-responsive">
-      <table class="table table-striped table-bordered">
+    <div class="nb-scrollbars">
+      <table class="lb-table lb-table-border-inside lb-table-striped">
           <thead>
               <tr>
-                  <th>#</th>
-                  <th>Nombre</th>
-                  <th>Creado</th>
-                  <th>Usuario</th>
-                  <th>Estado</th>
-                  <th colspan="2" style="width: 1px;">OPC.</th>
+                  <th scope="col" data-label="#">#</th>
+                  <th scope="col" data-label="Nombre">Nombre</th>
+                  <th scope="col" data-label="Creado">Creado</th>
+                  <th scope="col" data-label="Usuario">Usuario</th>
+                  <th scope="col" data-label="Estado">Estado</th>
+                  <th scope="col" data-label="opc" colspan="2" style="width: 1px;">OPC.</th>
               </tr>
           </thead>
           <tbody>
               <tr *ngFor="let item of brands; let i = index">
-                  <td>{{i+1}}</td>
+                  <td data-label="#">{{i+1}}</td>
                   <td>{{item.name}}</td>
                   <td>{{item.created_at | date: 'dd/MM/yyyy hh:mm:ss a'}}</td>
                   <td>{{item.created_user}}</td>

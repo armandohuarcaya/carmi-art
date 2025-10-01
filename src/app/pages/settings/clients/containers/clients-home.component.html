@@ -18,22 +18,22 @@
       </div>
     </form>
     <hr>
-    <div class="teble-responsive">
-      <table class="table table-striped table-bordered">
+    <div class="nb-scrollbars">
+      <table class="lb-table lb-table-border-inside lb-table-striped">
           <thead>
               <tr>
-                  <th>#</th>
-                  <th>Nombres</th>
-                  <th>Documento</th>
-                  <th>Celular</th>
-                  <th>Correo</th>
-                  <th>Dirección</th>
-                  <th colspan="2" style="width: 1px;">OPC.</th>
+                  <th scope="col" data-label="#">#</th>
+                  <th scope="col" data-label="Nombres">Nombres</th>
+                  <th scope="col" data-label="Documento">Documento</th>
+                  <th scope="col" data-label="Celular">Celular</th>
+                  <th scope="col" data-label="Correo">Correo</th>
+                  <th scope="col" data-label="Dirección">Dirección</th>
+                  <th scope="col" data-label="opc" colspan="2" style="width: 1px;">OPC.</th>
               </tr>
           </thead>
           <tbody>
               <tr *ngFor="let item of clients; let i = index">
-                  <td>{{i+1}}</td>
+                  <td data-label="#">{{i+1}}</td>
                   <td>{{item.name + ' ' + item.lastname}}</td>
                   <td>{{item.document_type + ' ' +item.document}}</td>
                   <td>{{item.cellphone}}</td>

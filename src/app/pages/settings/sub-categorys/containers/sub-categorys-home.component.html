@@ -58,5 +58,18 @@
           </tbody>
       </table>
   </div>
+  <div class="row g-1 row-cols-1 row-cols-lg-3 align-items-center" *ngIf="subCategorys?.length>0">
+    <div class="col">
+        <app-pagination-per [total]="paginate.total" [perPageDefault]="paginate.perPage"
+            [currentPerPage]="paginate.perPage" (changePerPage)="changePerPage($event)"></app-pagination-per>
+    </div>
+    <div class="col">
+        <app-pagination [formControl]="page" [paginationOptions]="paginate"
+            (changePagePagination)="changePagePaginations($event)"></app-pagination>
+    </div>
+    <div class="col">
+        <app-pagination-detail [paginationDetailOptions]="paginate"></app-pagination-detail>
+    </div>
+</div>
   </nb-card-body>
 </nb-card>

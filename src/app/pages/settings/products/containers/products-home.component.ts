@@ -107,8 +107,6 @@ export class ProductsHomeComponent implements OnInit {
       },
       closeOnBackdropClick: false,
       closeOnEsc: false,
-      hasBackdrop: true,
-      autoFocus: true,
     })
     .onClose.subscribe((result:any) => {
       if (result === 'ok') {

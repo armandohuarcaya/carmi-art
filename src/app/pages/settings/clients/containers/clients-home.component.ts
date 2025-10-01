@@ -53,9 +53,9 @@ export class ClientsHomeComponent implements OnInit {
     };
     this.loading = true;
     this.clientsServ.clients$(params).subscribe((res:any) => {
-      this.clients = res.data && res.data.data || [];
+      this.clients = res.data || [];
       setTimeout(() => {
-        this.setPaginate(res.data);
+        this.setPaginate(res);
       }, 100);
     }, () => this.loading=false, () => this.loading=false);
   }

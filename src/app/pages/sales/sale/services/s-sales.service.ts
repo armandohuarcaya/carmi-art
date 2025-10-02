@@ -26,6 +26,9 @@ export class SSalesService {
   updateSale$(id:any, params: any) {
     return this.httpClient.put(`${this.api.sale}/${id}`, params);
   }
+  updateStatusSale$(id:any, params: any) {
+    return this.httpClient.put(`${this.api.sale}/status/${id}`, params);
+  }
   search$(params: any) {
     return this.httpClient.get(`${this.api.product}/search`, {params});
   }

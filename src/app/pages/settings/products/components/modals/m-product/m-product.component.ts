@@ -49,7 +49,7 @@ export class MProductComponent implements OnInit {
       code: [''],
       name: ['', [Validators.required]],
       size: ['', [Validators.required]],
-      measure: ['', [Validators.required]],
+      measure: [''],
       files: [''],
       price_pen_ref: [''],
       price_pen: [''],

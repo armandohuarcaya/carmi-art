@@ -125,4 +125,25 @@ export class VMySaleComponent implements OnInit {
       return {name: 'Otros', icon: '', code: '', color: ''};
     }
   }
+
+  getAvailableStatus(current: string) {
+    if (current === 'PROCESSED') {
+      return this.status;
+    } else{
+      return this.status.filter(status => status.code !== 'PROCESSED');
+    }
+  }
+
+  onStatusChange(item: any) {
+    console.log('Nuevo estado:', item.status);
+    const params = {
+      status: item.status,
+    }
+    this.loading = true;
+    this.sSalesServ.updateStatusSale$(item._id, params).subscribe((res:any) => {
+      if (res.success) {
+        this.getMySales();
+      }
+    }, () => {this.loading = false}, () => {this.loading = false});
+  }
 }

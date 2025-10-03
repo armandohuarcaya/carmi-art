@@ -71,8 +71,8 @@
                   <tbody>
                       <tr *ngFor="let item of sale?.details; let i = index" style="font-size: 10px; font-weight: bold;">
                           <td>{{i+1}}</td>
-                          <td>{{item.product?.code || item.product?.code_original}}</td>
-                          <td>{{item.product?.name}}</td>
+                          <td>{{item.product?.code_original || item.product?.code}}</td>
+                          <td>{{item.product?.category?.name + ' - ' + item.product?.name}}</td>
                           <!-- <td>{{item.barcode}}</td> -->
                           <td>{{item.product?.measure}}</td>
                           <td style="text-align: right;">{{item.price | currency: ' '}}</td>

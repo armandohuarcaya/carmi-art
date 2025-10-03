@@ -11,8 +11,8 @@ export const environment = {
         success: '/pages/dashboard'
     },
     apiUrls: {
-        art: API.art.dev,
+        art: API.art.local,
     },
     shellApp: `${window.location.origin}`,
-    auth: API.auth.dev
+    auth: API.auth.local
 };

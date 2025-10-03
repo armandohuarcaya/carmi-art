@@ -33,9 +33,10 @@ export class SSalesService {
     return this.httpClient.get(`${this.api.product}/search`, {params});
   }
   generatePdf$(id:any) {
-    return this.httpClient.post(`${this.api.sale}/generate-pdf/${id}`,{}, {
-      responseType: 'blob'  // 👈 Importante
-    });
+    return this.httpClient.post(`${this.api.sale}/generate-pdf/${id}`,{});
+    // return this.httpClient.post(`${this.api.sale}/generate-pdf/${id}`,{}, {
+    //   responseType: 'blob'  // 👈 Importante
+    // });
   }
 
   addClient$(params: any) {

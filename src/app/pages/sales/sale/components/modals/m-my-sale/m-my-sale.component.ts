@@ -61,18 +61,27 @@ export class MMySaleComponent implements OnInit {
     }
   }
   generatePdf(viewDownload:any) {
-    this.sSalesServ.generatePdf$(this.sale._id).subscribe((res:Blob) => {
-      // Crear blob
-      const blob = new Blob([res], { type: 'application/pdf' });
+    this.sSalesServ.generatePdf$(this.sale._id).subscribe((res:any) => {
+      console.log(res);
+      const base64Data = res.data;
+      const dataUrl = `data:application/pdf;base64,${base64Data}`;
 
-      // Crear enlace de descarga
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = this.sale?.client_name + '-CARMIART.pdf'; // Nombre del archivo
-      a.click();
-      window.URL.revokeObjectURL(url);
+// Abrir en nueva ventana
+      window.open(dataUrl);
     }, () => {this.loading = false}, () => {this.loading = false});
+
+    // this.sSalesServ.generatePdf$(this.sale._id).subscribe((res:Blob) => {
+    //   // Crear blob
+    //   const blob = new Blob([res], { type: 'application/pdf' });
+    //
+    //   // Crear enlace de descarga
+    //   const url = window.URL.createObjectURL(blob);
+    //   const a = document.createElement('a');
+    //   a.href = url;
+    //   a.download = this.sale?.client_name + '-CARMIART.pdf'; // Nombre del archivo
+    //   a.click();
+    //   window.URL.revokeObjectURL(url);
+    // }, () => {this.loading = false}, () => {this.loading = false});
 
 
     // const newArray = [];

@@ -63,11 +63,17 @@ export class MMySaleComponent implements OnInit {
   generatePdf(viewDownload:any) {
     this.sSalesServ.generatePdf$(this.sale._id).subscribe((res:any) => {
       console.log(res);
-      const base64Data = res.data;
-      const dataUrl = `data:application/pdf;base64,${base64Data}`;
+      if (res.success) {
+        const base64Data = res.data;
 
-// Abrir en nueva ventana
-      window.open(dataUrl);
+        const byteCharacters = atob(base64Data);
+        const byteNumbers = new Array(byteCharacters.length).fill(0).map((_, i) => byteCharacters.charCodeAt(i));
+        const byteArray = new Uint8Array(byteNumbers);
+        const blob = new Blob([byteArray], { type: 'application/pdf' });
+
+        const url = URL.createObjectURL(blob);
+        window.open(url);
+      }
     }, () => {this.loading = false}, () => {this.loading = false});
 
     // this.sSalesServ.generatePdf$(this.sale._id).subscribe((res:Blob) => {

@@ -9,7 +9,7 @@ import {catchError, Observable, tap, throwError} from 'rxjs';
 import {NbGlobalPhysicalPosition, NbGlobalPosition, NbIconConfig, NbToastrService} from "@nebular/theme";
 import { status } from './status-messages';
 
-const showStatusCodes = [400, 500, 403, 404, 202, 422, 409, 0, 405];
+const showStatusCodes = [400, 401, 500, 403, 404, 202, 422, 409, 0, 405];
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {

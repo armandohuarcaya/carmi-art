@@ -98,7 +98,7 @@
   <nb-card-footer class="text-center">
     <button nbButton size="small" status="info" (click)="generatePdf('VIEW')" [disabled]="!sale">Ver doc.<nb-icon icon="eye"></nb-icon></button>&nbsp;
     <button nbButton size="small" status="success" (click)="generatePdf('DOWNLOAD')" [disabled]="!sale">Descargar doc.<nb-icon icon="download"></nb-icon></button>
-    <span *ngIf="sale?.status === 'PENDING'">
+    <span *ngIf="sale?.status !== 'PROCESSED'">
       &nbsp;<button nbButton size="small" status="danger" (click)="finishSale('CANCELED')">Anular<nb-icon icon="close-circle-outline"></nb-icon></button>&nbsp;
       <button nbButton size="small" status="primary" (click)="editSale()">Editar<nb-icon icon="edit"></nb-icon></button>&nbsp;
       <button nbButton size="small" status="primary" (click)="finishSale('PROCESSED')" [disabled]="sale.pay_method === 'NONE'">Finalizar venta<nb-icon icon="save"></nb-icon></button>

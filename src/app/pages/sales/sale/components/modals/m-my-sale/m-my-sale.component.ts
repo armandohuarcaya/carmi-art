@@ -8,6 +8,7 @@ import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { DialogConfimComponent } from 'src/app/shared/components/dialog-confim/dialog-confim.component';
 import { STATUS, TYPE_PAY } from '../../static/json';
 import { SSalesService } from '../../../services/s-sales.service';
+import { ViewPdfBase64Component } from 'src/app/shared/components/view-pdf-base64/view-pdf-base64.component';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
@@ -61,17 +62,21 @@ export class MMySaleComponent implements OnInit {
     }
   }
   generatePdf(viewDownload:any) {
-    this.sSalesServ.generatePdf$(this.sale._id).subscribe((res:Blob) => {
+    this.loading = true;
+    this.sSalesServ.generatePdf$(this.sale._id).subscribe((res:any) => {
+      // this.sSalesServ.generatePdf$(this.sale._id).subscribe((res:Blob) => {
+      console.log(res);
+      if (res.success) {
+        this.openPdf(res.data, 'base65');
+      }
       // Crear blob
-      const blob = new Blob([res], { type: 'application/pdf' });
-
-      // Crear enlace de descarga
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = this.sale?.client_name + '-CARMIART.pdf'; // Nombre del archivo
-      a.click();
-      window.URL.revokeObjectURL(url);
+      // const blob = new Blob([res], { type: 'application/pdf' });
+      // const url = window.URL.createObjectURL(blob);
+      // const a = document.createElement('a');
+      // a.href = url;
+      // a.download = this.sale?.client_name + '-CARMIART.pdf'; // Nombre del archivo
+      // a.click();
+      // window.URL.revokeObjectURL(url);
     }, () => {this.loading = false}, () => {this.loading = false});
 
 
@@ -144,6 +149,22 @@ export class MMySaleComponent implements OnInit {
     // } else {
     //   pdf.open();
     // }
+  }
+  openPdf(file:any, type:any) {
+    this.nbDialogService.open(ViewPdfBase64Component, {
+      dialogClass: 'dialog-limited-height',
+      context: {
+        archivo: file,
+        type: type
+      },
+      closeOnBackdropClick: false,
+      closeOnEsc: false,
+    })
+    .onClose.subscribe((result:any) => {
+      if (result) {
+
+      }
+    });
   }
   finishSale(option:any) {
     // if (this.datos_pedido.id_persona !== this.user.id_persona) {

@@ -34,6 +34,7 @@ export class SaleHomeComponent implements OnInit {
       client_name: ['', [Validators.required]],
       customer_id: ['', [Validators.required]],
       client_place: ['', [Validators.required]],
+      note: [''],
 
       date: [new Date(), [Validators.required]],
       pay_method: ['NONE'],
@@ -186,7 +187,8 @@ console.log('forms',forms);
           pay_method: forms.pay_method,
           price_total: Number(forms.price_total) || 0,
           status: option,
-          details: array
+          details: array,
+          note: forms.note,
         }
         if (result.isConfirmed && array.length>0) {
           // console.log(params);
@@ -242,7 +244,8 @@ console.log('forms',forms);
           pay_method: forms.pay_method,
           price_total: forms.price_total,
           status: option,
-          details: array
+          details: array,
+          note: forms.note,
         }
         if (result.isConfirmed && array.length>0 && this.formHeaders.value._id_venta) {
           // console.log(params);
@@ -342,6 +345,7 @@ console.log('forms',forms);
       customer_id: $event.customer_id,
       client_name: $event.client_name,
       client_place: $event.client_place,
+      note: $event.note,
       date: new Date(),
       pay_method: $event.pay_method,
       gasto_envio: 0,
@@ -409,10 +413,10 @@ console.log('forms',forms);
       // size: 100,
       filter: forms.client_name,
       page: 1,
-      pageSize: 20,
+      size: 20,
     }
     this.sSalesServ.listClient$(params).subscribe((res:any) => {
-      this.clients$ = res.data && res.data.data || [];
+      this.clients$ = res.data || [];
       if (this.clients$.length>0) {
         const input:any = document.getElementsByClassName('person_addd');
         input[0].click();

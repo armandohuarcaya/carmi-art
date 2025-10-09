@@ -178,7 +178,7 @@
                                       </div>
                                       <div class="row">
                                           <div class="col-md-12">
-                                              <label class="label">Procedéncia:</label><br>
+                                              <label class="label">Procedencia:</label><br>
                                               <div>
                                                   <input type="text" nbInput fieldSize="medium" fullWidth formControlName="client_place" placeholder="Lugar" [readOnly]="true">
                                               </div>
@@ -190,6 +190,19 @@
                                                       <nb-option *ngFor="let item of typePay" [value]="item.code">{{item.name}}</nb-option>
                                                   </nb-select>
                                               </div>
+                                          </div>
+                                          <div class="col-md-12">
+                                            <label class="label">Nota:</label><br>
+                                            <div>
+                                                <textarea nbInput
+                                                          fieldSize="small"
+                                                          fullWidth
+                                                          formControlName="note"
+                                                          placeholder="Nota"
+                                                          [readOnly]="false"
+                                                          rows="4">
+                                                </textarea>
+                                            </div>
                                           </div>
                                       </div>
                                   </form>

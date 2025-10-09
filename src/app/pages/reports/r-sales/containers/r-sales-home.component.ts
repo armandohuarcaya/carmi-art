@@ -67,7 +67,7 @@ export class RSalesHomeComponent implements OnInit {
       this.sales = res.data || [];
       if (this.sales.length>0) {
         this.sales.map((r:any) => {
-          r.sale_date = this.datepipe.transform(new Date(), 'dd/MM/yyyy hh:mm:ss a');
+          r.sale_date = this.datepipe.transform(r.sale_date, 'dd/MM/yyyy hh:mm:ss a');
         });
       }
       console.table(this.sales);

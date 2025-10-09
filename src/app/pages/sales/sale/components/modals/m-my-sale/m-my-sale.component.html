@@ -71,8 +71,8 @@
                   <tbody>
                       <tr *ngFor="let item of sale?.details; let i = index" style="font-size: 10px; font-weight: bold;">
                           <td>{{i+1}}</td>
-                          <td>{{item.product?.code || item.product?.code_original}}</td>
-                          <td>{{item.product?.name}}</td>
+                          <td>{{item.product?.code_original || item.product?.code}}</td>
+                          <td>{{item.product?.category?.name + ' - ' + item.product?.name}}</td>
                           <!-- <td>{{item.barcode}}</td> -->
                           <td>{{item.product?.measure}}</td>
                           <td style="text-align: right;">{{item.price | currency: ' '}}</td>
@@ -90,11 +90,15 @@
           </div>
       </nb-card-body>
   </nb-card>
+    <div class="col-md-12">
+      <label class="label">Nota:&nbsp;&nbsp;</label>
+      <input type="text" nbInput fullWidth fieldSize="small" [(ngModel)]="sale.note" [readOnly]="sale?.status !== 'PENDING'">
+    </div>
   </nb-card-body>
   <nb-card-footer class="text-center">
     <button nbButton size="small" status="info" (click)="generatePdf('VIEW')" [disabled]="!sale">Ver doc.<nb-icon icon="eye"></nb-icon></button>&nbsp;
     <button nbButton size="small" status="success" (click)="generatePdf('DOWNLOAD')" [disabled]="!sale">Descargar doc.<nb-icon icon="download"></nb-icon></button>
-    <span *ngIf="sale?.status === 'PENDING'">
+    <span *ngIf="sale?.status !== 'PROCESSED'">
       &nbsp;<button nbButton size="small" status="danger" (click)="finishSale('CANCELED')">Anular<nb-icon icon="close-circle-outline"></nb-icon></button>&nbsp;
       <button nbButton size="small" status="primary" (click)="editSale()">Editar<nb-icon icon="edit"></nb-icon></button>&nbsp;
       <button nbButton size="small" status="primary" (click)="finishSale('PROCESSED')" [disabled]="sale.pay_method === 'NONE'">Finalizar venta<nb-icon icon="save"></nb-icon></button>

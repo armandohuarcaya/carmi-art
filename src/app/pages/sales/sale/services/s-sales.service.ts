@@ -26,13 +26,19 @@ export class SSalesService {
   updateSale$(id:any, params: any) {
     return this.httpClient.put(`${this.api.sale}/${id}`, params);
   }
+  updateStatusSale$(id:any, params: any) {
+    return this.httpClient.put(`${this.api.sale}/status/${id}`, params);
+  }
   search$(params: any) {
     return this.httpClient.get(`${this.api.product}/search`, {params});
   }
+  // generatePdf$(id:any) {
+  //   return this.httpClient.post(`${this.api.sale}/generate-pdf/${id}`,{}, {
+  //     responseType: 'blob'  // 👈 Importante
+  //   });
+  // }
   generatePdf$(id:any) {
-    return this.httpClient.post(`${this.api.sale}/generate-pdf/${id}`,{}, {
-      responseType: 'blob'  // 👈 Importante
-    });
+    return this.httpClient.post(`${this.api.sale}/generate-pdf/${id}`,{});
   }
 
   addClient$(params: any) {

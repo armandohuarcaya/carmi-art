@@ -26,6 +26,7 @@
                   <th scope="col" data-label="Tipo pago">Tipo de pago</th>
                   <th scope="col" data-label="Total">Total</th>
                   <th scope="col" data-label="Fecha">Fecha</th>
+                  <th scope="col" data-label="Flujo" style="width: 1px;">Flujo</th>
                   <th scope="col" data-label="Estado" style="width: 1px;">Estado</th>
                   <th scope="col" data-label="Acciones" style="width: 1px;">Acciones</th>
               </tr>
@@ -38,6 +39,14 @@
                   <td>{{getTypePays(item.pay_method)}}</td>
                   <td>{{item.price_total | currency: ' '}}</td>
                   <td>{{item.created_at | date: 'dd/MM/yyyy HH:mm:ss'}}</td>
+                  <td class="text-center">
+                    <nb-select size="small" style="min-width: 150px"
+                               [(ngModel)]="item.status"
+                               (ngModelChange)="onStatusChange(item)"
+                               [disabled]="item.status === 'PROCESSED'">
+                      <nb-option *ngFor="let status of getAvailableStatus(item.status)" [value]="status.code">{{status.name}}</nb-option>
+                    </nb-select>
+                  </td>
                   <td class="text-center">
                     <nb-icon [icon]="getStatus(item?.status)?.icon" [status]="getStatus(item?.status)?.color"></nb-icon></td>
                   <td style="width: 1px;" class="text-center">

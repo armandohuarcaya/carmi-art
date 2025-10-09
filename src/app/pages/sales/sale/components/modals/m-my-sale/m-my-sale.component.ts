@@ -8,6 +8,7 @@ import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { DialogConfimComponent } from 'src/app/shared/components/dialog-confim/dialog-confim.component';
 import { STATUS, TYPE_PAY } from '../../static/json';
 import { SSalesService } from '../../../services/s-sales.service';
+import { ViewPdfBase64Component } from 'src/app/shared/components/view-pdf-base64/view-pdf-base64.component';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
@@ -61,19 +62,44 @@ export class MMySaleComponent implements OnInit {
     }
   }
   generatePdf(viewDownload:any) {
+    this.loading = true;
     this.sSalesServ.generatePdf$(this.sale._id).subscribe((res:any) => {
-      console.log(res);
+      // console.log(res);
       if (res.success) {
-        const base64Data = res.data;
+        if (viewDownload==='DOWNLOAD') {
+          const base64Data = res.data;
 
-        const byteCharacters = atob(base64Data);
-        const byteNumbers = new Array(byteCharacters.length).fill(0).map((_, i) => byteCharacters.charCodeAt(i));
-        const byteArray = new Uint8Array(byteNumbers);
-        const blob = new Blob([byteArray], { type: 'application/pdf' });
+          const byteCharacters = atob(base64Data);
+          const byteNumbers = new Array(byteCharacters.length).fill(0).map((_, i) => byteCharacters.charCodeAt(i));
+          const byteArray = new Uint8Array(byteNumbers);
+          const blob = new Blob([byteArray], { type: 'application/pdf' });
 
-        const url = URL.createObjectURL(blob);
-        window.open(url);
+
+          const link = document.createElement('a');
+          const url = URL.createObjectURL(blob);
+          link.href = url;
+          link.download = 'carmi-art.pdf';
+          link.click();
+
+          // Limpieza del objeto URL
+          window.URL.revokeObjectURL(url);
+          // window.open(url);
+        } else {
+          this.openPdf(res.data, 'base64');
+        }
       }
+      // console.log(res);
+      // if (res.success) {
+      //   const base64Data = res.data;
+
+      //   const byteCharacters = atob(base64Data);
+      //   const byteNumbers = new Array(byteCharacters.length).fill(0).map((_, i) => byteCharacters.charCodeAt(i));
+      //   const byteArray = new Uint8Array(byteNumbers);
+      //   const blob = new Blob([byteArray], { type: 'application/pdf' });
+
+      //   const url = URL.createObjectURL(blob);
+      //   window.open(url);
+      // }
     }, () => {this.loading = false}, () => {this.loading = false});
 
     // this.sSalesServ.generatePdf$(this.sale._id).subscribe((res:Blob) => {
@@ -159,6 +185,22 @@ export class MMySaleComponent implements OnInit {
     // } else {
     //   pdf.open();
     // }
+  }
+  openPdf(file:any, type:any) {
+    this.nbDialogService.open(ViewPdfBase64Component, {
+      dialogClass: 'dialog-limited-height',
+      context: {
+        archivo: file,
+        type: type
+      },
+      closeOnBackdropClick: false,
+      closeOnEsc: false,
+    })
+    .onClose.subscribe((result:any) => {
+      if (result) {
+
+      }
+    });
   }
   finishSale(option:any) {
     // if (this.datos_pedido.id_persona !== this.user.id_persona) {

@@ -12,6 +12,7 @@ import { PdfSalesModule } from 'src/app/shared/components/generate-pdf/pdf-sales
 import { VMySaleComponent } from './components/views/v-my-sale/v-my-sale.component';
 import { MMySaleComponent } from './components/modals/m-my-sale/m-my-sale.component';
 import { MClientSaleComponent } from './components/modals/m-client-sale/m-client-sale.component';
+import { ViewPdfBase64Module } from 'src/app/shared/components/view-pdf-base64/view-pdf-base64.module';
 
 
 const ANGULAR: any[] = [CommonModule, FormsModule, ReactiveFormsModule];
@@ -48,7 +49,8 @@ const NEBULAR: any[] = [
     ...ANGULAR,
     ...NEBULAR,
     DialogConfimModule,
-    PdfSalesModule
+    PdfSalesModule,
+    ViewPdfBase64Module
   ]
 })
 export class SaleModule { }

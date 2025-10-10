@@ -11,6 +11,7 @@ import { Subscription, map } from 'rxjs';
   styleUrls: ['./scaffold.component.scss']
 })
 export class ScaffoldComponent implements OnInit {
+  copyright = atob('Q3JlYXRlIGJ5IEBDcmlzdGlhbiBIdWFyY2F5YSAyMDI0'); // CH
   loading: boolean = false;
   isLessThanXl = false;
   MENU_ITEMS: NbMenuItem[] = [

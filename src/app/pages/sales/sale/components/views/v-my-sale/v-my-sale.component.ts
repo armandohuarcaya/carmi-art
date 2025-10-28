@@ -58,7 +58,7 @@ export class VMySaleComponent implements OnInit {
       // size: 100,
       size: forms.per_page,
       page: forms.page,
-      name: forms.name
+      filter: forms.name
     };
     if (forms.status) {
       params.status = forms.status

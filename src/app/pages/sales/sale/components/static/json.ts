@@ -101,6 +101,11 @@ export const TYPE_PAY = [
     name: 'Tarjeta de crédito',
     code: 'CREDIT_CARD',
     id: '5',
+  },
+  {
+    name: 'Depósito',
+    code: 'DEPOSIT',
+    id: '6',
   }
 ];
 export const OTHERS = [];

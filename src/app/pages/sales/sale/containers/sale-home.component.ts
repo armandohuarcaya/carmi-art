@@ -41,6 +41,7 @@ export class SaleHomeComponent implements OnInit {
       gasto_envio: [0, [Validators.required]],
       price_parcial: [0, [Validators.required]],
       price_total: [0, [Validators.required]],
+      partial_pay: [0],
       pay: [''],
       turned: [0],
       page: [1],
@@ -93,7 +94,7 @@ export class SaleHomeComponent implements OnInit {
       // size: 100,
       size: forms.per_page,
       page: forms.page,
-      name_code_filter: forms.name_producto
+      filter: forms.name_producto
     }
     this.sSalesServ.search$(params).subscribe((res:any) => {
       this.products$ = res.data || [];
@@ -185,6 +186,7 @@ console.log('forms',forms);
           client_place: forms.client_place,
           date: this.datepipe.transform(forms.date, 'yyyy-MM-dd'),
           pay_method: forms.pay_method,
+          partial_pay: Number(forms.partial_pay) || 0,
           price_total: Number(forms.price_total) || 0,
           status: option,
           details: array,
@@ -259,6 +261,13 @@ console.log('forms',forms);
           }
       });
     // }
+  }
+  inputPayTotal() {
+    if (this.formHeaders.value.partial_pay) {
+      this.formHeaders.controls['price_total'].setValue(Number(this.formHeaders.value.price_parcial) - Number(this.formHeaders.value.partial_pay));
+    } else {
+      this.formHeaders.controls['price_total'].setValue(Number(this.formHeaders.value.price_parcial));
+    }
   }
   inputPay() {
     if (this.formHeaders.value.pay) {

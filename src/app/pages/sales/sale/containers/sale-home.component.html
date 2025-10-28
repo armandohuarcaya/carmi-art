@@ -111,11 +111,17 @@
                                           </div>
                                       </div>
                                       <br>
+<!--                                      <div class="row">-->
+<!--                                          <label class="label col-md-3">Gastos envío:</label>-->
+<!--                                          <div class="col-md-9" style="text-align: right; font-size: 15px; font-weight: bold;">-->
+<!--                                              S/. {{formHeaders.value.gasto_envio | currency: ' '}}-->
+<!--                                          </div>-->
+<!--                                      </div>-->
                                       <div class="row">
-                                          <label class="label col-md-3">Gastos envío:</label>
-                                          <div class="col-md-9" style="text-align: right; font-size: 15px; font-weight: bold;">
-                                              S/. {{formHeaders.value.gasto_envio | currency: ' '}}
-                                          </div>
+                                        <label class="label col-md-3">Anticipo:</label>
+                                        <div class="col-md-9" style="text-align: right; font-size: 15px; font-weight: bold;">
+                                          <input type="number" status="success" class="text-center" nbInput fieldSize="medium" fullWidth formControlName="partial_pay" placeholder="Anticipo" (input)="inputPayTotal()">
+                                        </div>
                                       </div>
                                       <br>
                                       <div class="row">
@@ -125,20 +131,20 @@
                                           </div>
                                       </div>
                                       <br>
-                                      <div class="row">
-                                          <div class="col-md-6">
-                                              <label class="label">Paga con:</label><br>
-                                              <div>
-                                                  <input type="number" status="success" class="text-center" nbInput fieldSize="medium" fullWidth formControlName="pay" placeholder="Paga" (input)="inputPay()">
-                                              </div>
-                                          </div>
-                                          <div class="col-md-6">
-                                              <label class="label" [ngStyle]="{'color': formHeaders.value.turned>=0 ? '': 'red'}">{{formHeaders.value.turned>=0 ? 'Vuelto': 'Falta pagar'}}:</label><br>
-                                              <div>
-                                                  <input type="number" status="success" class="text-center" nbInput fieldSize="medium" fullWidth formControlName="turned" placeholder="Vuelto" [readOnly]="true" style="color: red;">
-                                              </div>
-                                          </div>
-                                      </div>
+<!--                                      <div class="row">-->
+<!--                                          <div class="col-md-6">-->
+<!--                                              <label class="label">Paga con:</label><br>-->
+<!--                                              <div>-->
+<!--                                                  <input type="number" status="success" class="text-center" nbInput fieldSize="medium" fullWidth formControlName="pay" placeholder="Paga" (input)="inputPay()">-->
+<!--                                              </div>-->
+<!--                                          </div>-->
+<!--                                          <div class="col-md-6">-->
+<!--                                              <label class="label" [ngStyle]="{'color': formHeaders.value.turned>=0 ? '': 'red'}">{{formHeaders.value.turned>=0 ? 'Vuelto': 'Falta pagar'}}:</label><br>-->
+<!--                                              <div>-->
+<!--                                                  <input type="number" status="success" class="text-center" nbInput fieldSize="medium" fullWidth formControlName="turned" placeholder="Vuelto" [readOnly]="true" style="color: red;">-->
+<!--                                              </div>-->
+<!--                                          </div>-->
+<!--                                      </div>-->
                                       <div class="row">
                                           <div class="col-md-12">
                                               <label class="label">Fecha:</label><br>

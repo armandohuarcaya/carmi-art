@@ -59,31 +59,37 @@
                   <thead>
                       <tr style="font-size: 12px !important;">
                           <th scope="col" data-label="#">#</th>
+                          <th scope="col" data-label="Cantidad" class="text-center">Cantidad</th>
                           <th scope="col" data-label="Código">Código</th>
                           <th scope="col" data-label="Nombre">Nombre</th>
-                          <!-- <th style="width: 1px;">Tipo</th> -->
                           <th scope="col" data-label="Medida">Medida</th>
-                          <th scope="col" data-label="Precio" style="text-align: right;">Precio</th>
-                          <th scope="col" data-label="Cantidad" class="text-center">Cantidad</th>
-                          <th scope="col" data-label="Sub Total" style="text-align: right;">Sub. Total</th>
+                          <th scope="col" data-label="Precio" style="text-align: right;">P. Unitario</th>
+                          <th scope="col" data-label="Sub Total" style="text-align: right;">Imp. de Venta</th>
                       </tr>
                   </thead>
                   <tbody>
-                      <tr *ngFor="let item of sale?.details; let i = index" style="font-size: 10px; font-weight: bold;">
+                      <tr *ngFor="let item of sale?.details; let i = index" style="font-size: 10px;">
                           <td>{{i+1}}</td>
+                          <td class="text-center">{{item.amount}}</td>
                           <td>{{item.product?.code_original || item.product?.code}}</td>
                           <td>{{item.product?.category?.name + ' - ' + item.product?.name}}</td>
-                          <!-- <td>{{item.barcode}}</td> -->
                           <td>{{item.product?.measure}}</td>
                           <td style="text-align: right;">{{item.price | currency: ' '}}</td>
-                          <td class="text-center">{{item.amount}}</td>
                           <td style="text-align: right;">{{item.price_total  | currency: ' '}}</td>
                       </tr>
                   </tbody>
                   <tfoot>
-                    <tr>
-                      <th colspan="6"></th>
+                    <tr *ngIf="sale?.partial_pay > 0">
+                      <th style="text-align: right;" colspan="6">Sub Total</th>
                       <th style="text-align: right;">{{sale?.price_total | currency: ' '}}</th>
+                    </tr>
+                    <tr *ngIf="sale?.partial_pay > 0">
+                      <th style="text-align: right;" colspan="6">Anticipo</th>
+                      <th style="text-align: right;">{{sale?.partial_pay | currency: ' '}}</th>
+                    </tr>
+                    <tr>
+                      <th style="text-align: right;" colspan="6">Importe Total</th>
+                      <th style="text-align: right;">{{(sale?.price_total - sale?.partial_pay) | currency: ' '}}</th>
                     </tr>
                   </tfoot>
               </table>

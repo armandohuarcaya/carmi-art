@@ -60,7 +60,7 @@ export class RSalesHomeComponent implements OnInit {
       date_end: this.datepipe.transform(forms.date_end, 'yyyy-MM-dd'),
       size: forms.per_page,
       page: forms.page,
-      name_code_filter: forms.search
+      filter: forms.search
     };
     this.loading = true;
     this.sRSalesServ.sales$(params).subscribe((res:any) => {

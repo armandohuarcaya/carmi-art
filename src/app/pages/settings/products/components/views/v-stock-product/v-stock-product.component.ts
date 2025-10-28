@@ -70,7 +70,7 @@ export class VStockProductComponent implements OnInit {
       // size: 100,
       size: forms.per_page,
       page: forms.page,
-      name_code_filter: forms.name_producto
+      filter: forms.name_producto
     }
     this.sProductsServ.search$(params).subscribe((res:any) => {
       this.products$ = res.data || [];

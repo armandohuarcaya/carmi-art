@@ -245,6 +245,7 @@ console.log('forms',forms);
           date: this.datepipe.transform(forms.date, 'yyyy-MM-dd'),
           pay_method: forms.pay_method,
           price_total: forms.price_total,
+          partial_pay: forms.partial_pay,
           status: option,
           details: array,
           note: forms.note,
@@ -349,6 +350,7 @@ console.log('forms',forms);
     }
   }
   saleEdit($event:any) {
+    console.log('chulls', $event);
     this.tabSelected = 'VENDER';
     this.formHeaders.patchValue({
       customer_id: $event.customer_id,
@@ -358,8 +360,9 @@ console.log('forms',forms);
       date: new Date(),
       pay_method: $event.pay_method,
       gasto_envio: 0,
-      price_parcial: 0,
-      price_total: $event.price_total,
+      partial_pay: $event.partial_pay,
+      price_parcial: $event.price_total,
+      price_total: $event.price_total - $event.partial_pay,
       _id_venta: $event._id,
     });
     const array = [];

@@ -21,51 +21,23 @@ export const STATUS = [
     color: 'danger'
   },
   {
-    name: 'Pendiente de pago',
-    code: 'PENDING_PAYMENT',
-    id: '4',
-    icon: 'alert-triangle-outline',
-    color: 'warning'
-  },
-  {
     name: 'Pago parcial',
     code: 'PARTIALLY_PAID',
-    id: '5',
+    id: '4',
     icon: 'alert-triangle-outline',
     color: 'warning'
   },
   {
     name: 'Pagado',
     code: 'PAID',
-    id: '6',
-    icon: 'alert-triangle-outline',
-    color: 'warning'
-  },
-  {
-    name: 'Pendiente de entrega',
-    code: 'PENDING_DELIVERY',
-    id: '7',
+    id: '5',
     icon: 'alert-triangle-outline',
     color: 'warning'
   },
   {
     name: 'Reembolsado',
     code: 'REFUNDED',
-    id: '8',
-    icon: 'alert-triangle-outline',
-    color: 'warning'
-  },
-  {
-    name: 'Prepración de pedido',
-    code: 'PROCESSING',
-    id: '9',
-    icon: 'alert-triangle-outline',
-    color: 'warning'
-  },
-  {
-    name: 'Entregado',
-    code: 'DELIVERED',
-    id: '10',
+    id: '6',
     icon: 'alert-triangle-outline',
     color: 'warning'
   },

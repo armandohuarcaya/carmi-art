@@ -37,7 +37,7 @@
     <hr>
     <div class="row">
       <div class="col-md-6">
-        <label class="label">Fecha:&nbsp;&nbsp;</label> <strong>{{sale?.created_at | date: 'dd/MM/yyyy HH:mm:ss'}}</strong>
+        <label class="label">Fecha:&nbsp;&nbsp;</label> <strong>{{sale?.created_at | date: 'dd/MM/yyyy'}}</strong>
       </div>
       <div class="col-md-6">
         <label class="label">Total:&nbsp;&nbsp;</label> <strong>{{sale?.price_total | currency: ' '}}</strong>
@@ -59,21 +59,21 @@
                   <thead>
                       <tr style="font-size: 12px !important;">
                           <th scope="col" data-label="#">#</th>
-                          <th scope="col" data-label="Cantidad" class="text-center">Cantidad</th>
                           <th scope="col" data-label="Código">Código</th>
                           <th scope="col" data-label="Nombre">Nombre</th>
                           <th scope="col" data-label="Medida">Medida</th>
+                          <th scope="col" data-label="Cantidad" class="text-center">Cantidad</th>
                           <th scope="col" data-label="Precio" style="text-align: right;">P. Unitario</th>
-                          <th scope="col" data-label="Sub Total" style="text-align: right;">Imp. de Venta</th>
+                          <th scope="col" data-label="Sub Total" style="text-align: right;">Importe</th>
                       </tr>
                   </thead>
                   <tbody>
                       <tr *ngFor="let item of sale?.details; let i = index" style="font-size: 10px;">
                           <td>{{i+1}}</td>
-                          <td class="text-center">{{item.amount}}</td>
                           <td>{{item.product?.code_original || item.product?.code}}</td>
                           <td>{{item.product?.category?.name + ' - ' + item.product?.name}}</td>
                           <td>{{item.product?.measure}}</td>
+                          <td class="text-center">{{item.amount}}</td>
                           <td style="text-align: right;">{{item.price | currency: ' '}}</td>
                           <td style="text-align: right;">{{item.price_total  | currency: ' '}}</td>
                       </tr>

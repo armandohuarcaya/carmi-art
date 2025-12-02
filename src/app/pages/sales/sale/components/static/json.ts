@@ -41,6 +41,13 @@ export const STATUS = [
     icon: 'alert-triangle-outline',
     color: 'warning'
   },
+  {
+    name: 'Pre Venta',
+    code: 'PRE_SALE',
+    id: '7',
+    icon: 'alert-triangle-outline',
+    color: 'warning'
+  },
 ];
 
 export const TYPE_PAY = [

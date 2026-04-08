@@ -47,11 +47,8 @@
     <nb-card status="info">
       <nb-card-header class="d-flex align-items-center justify-content-between">
         <strong>
-          DETALLE DE VENTA
+          DETALLE DE VENTA <span class="sale-code-badge-light">{{sale.code}}</span>
         </strong>
-        <span>
-          <!-- <button nbButton size="tiny" status="warning" (click)="generatePdf()" [disabled]="carrito?.length<=0">Pdf</button> -->
-        </span>
       </nb-card-header>
       <nb-card-body>
           <div class="nb-scrollbars">

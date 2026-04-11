@@ -56,7 +56,7 @@ export class ProductsHomeComponent implements OnInit {
       filter: forms.search
     };
     this.loading = true;
-    this.sProductsServ.products$(params).subscribe((res:any) => {
+    this.sProductsServ.search$(params).subscribe((res:any) => {
       this.products = res.data || [];
       // console.log(this.products);
       setTimeout(() => {

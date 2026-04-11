@@ -65,6 +65,8 @@
           <thead>
               <tr>
                   <th scope="col" data-label="#">#</th>
+                  <th scope="col" data-label="Código">Código</th>
+                  <th scope="col" data-label="Documento">Documento</th>
                   <th scope="col" data-label="Cliente">Cliente</th>
                   <th scope="col" data-label="Procedencia">Procedencia</th>
                   <th scope="col" data-label="Fecha">Fecha</th>
@@ -76,6 +78,8 @@
           <tbody>
               <tr *ngFor="let item of sales; let i = index">
                   <td data-label="#">{{i+1}}</td>
+                  <td>{{item.sale_code}}</td>
+                  <td>{{item.sale_client_document}}</td>
                   <td>{{item.sale_client_name}}</td>
                   <td>{{item.sale_client_place}}</td>
                   <td>{{item.sale_date}}</td>

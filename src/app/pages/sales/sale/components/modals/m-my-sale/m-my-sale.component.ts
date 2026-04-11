@@ -23,7 +23,7 @@ export class MMySaleComponent implements OnInit {
     value: ''
   };
   @Input() item:any = '';
-  sale:any = '';
+  sale:any = {};
   typePay:any = TYPE_PAY;
   status:any = STATUS;
   totales:any = {
@@ -31,7 +31,10 @@ export class MMySaleComponent implements OnInit {
     cantidad: 0,
     subTotal: 0
   };
-  constructor(public activeModal: NbDialogRef<MMySaleComponent>, private sSalesServ: SSalesService, private datepipe: DatePipe, private nbDialogService: NbDialogService) { }
+  constructor(public activeModal: NbDialogRef<MMySaleComponent>,
+              private readonly sSalesServ: SSalesService,
+              private readonly datepipe: DatePipe,
+              private readonly nbDialogService: NbDialogService) { }
   ngOnInit(): void {
     this.getMySale();
   }

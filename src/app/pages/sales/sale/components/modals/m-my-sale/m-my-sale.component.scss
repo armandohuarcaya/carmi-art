@@ -33,3 +33,9 @@
   box-shadow: 0 1px 3px rgba(0,0,0,0.2); /* Sombra suave para dar profundidad */
   text-transform: uppercase;   /* Opcional: si quieres el código siempre en mayúsculas */
 }
+
+.tag-compact {
+  font-size: 0.7rem;
+  padding: 2px 6px;
+  line-height: 1;
+}

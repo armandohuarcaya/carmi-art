@@ -1,0 +1,41 @@
+.product-option-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 4px 0;
+}
+
+.product-info {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.product-main-text {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.product-secondary-text {
+  font-size: 0.75rem;
+  color: var(--text-hint-color); /* Gris tenue de Nebular */
+}
+
+.product-stats {
+  text-align: right;
+  min-width: 100px;
+}
+
+.badge-stock {
+  font-size: 0.7rem;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.price-text {
+  display: block;
+  color: var(--color-success-500); /* Verde para el precio */
+  font-weight: bold;
+  font-size: 0.85rem;
+}

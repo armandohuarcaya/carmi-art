@@ -72,7 +72,7 @@ export class VStockProductComponent implements OnInit {
       page: forms.page,
       filter: forms.name_producto
     }
-    this.sProductsServ.search$(params).subscribe((res:any) => {
+    this.sProductsServ.products$(params).subscribe((res:any) => {
       this.products$ = res.data || [];
       if (this.products$.length>0) {
         this.products$.map((r:any) => {
@@ -119,5 +119,28 @@ export class VStockProductComponent implements OnInit {
         this.carrito = [];
       }
     }, () => this.loading=false, () => this.loading=false);
+  }
+
+  setSizeMeasure(product: any) {
+    let sizeMeasure = product.measure;
+
+    if (product.size) {
+      switch (product.size) {
+        case 'SMALL':
+          sizeMeasure = 'PEQUEÑO' + ' ' + product.measure;
+          break;
+        case 'MEDIUM':
+          sizeMeasure = 'MEDIANO' + ' ' + product.measure;
+          break;
+        case 'BIG':
+          sizeMeasure = 'GRANDE' + ' ' + product.measure;
+          break;
+        case 'STANDARD':
+          sizeMeasure = 'ESTÁNDAR' + ' ' + product.measure;
+          break;
+      }
+    }
+
+    return sizeMeasure.trim();
   }
 }

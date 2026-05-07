@@ -1,67 +1,71 @@
 <nb-card class="scrollModal" style="width: 900px;" [nbSpinner]="loading" status="primary">
   <nb-card-header style="position: relative;">
     <div class="d-flex align-items-center justify-content-between">
-      <div>
+      <div class="d-flex align-items-center gap-2">
         <nb-icon icon="shopping-cart-outline" status="success"></nb-icon>
-        MI VENTA
-      </div>
-      <button nbButton outline status="basic" size="tiny" (click)="closeModal()">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <br>
-    <nb-badge [text]="getStatus(sale?.status)?.name" [status]="getStatus(sale?.status)?.color"
-              position="bottom end"></nb-badge>
-  </nb-card-header>
-  <nb-card-body>
-    <div class="row g-3">
-      <div class="col-md-4">
-        <label class="label">DNI:</label>
-        <input type="text" nbInput fullWidth fieldSize="small"
-               [(ngModel)]="sale?.customer.document"
-               [readOnly]="sale?.status !== 'PENDING'">
-        <!--         <strong>{{sale?.customer.document}}</strong>-->
-      </div>
-      <div class="col-md-4">
-        <label class="label">Cliente:</label>
-        <input type="text" nbInput fullWidth fieldSize="small"
-               [(ngModel)]="sale.customer.fullname"
-               [readOnly]="sale?.status !== 'PENDING'">
-        <!-- <strong>{{sale?.client_name}}</strong> -->
-      </div>
-      <div class="col-md-4">
-        <label class="label">Procedencia:</label>
-        <input type="text" nbInput fullWidth fieldSize="small"
-               [(ngModel)]="sale.client_place"
-               [readOnly]="sale?.status !== 'PENDING'">
-        <!-- <strong>{{sale?.client_place}}</strong> -->
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-6">
-        <label class="label">Tipo de pago:</label> <br>
-        <nb-select placeholder="Tipo" size="small" fullWidth
-                   [(ngModel)]="sale.pay_method"
-                   [disabled]="sale?.status !== 'PENDING'">
-          <nb-option *ngFor="let item of typePay" [value]="item.code">{{ item.name }}
-          </nb-option>
-        </nb-select>
-      </div>
-    </div>
-<!--    <hr class="my-4">-->
-    <hr>
-    <div class="row align-items-center">
-      <div class="col-md-6 d-flex align-items-center gap-2">
-        <span class="label">Fecha:</span>
-        <nb-tag status="basic" appearance="outline" [text]="sale?.created_at | date: 'dd/MM/yyyy'"></nb-tag>
+        <span>MI VENTA</span>
       </div>
 
-      <div class="col-md-6 d-flex align-items-center gap-2">
-        <span class="label">Total:</span>
-        <h5 class="m-0 text-primary">{{ sale?.price_total | currency: 'S/ ' }}</h5>
+      <div class="d-flex align-items-center gap-2">
+        <nb-tag
+          class="tag-compact"
+          [text]="getStatus(sale?.status)?.name"
+          [status]="getStatus(sale?.status)?.color">
+        </nb-tag>
+
+        <button nbButton outline status="basic" size="tiny" (click)="closeModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
     </div>
-    <hr>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="card shadow-sm px-3 py-2">
+      <div class="row align-items-top g-2">
+        <!-- CLIENTE -->
+        <div class="col-md-6">
+          <div class="d-flex flex-column">
+            <small class="text-muted">Cliente</small>
+            <span class="fw-semibold text-truncate">
+              {{ sale?.customer.fullname || '-' }}
+            </span>
+            <small class="text-muted text-truncate">
+              {{ sale?.customer.address || '-' }}
+            </small>
+            <small class="text-muted text-truncate">
+              {{ sale?.customer.document || '-' }}
+            </small>
+          </div>
+        </div>
+        <!-- INFO VENTA -->
+        <div class="col-md-3">
+          <div class="d-flex flex-column">
+            <small class="text-muted">Orden de Pedido</small>
+            <span class="fw-semibold text-truncate">
+              {{ sale?.code }}
+            </span>
+            <small class="text-muted text-truncate">
+              {{ sale?.created_at | date: 'dd/MM/yyyy' }}
+            </small>
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <div class="d-flex flex-column">
+            <small class="text-muted">Tipo de pago</small>
+            <nb-select placeholder="Pago" size="tiny"
+                       [(ngModel)]="sale.pay_method"
+                       [disabled]="sale?.status === 'PROCESSED'">
+              <nb-option *ngFor="let item of typePay" [value]="item.code">
+                {{ item.name }}
+              </nb-option>
+            </nb-select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="my-2">
     <nb-card status="info">
       <nb-card-header class="d-flex align-items-center justify-content-between">
         <strong>
@@ -95,7 +99,7 @@
             </tbody>
             <tfoot>
             <tr *ngIf="sale?.partial_pay > 0">
-              <th style="text-align: right;" colspan="6">Sub Total</th>
+              <th style="text-align: right;" colspan="6">Total</th>
               <th style="text-align: right;">{{ sale?.price_total | currency: ' ' }}</th>
             </tr>
             <tr *ngIf="sale?.partial_pay > 0">
@@ -111,10 +115,9 @@
         </div>
       </nb-card-body>
     </nb-card>
-    <div class="col-md-12">
-      <label class="label">Nota:&nbsp;&nbsp;</label>
-      <input type="text" nbInput fullWidth fieldSize="small" [(ngModel)]="sale.note"
-             [readOnly]="sale?.status !== 'PENDING'">
+    <div *ngIf="sale?.note">
+      <span class="fw-semibold text-truncate">Nota: </span>
+      <small class="text-muted">{{ sale?.note }}</small>
     </div>
   </nb-card-body>
   <nb-card-footer class="text-center">
@@ -123,10 +126,11 @@
     </button>&nbsp;
     <button nbButton size="small" status="success" (click)="generatePdf('DOWNLOAD')" [disabled]="!sale">Descargar doc.
       <nb-icon icon="download"></nb-icon>
-    </button>
+    </button>&nbsp;
     <span *ngIf="sale?.status !== 'PROCESSED'">
-      &nbsp;<button nbButton size="small" status="danger" (click)="finishSale('CANCELED')">Anular<nb-icon
-      icon="close-circle-outline"></nb-icon></button>&nbsp;
+<!--      <button nbButton size="small" status="danger" (click)="finishSale('CANCELED')">Anular-->
+<!--        <nb-icon icon="close-circle-outline"></nb-icon>-->
+<!--      </button>&nbsp;-->
       <button nbButton size="small" status="primary" (click)="editSale()">Editar<nb-icon icon="edit"></nb-icon></button>&nbsp;
       <button nbButton size="small" status="primary" (click)="finishSale('PROCESSED')"
               [disabled]="sale.pay_method === 'NONE'">Finalizar venta<nb-icon icon="save"></nb-icon></button>

@@ -3,7 +3,20 @@ import { CommonModule } from '@angular/common';
 
 import { ProductsRoutingModule } from './products-routing.module';
 import { ProductsHomeComponent } from './containers/products-home.component';
-import { NbAutocompleteModule, NbButtonModule, NbCardModule, NbCheckboxModule, NbDialogModule, NbFormFieldModule, NbIconModule, NbInputModule, NbSelectModule, NbSpinnerModule, NbTabsetModule } from '@nebular/theme';
+import {
+    NbAutocompleteModule,
+    NbButtonModule,
+    NbCardModule,
+    NbCheckboxModule,
+    NbDialogModule,
+    NbFormFieldModule,
+    NbIconModule,
+    NbInputModule,
+    NbSelectModule,
+    NbSpinnerModule,
+    NbTabsetModule,
+    NbTagModule
+} from '@nebular/theme';
 import { PaginationsModule } from 'src/app/shared/components/paginations/paginations.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MShoppingComponent } from './components/modals/m-shopping/m-shopping.component';
@@ -32,12 +45,13 @@ const NEBULAR: any[] = [
     MProductComponent,
     VStockProductComponent
   ],
-  imports: [
-    ProductsRoutingModule,
-    PaginationsModule,
-    AddFileModule,
-    ...ANGULAR,
-    ...NEBULAR
-  ]
+    imports: [
+        ProductsRoutingModule,
+        PaginationsModule,
+        AddFileModule,
+        ...ANGULAR,
+        ...NEBULAR,
+        NbTagModule
+    ]
 })
 export class ProductsModule { }

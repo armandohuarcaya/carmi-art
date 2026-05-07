@@ -25,7 +25,7 @@ export class SaleHomeComponent implements OnInit {
   loading: boolean = false;
   typePay: any = TYPE_PAY;
   pdf: boolean = false;
-  tabSelected: any = 'VENDER';
+  tabSelected: any = 'VENTAS';
 
   constructor(private sSalesServ: SSalesService, private formBuilder: FormBuilder, private nbDialogService: NbDialogService, private datepipe: DatePipe) {
   }
@@ -109,7 +109,7 @@ export class SaleHomeComponent implements OnInit {
       page: forms.page,
       filter: forms.name_producto
     }
-    this.sSalesServ.search$(params).subscribe((res: any) => {
+    this.sSalesServ.products$(params).subscribe((res: any) => {
       this.products$ = res.data || [];
       if (this.products$.length > 0) {
         this.products$.map((r: any) => {
@@ -383,7 +383,6 @@ export class SaleHomeComponent implements OnInit {
   }
 
   saleEdit($event: any) {
-    console.log('chulls', $event);
     this.tabSelected = 'VENDER';
     this.formHeaders.patchValue({
       customer_id: $event.customer_id,

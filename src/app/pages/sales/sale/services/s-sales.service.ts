@@ -32,6 +32,9 @@ export class SSalesService {
   search$(params: any) {
     return this.httpClient.get(`${this.api.product}/search`, {params});
   }
+  products$(params: any) {
+    return this.httpClient.get(`${this.api.product}`, {params});
+  }
   // generatePdf$(id:any) {
   //   return this.httpClient.post(`${this.api.sale}/generate-pdf/${id}`,{}, {
   //     responseType: 'blob'  // 👈 Importante

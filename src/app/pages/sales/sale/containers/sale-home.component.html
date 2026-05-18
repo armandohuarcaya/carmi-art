@@ -47,7 +47,7 @@
                     <div class="product-info">
                       <span class="product-main-text">
                         {{ option?.name }}
-                        <small class="text-hint">({{ this.setSizeMeasure(option) }})</small>
+                        <small class="text-hint">({{ setSizeMeasure(option) }})</small>
                       </span>
                       <span class="product-secondary-text">
                         <strong>{{ option?.code_original }}</strong> | SKU: {{ option?.code }}
@@ -172,12 +172,12 @@
                              [nbAutocomplete]="completeCli"
                              [formControl]="formHeaders.controls['client_name']"
                              (input)="inputKeyAutocompleteClient($event)"
-                             (keydown.enter)="filtersClient()"/>
-                      <button nbSuffix nbButton ghost size="small" status="warning" (click)="filtersClient()">
+                             (keydown.enter)="filtersClient()" class="person_addd"/>
+                      <button nbSuffix nbButton size="small" status="warning" (click)="filtersClient()" [disabled]="formHeaders.value.client_name">
                         <nb-icon icon="search-outline" pack="eva"></nb-icon>
                       </button>
                     </nb-form-field>
-                    <nb-autocomplete #completeCli size="small">
+                    <nb-autocomplete #completeCli size="large">
                       <nb-option *ngFor="let option of clients$"
                                  [value]="(option.name + ' ' + option?.lastname)"
                                  (click)="changeAutocompleteClient(option)"
@@ -227,7 +227,7 @@
                     </button>
                   </div>
                   <div *ngIf="formHeaders.value.pay_method !== 'NONE'">
-                    <button nbButton size="small" status="success" fullWidth
+                    <button nbButton size="small" status="primary" fullWidth
                             [disabled]="carrito.length<=0 || formHeaders.invalid" (click)="saveSales('PROCESSED')">
                       Registrar venta
                     </button>
@@ -241,7 +241,7 @@
                     </button>
                   </div>
                   <div *ngIf="formHeaders.value.pay_method !== 'NONE'">
-                    <button nbButton size="small" status="success" fullWidth
+                    <button nbButton size="small" status="primary" fullWidth
                             [disabled]="carrito.length<=0 || formHeaders.invalid" (click)="updateSales('PROCESSED')">
                       Registrar venta
                     </button>

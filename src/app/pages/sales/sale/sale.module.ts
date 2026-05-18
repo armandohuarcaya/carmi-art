@@ -51,7 +51,8 @@ const NEBULAR: any[] = [
   NbTabsetModule,
   NbRadioModule,
   NbBadgeModule,
-  NbAlertModule
+  NbAlertModule,
+  NbTagModule
 ];
 
 @NgModule({

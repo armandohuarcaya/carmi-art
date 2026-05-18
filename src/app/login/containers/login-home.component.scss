@@ -1,6 +1,6 @@
 
   .found {
-    background-image: url('https://wallpapers.com/images/hd/dark-theme-background-8xlni5mkdutatc7r.jpg');
+    background-image: url('https://img.freepik.com/vector-premium/fondo-tecnologia-circuito-sistema-conexion-datos-digitales-alta-tecnologia-diseno-electronico-computadora_29971-656.jpg');
     // background-image: url(../../../assets/imgs/IntiPaz2023.png);
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -9,15 +9,24 @@
     object-fit: cover;
     // background-size: contain;
   }
-// nb-layout-column  {
-//     margin: 0;
-//     padding: 0;
-//     height: 100vh;
-//     display: flex;
-//     justify-content: center;
-//     align-items: center;
-// }
+nb-layout-column  {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.card-transparente {
+  background: rgba(255, 255, 255, 0.2); // transparencia
+  backdrop-filter: blur(10px); // opcional efecto glass
+  border: 1px solid rgba(255,255,255,0.1);
 
+  nb-card-header,
+  nb-card-body {
+    background: transparent;
+  }
+}
 .alings  {
     margin: 0;
     padding: 0;

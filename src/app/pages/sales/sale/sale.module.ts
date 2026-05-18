@@ -4,7 +4,25 @@ import { CommonModule } from '@angular/common';
 import { SaleRoutingModule } from './sale-routing.module';
 import { SaleHomeComponent } from './containers/sale-home.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NbAlertModule, NbAutocompleteModule, NbBadgeModule, NbButtonModule, NbCardModule, NbCheckboxModule, NbDatepickerModule, NbDialogModule, NbFormFieldModule, NbIconModule, NbInputModule, NbListModule, NbRadioModule, NbSelectModule, NbSpinnerModule, NbTabsetModule } from '@nebular/theme';
+import {
+    NbAlertModule,
+    NbAutocompleteModule,
+    NbBadgeModule,
+    NbButtonModule,
+    NbCardModule,
+    NbCheckboxModule,
+    NbDatepickerModule,
+    NbDialogModule,
+    NbFormFieldModule,
+    NbIconModule,
+    NbInputModule,
+    NbListModule,
+    NbRadioModule,
+    NbSelectModule,
+    NbSpinnerModule,
+    NbTabsetModule,
+    NbTagModule
+} from '@nebular/theme';
 import { NbDateFnsDateModule } from '@nebular/date-fns';
 import { PaginationsModule } from 'src/app/shared/components/paginations/paginations.module';
 import { DialogConfimModule } from 'src/app/shared/components/dialog-confim/dialog-confim.module';
@@ -33,7 +51,8 @@ const NEBULAR: any[] = [
   NbTabsetModule,
   NbRadioModule,
   NbBadgeModule,
-  NbAlertModule
+  NbAlertModule,
+  NbTagModule
 ];
 
 @NgModule({
@@ -43,14 +62,15 @@ const NEBULAR: any[] = [
     SaleHomeComponent,
     MClientSaleComponent
   ],
-  imports: [
-    SaleRoutingModule,
-    PaginationsModule,
-    ...ANGULAR,
-    ...NEBULAR,
-    DialogConfimModule,
-    PdfSalesModule,
-    ViewPdfBase64Module
-  ]
+    imports: [
+        SaleRoutingModule,
+        PaginationsModule,
+        ...ANGULAR,
+        ...NEBULAR,
+        DialogConfimModule,
+        PdfSalesModule,
+        ViewPdfBase64Module,
+        NbTagModule
+    ]
 })
 export class SaleModule { }

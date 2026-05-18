@@ -1,13 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NbDialogService } from '@nebular/theme';
-import { DatePipe } from '@angular/common';
-import { DialogConfimComponent } from 'src/app/shared/components/dialog-confim/dialog-confim.component';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {NbDialogService} from '@nebular/theme';
+import {DatePipe} from '@angular/common';
+import {DialogConfimComponent} from 'src/app/shared/components/dialog-confim/dialog-confim.component';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
-import { TYPE_PAY } from '../components/static/json';
-import { SSalesService } from '../services/s-sales.service';
-import { MClientSaleComponent } from '../components/modals/m-client-sale/m-client-sale.component';
+import {TYPE_PAY} from '../components/static/json';
+import {SSalesService} from '../services/s-sales.service';
+import {MClientSaleComponent} from '../components/modals/m-client-sale/m-client-sale.component';
+import {TYPE_SIZE} from "../../../settings/products/components/static/json";
+
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
@@ -17,18 +19,22 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
 })
 export class SaleHomeComponent implements OnInit {
   formHeaders: any = FormGroup;
-  products$:any = [];
-  clients$:any = [];
-  carrito:any = [];
-  loading:boolean = false;
-  typePay:any = TYPE_PAY;
+  products$: any = [];
+  clients$: any = [];
+  carrito: any = [];
+  loading: boolean = false;
+  typePay: any = TYPE_PAY;
   pdf: boolean = false;
-  tabSelected: any = 'VENDER';
-  constructor(private sSalesServ: SSalesService, private formBuilder: FormBuilder, private nbDialogService: NbDialogService, private datepipe: DatePipe) {}
+  tabSelected: any = 'VENTAS';
+
+  constructor(private sSalesServ: SSalesService, private formBuilder: FormBuilder, private nbDialogService: NbDialogService, private datepipe: DatePipe) {
+  }
+
   ngOnInit(): void {
     this.fieldReactive();
     // this.getProducts();
   }
+
   private fieldReactive() {
     const controls = {
       client_name: ['', [Validators.required]],
@@ -41,6 +47,7 @@ export class SaleHomeComponent implements OnInit {
       gasto_envio: [0, [Validators.required]],
       price_parcial: [0, [Validators.required]],
       price_total: [0, [Validators.required]],
+      partial_pay: [0],
       pay: [''],
       turned: [0],
       page: [1],
@@ -51,41 +58,48 @@ export class SaleHomeComponent implements OnInit {
     };
     this.formHeaders = this.formBuilder.group(controls);
   }
-  enterProducts():any {
+
+  enterProducts(): any {
     this.formHeaders.controls['page'].setValue(1);
     this.getProducts();
   }
+
   filters() {
     this.formHeaders.controls['page'].setValue(1);
     this.getProducts();
   }
-  inputKeyAutocomplete($event:any) {
+
+  inputKeyAutocomplete($event: any) {
     if (!this.formHeaders.value.name_producto) {
       this.clearProduct();
     }
   }
-  changeAutocomplete($event:any) {
+
+  changeAutocomplete($event: any) {
     if ($event && $event._id) {
       this.formHeaders.controls['_id'].setValue($event._id);
-      this.products$ = this.products$.filter((a:any) => a._id === $event._id);
+      this.products$ = this.products$.filter((a: any) => a._id === $event._id);
       this.addItem($event);
       this.clearProduct();
     } else {
-     this.clearProduct();
+      this.clearProduct();
     }
   }
-  colorAutocompleteSelect(option:any) {
+
+  colorAutocompleteSelect(option: any) {
     if (this.formHeaders.value._id === option._id) {
       return {'background': 'var(--color-primary-500)', 'color': 'white', 'font-size': '11px'};
     } else {
       return {'font-size': '11px'};
     }
   }
+
   clearProduct() {
     this.formHeaders.controls['name_producto'].setValue('');
     this.formHeaders.controls['_id'].setValue('');
     this.products$ = [];
   }
+
   getProducts() {
     const forms = this.formHeaders.value;
     const params = {
@@ -93,30 +107,33 @@ export class SaleHomeComponent implements OnInit {
       // size: 100,
       size: forms.per_page,
       page: forms.page,
-      name_code_filter: forms.name_producto
+      filter: forms.name_producto
     }
-    this.sSalesServ.search$(params).subscribe((res:any) => {
+    this.sSalesServ.products$(params).subscribe((res: any) => {
       this.products$ = res.data || [];
-      if (this.products$.length>0) {
-        this.products$.map((r:any) => {
+      if (this.products$.length > 0) {
+        this.products$.map((r: any) => {
           r.quantity = 1;
           r.subTotal = Number(r.quantity) * Number(r.price_pen);
         });
-        const input:any = document.getElementsByClassName('user_avatar');
+        const input: any = document.getElementsByClassName('user_avatar');
         input[0].click();
       }
     });
   }
-  addItem(item:any) {
+
+  addItem(item: any) {
     // this.person_id = JSON.parse(JSON.stringify(this.person_id));
     this.carrito.push(JSON.parse(JSON.stringify(item)));
     this.calcularCantidadPrecio();
   }
-  deleteCarr(item:any, i:any) {
+
+  deleteCarr(item: any, i: any) {
     this.carrito.splice(i, 1);
     this.calcularCantidadPrecio();
   }
-  changeCantidad(type:any, item:any) {
+
+  changeCantidad(type: any, item: any) {
     if (type === 'PLUS') {
       item.quantity = Number(item.quantity) + 1;
     } else {
@@ -124,13 +141,15 @@ export class SaleHomeComponent implements OnInit {
     }
     this.calcularCantidadPrecio();
   }
+
   changeBlur() {
     this.calcularCantidadPrecio();
   }
+
   calcularCantidadPrecio() {
     // let cantidad:any = 0;
     let precio = 0;
-    this.carrito.map((a:any) => {
+    this.carrito.map((a: any) => {
       a.subTotal = Number(a.quantity) * Number(a.price_pen);
       // cantidad = cantidad + a.quantity;
       precio = precio + a.subTotal;
@@ -143,123 +162,144 @@ export class SaleHomeComponent implements OnInit {
     });
     this.inputPay();
   }
-  saveSales(option:any) {
+
+  saveSales(option: any) {
     if (option === 'PENDING') {
       this.formHeaders.controls['pay_method'].setValue('NONE');
     }
     // if (this.datos_pedido.id_persona !== this.user.id_persona) {
-      this.nbDialogService.open(DialogConfimComponent, {
-        dialogClass: 'dialog-limited-height',
-        context: {
-          tittle: 'CONFIRMAR',
-          text: option === 'PROCESSED' ? '¿ Desea confirmar la venta ?' : 'Se guardará el registro como pendiente',
-          icon: 'save-outline',
-          colorIcon: 'success',
-          showCloseButton: true,
-          showCancelButton: true,
-          showConfirmButton: true,
-          confirmButtonColor: 'primary',
-          confirmButtonText: 'Si',
-          cancelButtonText: 'No',
-        },
-        closeOnBackdropClick: false,
-        closeOnEsc: false,
-      })
-      .onClose.subscribe((result:any) => {
-        const forms = this.formHeaders.value;
-        const array:any = [];
-        this.carrito.map((f:any) => {
-          const datos = {
-            product_id: f._id,
-            amount: Number(f.quantity) || 0,
-            price: Number(f.price_pen) || 0,
-            price_total: Number(f.subTotal) || 0,
-          };
-          array.push(datos);
-        });
-console.log('clients$',this.clients$);
-console.log('forms',forms);
-        const params = {
-          customer_id: forms.customer_id,
-          client_name: forms.client_name,
-          client_place: forms.client_place,
-          date: this.datepipe.transform(forms.date, 'yyyy-MM-dd'),
-          pay_method: forms.pay_method,
-          price_total: Number(forms.price_total) || 0,
-          status: option,
-          details: array,
-          note: forms.note,
-        }
-        if (result.isConfirmed && array.length>0) {
-          // console.log(params);
-            this.loading = true;
-            this.sSalesServ.addSale$(params).subscribe((res:any) => {
-              if (res.success) {
-                this.fieldReactive();
-                this.carrito = [];
-              }
-            }, () => {this.loading = false}, () => {this.loading = false});
-          }
+    this.nbDialogService.open(DialogConfimComponent, {
+      dialogClass: 'dialog-limited-height',
+      context: {
+        tittle: 'CONFIRMAR',
+        text: option === 'PROCESSED' ? '¿ Desea confirmar la venta ?' : 'Se guardará el registro como pendiente',
+        icon: 'save-outline',
+        colorIcon: 'success',
+        showCloseButton: true,
+        showCancelButton: true,
+        showConfirmButton: true,
+        confirmButtonColor: 'primary',
+        confirmButtonText: 'Si',
+        cancelButtonText: 'No',
+      },
+      closeOnBackdropClick: false,
+      closeOnEsc: false,
+    })
+      .onClose.subscribe((result: any) => {
+      const forms = this.formHeaders.value;
+      const array: any = [];
+      this.carrito.map((f: any) => {
+        const datos = {
+          product_id: f._id,
+          amount: Number(f.quantity) || 0,
+          price: Number(f.price_pen) || 0,
+          price_total: Number(f.subTotal) || 0,
+        };
+        array.push(datos);
       });
+      console.log('clients$', this.clients$);
+      console.log('forms', forms);
+      const params = {
+        customer_id: forms.customer_id,
+        client_name: forms.client_name,
+        client_place: forms.client_place,
+        date: this.datepipe.transform(forms.date, 'yyyy-MM-dd'),
+        pay_method: forms.pay_method,
+        partial_pay: Number(forms.partial_pay) || 0,
+        price_total: Number(forms.price_total) || 0,
+        status: option,
+        details: array,
+        note: forms.note,
+      }
+      if (result.isConfirmed && array.length > 0) {
+        // console.log(params);
+        this.loading = true;
+        this.sSalesServ.addSale$(params).subscribe((res: any) => {
+          if (res.success) {
+            this.fieldReactive();
+            this.carrito = [];
+          }
+        }, () => {
+          this.loading = false
+        }, () => {
+          this.loading = false
+        });
+      }
+    });
     // }
   }
-  updateSales(option:any) {
-    // if (this.datos_pedido.id_persona !== this.user.id_persona) {
-      this.nbDialogService.open(DialogConfimComponent, {
-        dialogClass: 'dialog-limited-height',
-        context: {
-          tittle: 'CONFIRMAR',
-          text: option === 'processed' ? '¿ Desea confirmar la venta ?' : 'Se guardará el registro como pendiente',
-          icon: 'save-outline',
-          colorIcon: 'success',
-          showCloseButton: true,
-          showCancelButton: true,
-          showConfirmButton: true,
-          confirmButtonColor: 'primary',
-          confirmButtonText: 'Si',
-          cancelButtonText: 'No',
-        },
-        closeOnBackdropClick: false,
-        closeOnEsc: false,
-      })
-      .onClose.subscribe((result:any) => {
-        const forms = this.formHeaders.value;
-        const array:any = [];
-        this.carrito.map((f:any) => {
-          const datos = {
-            product_id: f.sale_id ? f.product_id : f._id,
-            amount: Number(f.quantity) || 0,
-            price: Number(f.price_pen) || 0,
-            price_total: Number(f.subTotal) || 0,
-            _id: f.sale_id ? f._id : ''
-          };
-          array.push(datos);
-        });
 
-        const params = {
-          customer_id: forms.customer_id,
-          client_name: forms.client_name,
-          client_place: forms.client_place,
-          date: this.datepipe.transform(forms.date, 'yyyy-MM-dd'),
-          pay_method: forms.pay_method,
-          price_total: forms.price_total,
-          status: option,
-          details: array,
-          note: forms.note,
-        }
-        if (result.isConfirmed && array.length>0 && this.formHeaders.value._id_venta) {
-          // console.log(params);
-            this.loading = true;
-            this.sSalesServ.updateSale$(this.formHeaders.value._id_venta, params).subscribe((res:any) => {
-              if (res.success) {
-                this.fieldReactive();
-                this.carrito = [];
-              }
-            }, () => {this.loading = false}, () => {this.loading = false});
-          }
+  updateSales(option: any) {
+    // if (this.datos_pedido.id_persona !== this.user.id_persona) {
+    this.nbDialogService.open(DialogConfimComponent, {
+      dialogClass: 'dialog-limited-height',
+      context: {
+        tittle: 'CONFIRMAR',
+        text: option === 'processed' ? '¿ Desea confirmar la venta ?' : 'Se guardará el registro como pendiente',
+        icon: 'save-outline',
+        colorIcon: 'success',
+        showCloseButton: true,
+        showCancelButton: true,
+        showConfirmButton: true,
+        confirmButtonColor: 'primary',
+        confirmButtonText: 'Si',
+        cancelButtonText: 'No',
+      },
+      closeOnBackdropClick: false,
+      closeOnEsc: false,
+    })
+      .onClose.subscribe((result: any) => {
+      const forms = this.formHeaders.value;
+      const array: any = [];
+      this.carrito.map((f: any) => {
+        const datos = {
+          product_id: f.sale_id ? f.product_id : f._id,
+          amount: Number(f.quantity) || 0,
+          price: Number(f.price_pen) || 0,
+          price_total: Number(f.subTotal) || 0,
+          _id: f.sale_id ? f._id : ''
+        };
+        array.push(datos);
       });
+
+      const params = {
+        customer_id: forms.customer_id,
+        client_name: forms.client_name,
+        client_place: forms.client_place,
+        date: this.datepipe.transform(forms.date, 'yyyy-MM-dd'),
+        pay_method: forms.pay_method,
+        price_total: forms.price_total,
+        partial_pay: forms.partial_pay,
+        status: option,
+        details: array,
+        note: forms.note,
+      }
+      if (result.isConfirmed && array.length > 0 && this.formHeaders.value._id_venta) {
+        // console.log(params);
+        this.loading = true;
+        this.sSalesServ.updateSale$(this.formHeaders.value._id_venta, params).subscribe((res: any) => {
+          if (res.success) {
+            this.fieldReactive();
+            this.carrito = [];
+          }
+        }, () => {
+          this.loading = false
+        }, () => {
+          this.loading = false
+        });
+      }
+    });
     // }
   }
+
+  inputPayTotal() {
+    if (this.formHeaders.value.partial_pay) {
+      this.formHeaders.controls['price_total'].setValue(Number(this.formHeaders.value.price_parcial) - Number(this.formHeaders.value.partial_pay));
+    } else {
+      this.formHeaders.controls['price_total'].setValue(Number(this.formHeaders.value.price_parcial));
+    }
+  }
+
   inputPay() {
     if (this.formHeaders.value.pay) {
       this.formHeaders.controls['turned'].setValue(Number(this.formHeaders.value.pay) - Number(this.formHeaders.value.price_total));
@@ -267,12 +307,14 @@ console.log('forms',forms);
       this.formHeaders.controls['turned'].setValue(0);
     }
   }
+
   descargar() {
     this.pdf = true;
     setTimeout(() => {
       this.pdf = false;
     }, 100);
   }
+
   // generatePdf() {
   //   const newArray = [];
   //   this.carrito.map((a:any) => {
@@ -334,12 +376,13 @@ console.log('forms',forms);
   //   const pdf = pdfMake.createPdf(pdfGenerate);
   //   pdf.open();
   // }
-  tabChange($event:any) {
+  tabChange($event: any) {
     if ($event) {
       this.tabSelected = $event.tabId;
     }
   }
-  saleEdit($event:any) {
+
+  saleEdit($event: any) {
     this.tabSelected = 'VENDER';
     this.formHeaders.patchValue({
       customer_id: $event.customer_id,
@@ -349,12 +392,13 @@ console.log('forms',forms);
       date: new Date(),
       pay_method: $event.pay_method,
       gasto_envio: 0,
-      price_parcial: 0,
-      price_total: $event.price_total,
+      partial_pay: $event.partial_pay,
+      price_parcial: $event.price_total,
+      price_total: $event.price_total - $event.partial_pay,
       _id_venta: $event._id,
     });
     const array = [];
-    $event.details.map((f:any) => {
+    $event.details.map((f: any) => {
       const datos = {
         product_id: f.product_id,
         quantity: Number(f.amount) || 0,
@@ -373,39 +417,44 @@ console.log('forms',forms);
     this.carrito = array;
     // console.log($event);
   }
+
   clearVenta() {
     this.fieldReactive();
     this.carrito = [];
   }
 
   // cliente
-  inputKeyAutocompleteClient($event:any) {
+  inputKeyAutocompleteClient($event: any) {
     if (!this.formHeaders.value.client_name) {
       this.clearClient();
     }
   }
-  changeAutocompleteClient($event:any) {
+
+  changeAutocompleteClient($event: any) {
     if ($event && $event._id) {
       this.formHeaders.controls['customer_id'].setValue($event._id);
       this.formHeaders.controls['client_place'].setValue($event.address);
-      this.clients$ = this.clients$.filter((a:any) => a._id === $event._id);
+      this.clients$ = this.clients$.filter((a: any) => a._id === $event._id);
     } else {
-     this.clearClient();
+      this.clearClient();
     }
   }
-  colorAutocompleteSelectClient(option:any) {
+
+  colorAutocompleteSelectClient(option: any) {
     if (this.formHeaders.value.customer_id === option._id) {
       return {'background': 'var(--color-primary-500)', 'color': 'white', 'font-size': '11px'};
     } else {
       return {'font-size': '11px'};
     }
   }
+
   clearClient() {
     this.formHeaders.controls['client_name'].setValue('');
     this.formHeaders.controls['customer_id'].setValue('');
     this.formHeaders.controls['client_place'].setValue('');
     this.clients$ = [];
   }
+
   getClient() {
     const forms = this.formHeaders.value;
     const params = {
@@ -415,19 +464,21 @@ console.log('forms',forms);
       page: 1,
       size: 20,
     }
-    this.sSalesServ.listClient$(params).subscribe((res:any) => {
+    this.sSalesServ.listClient$(params).subscribe((res: any) => {
       this.clients$ = res.data || [];
-      if (this.clients$.length>0) {
-        const input:any = document.getElementsByClassName('person_addd');
+      if (this.clients$.length > 0) {
+        const input: any = document.getElementsByClassName('person_addd');
         input[0].click();
       }
     });
   }
+
   filtersClient() {
     // this.formHeaders.controls['page'].setValue(1);
     this.getClient();
   }
-  openClient(item:any, type:any) {
+
+  openClient(item: any, type: any) {
     this.clearClient();
     this.nbDialogService.open(MClientSaleComponent, {
       dialogClass: 'dialog-limited-height',
@@ -438,12 +489,35 @@ console.log('forms',forms);
       closeOnBackdropClick: false,
       closeOnEsc: false,
     })
-    .onClose.subscribe((result:any) => {
+      .onClose.subscribe((result: any) => {
       if (result && result.close === 'ok') {
         this.formHeaders.controls['customer_id'].setValue(result.value._id);
         this.formHeaders.controls['client_name'].setValue(result.value.name + ' ' + result.value.lastname);
         this.formHeaders.controls['client_place'].setValue(result.value.address);
       }
     });
+  }
+
+  setSizeMeasure(product: any) {
+    let sizeMeasure = product.measure;
+
+    if (product.size) {
+      switch (product.size) {
+        case 'SMALL':
+          sizeMeasure = 'PEQUEÑO' + ' ' + product.measure;
+          break;
+        case 'MEDIUM':
+          sizeMeasure = 'MEDIANO' + ' ' + product.measure;
+          break;
+        case 'BIG':
+          sizeMeasure = 'GRANDE' + ' ' + product.measure;
+          break;
+        case 'STANDARD':
+          sizeMeasure = 'ESTÁNDAR' + ' ' + product.measure;
+          break;
+      }
+    }
+
+    return sizeMeasure.trim();
   }
 }

@@ -1,0 +1,41 @@
+.sale-code-badge-outline {
+  font-size: 0.8rem;
+  font-weight: 400;             /* Peso normal para no competir con el 'strong' */
+  color: #ffffff;               /* Texto blanco */
+  border: 1px solid rgba(255, 255, 255, 0.7); /* Borde blanco semi-transparente */
+  padding: 2px 10px;
+  border-radius: 4px;           /* Bordes ligeramente redondeados */
+  margin-left: 10px;
+  background-color: rgba(255, 255, 255, 0.1); /* Fondo blanco casi invisible */
+  letter-spacing: 0.5px;        /* Un poco más de espacio entre letras */
+}
+
+.sale-code-badge-highlight {
+  font-size: 0.75rem;
+  font-weight: 700;             /* Negrita completa */
+  color: #333333;               /* Texto oscuro para contraste en amarillo */
+  background-color: #ffeb3b;    /* Amarillo vibrante (o #ffca28 para ámbar) */
+  padding: 3px 8px;
+  border-radius: 4px;
+  margin-left: 8px;
+  vertical-align: baseline;
+}
+
+.sale-code-badge-light {
+  font-size: 0.75rem;          /* Más pequeño (aprox 12px si la base es 16px) */
+  font-weight: 600;            /* Semi-negrita para legibilidad al ser pequeño */
+  color: #8c1c8c;              /* Un tono oscuro derivado del magenta base */
+  background-color: #ffffff;   /* Fondo blanco puro */
+  padding: 3px 8px;            /* Espaciado interno sutil */
+  border-radius: 12px;         /* Bordes muy redondeados (tipo pastilla) */
+  margin-left: 8px;            /* Separación del texto principal */
+  vertical-align: middle;      /* Alineación vertical central */
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2); /* Sombra suave para dar profundidad */
+  text-transform: uppercase;   /* Opcional: si quieres el código siempre en mayúsculas */
+}
+
+.tag-compact {
+  font-size: 0.7rem;
+  padding: 2px 6px;
+  line-height: 1;
+}

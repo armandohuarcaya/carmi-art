@@ -1,9 +1,7 @@
-import { HttpHeaders } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { NbMediaBreakpointsService, NbMenuItem, NbSidebarService, NbThemeService } from '@nebular/theme';
-import { Subscription, map } from 'rxjs';
-// import { GeneralService } from 'src/app/providers';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {NbMediaBreakpointsService, NbMenuItem, NbSidebarService, NbThemeService} from '@nebular/theme';
+import {map, Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-scaffold',
@@ -17,31 +15,31 @@ export class ScaffoldComponent implements OnInit {
   MENU_ITEMS: NbMenuItem[] = [
     {
       title: "Administrar",
-      icon: "settings-outline",
+      icon: "settings-2-outline",
       link: "/pages/settings",
       pathMatch: "prefix",
       children: [
         {
           title: "Productos",
-          icon: "sync-outline",
+          icon: "cube-outline",
           link: "/pages/settings/product",
           pathMatch: "prefix",
         },
         {
           title: "Marcas",
-          icon: "sync-outline",
+          icon: "pricetags-outline",
           link: "/pages/settings/brand",
           pathMatch: "prefix",
         },
         {
           title: "Categorías",
-          icon: "sync-outline",
+          icon: "grid-outline",
           link: "/pages/settings/category",
           pathMatch: "prefix",
         },
         {
           title: "Sub categoría",
-          icon: "sync-outline",
+          icon: "layers-outline",
           link: "/pages/settings/sub-category",
           pathMatch: "prefix",
         },
@@ -55,13 +53,13 @@ export class ScaffoldComponent implements OnInit {
     },
     {
       title: "Ventas",
-      icon: "settings-outline",
+      icon: "shopping-cart-outline",
       link: "/pages/sales",
       pathMatch: "prefix",
       children: [
         {
           title: "Ventas rápidas",
-          icon: "sync-outline",
+          icon: "flash-outline",
           link: "/pages/sales/sale",
           pathMatch: "prefix",
         },
@@ -69,23 +67,28 @@ export class ScaffoldComponent implements OnInit {
     },
     {
       title: "Reportes",
-      icon: "bar-chart-outline",
+      icon: "bar-chart-2-outline",
       link: "/pages/reports",
       pathMatch: "prefix",
       children: [
         {
           title: "Ventas",
-          icon: "shopping-bag-outline",
+          icon: "trending-up-outline",
           link: "/pages/reports/sale",
           pathMatch: "prefix",
         },
       ],
     },
   ];
-  user:any = '';
+  user: any = '';
   isMobile: boolean = false;
-  constructor(private router: Router, private _nbSidebarService: NbSidebarService, private _breakpointService: NbMediaBreakpointsService,
-    private _nbThemeService: NbThemeService) { }
+
+  constructor(private readonly router: Router,
+              private readonly _nbSidebarService: NbSidebarService,
+              private readonly _breakpointService: NbMediaBreakpointsService,
+              private readonly _nbThemeService: NbThemeService
+  ) {
+  }
 
   onLessThanXl(): Subscription {
     const {xl} = this._breakpointService.getBreakpointsMap();
@@ -95,20 +98,19 @@ export class ScaffoldComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const tok:any = localStorage.getItem('token') ? localStorage.getItem('token')?.split('.') : '';
+    const tok: any = localStorage.getItem('token') ? localStorage.getItem('token')?.split('.') : '';
     this.user = JSON.parse(atob(tok[1]));
     // console.log(this.user.user);
     this.isMobile = this.detectMobileDevice();
     console.log('¿Está usando un dispositivo móvil?', this.isMobile);
   }
+
   detectMobileDevice(): boolean {
     const userAgent = navigator.userAgent || navigator.vendor;
     // Detecta si el usuario está en un dispositivo móvil (iOS, Android, Windows Phone)
-    if (/android|iPad|iPhone|iPod|windows phone/i.test(userAgent)) {
-      return true;
-    }
-    return false;
+    return /android|iPad|iPhone|iPod|windows phone/i.test(userAgent);
   }
+
   logout() {
     // const serviceName = 'logout';
     // this.loading = true;
@@ -116,12 +118,13 @@ export class ScaffoldComponent implements OnInit {
     //   if (res.success) {
     //     localStorage.removeItem('user');
     //     setTimeout(() => {
-          localStorage.removeItem('token');
-          this.router.navigate(['/login']);
+    localStorage.removeItem('token');
+    this.router.navigate(['/login']);
     //     }, 100);
     //   }
     // }, () => this.loading = false, () => this.loading = false);
   }
+
   toggle(): boolean {
     this._nbSidebarService.toggle(true, 'core-sidebar');
     this.isLessThanXl = !this.isLessThanXl;

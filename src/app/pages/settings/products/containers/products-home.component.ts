@@ -53,7 +53,7 @@ export class ProductsHomeComponent implements OnInit {
       // size: 100,
       size: forms.per_page,
       page: forms.page,
-      name_code_filter: forms.search
+      filter: forms.search
     };
     this.loading = true;
     this.sProductsServ.products$(params).subscribe((res:any) => {

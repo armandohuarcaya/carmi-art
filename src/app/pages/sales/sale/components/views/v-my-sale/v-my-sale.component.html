@@ -21,6 +21,7 @@
           <thead>
               <tr style="font-size: 12px !important;">
                   <th scope="col" data-label="#" style="width: 1px;">#</th>
+                  <th scope="col" data-label="Cliente">Código</th>
                   <th scope="col" data-label="Cliente">Cliente</th>
                   <th scope="col" data-label="Procedencia">Procedencia</th>
                   <th scope="col" data-label="Tipo pago">Tipo de pago</th>
@@ -34,7 +35,8 @@
           <tbody>
               <tr *ngFor="let item of sales; let i = index" style="font-size: 12px;">
                   <td>{{i+1}}</td>
-                  <td>{{item.client_name}}</td>
+                  <td>{{item.code}}</td>
+                  <td>{{item.customer.fullname}}</td>
                   <td>{{item.client_place}}</td>
                   <td>{{getTypePays(item.pay_method)}}</td>
                   <td>{{item.price_total | currency: ' '}}</td>

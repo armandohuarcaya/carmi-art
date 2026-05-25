@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {NbMediaBreakpointsService, NbMenuItem, NbSidebarService, NbThemeService} from '@nebular/theme';
+import {NbMediaBreakpointsService, NbSidebarService, NbThemeService} from '@nebular/theme';
 import {map, Subscription} from 'rxjs';
+import {AppMenuItem} from "./menu-item.interface";
 
 @Component({
   selector: 'app-scaffold',
@@ -12,11 +13,38 @@ export class ScaffoldComponent implements OnInit {
   copyright = atob('Q3JlYXRlIGJ5IEBDcmlzdGlhbiBIdWFyY2F5YSAyMDI0'); // CH
   loading: boolean = false;
   isLessThanXl = false;
-  MENU_ITEMS: NbMenuItem[] = [
+  user: any = '';
+  superadmin: any = '';
+  userRoles: string[] = [];
+  filteredMenu: AppMenuItem[] = [];
+  isMobile: boolean = false;
+  MENU_ITEMS: AppMenuItem[] = [
     {
       title: "Administrar",
       icon: "settings-2-outline",
+      link: "/pages/admin",
+      roles: ['superadmin'],
+      pathMatch: "prefix",
+      children: [
+        {
+          title: "Usuarios",
+          icon: "people-outline",
+          link: "/pages/admin/user",
+          pathMatch: "prefix",
+        },
+        {
+          title: "Empresa",
+          icon: "pricetags-outline",
+          link: "/pages/admin/company",
+          pathMatch: "prefix",
+        },
+      ],
+    },
+    {
+      title: "Configuración",
+      icon: "settings-2-outline",
       link: "/pages/settings",
+      roles: ['admin'],
       pathMatch: "prefix",
       children: [
         {
@@ -55,6 +83,7 @@ export class ScaffoldComponent implements OnInit {
       title: "Ventas",
       icon: "shopping-cart-outline",
       link: "/pages/sales",
+      roles: ['admin', 'seller'],
       pathMatch: "prefix",
       children: [
         {
@@ -69,6 +98,7 @@ export class ScaffoldComponent implements OnInit {
       title: "Reportes",
       icon: "bar-chart-2-outline",
       link: "/pages/reports",
+      roles: ['admin'],
       pathMatch: "prefix",
       children: [
         {
@@ -80,13 +110,12 @@ export class ScaffoldComponent implements OnInit {
       ],
     },
   ];
-  user: any = '';
-  isMobile: boolean = false;
 
-  constructor(private readonly router: Router,
-              private readonly _nbSidebarService: NbSidebarService,
-              private readonly _breakpointService: NbMediaBreakpointsService,
-              private readonly _nbThemeService: NbThemeService
+  constructor(
+    private readonly router: Router,
+    private readonly _nbSidebarService: NbSidebarService,
+    private readonly _breakpointService: NbMediaBreakpointsService,
+    private readonly _nbThemeService: NbThemeService
   ) {
   }
 
@@ -100,9 +129,15 @@ export class ScaffoldComponent implements OnInit {
   ngOnInit(): void {
     const tok: any = localStorage.getItem('token') ? localStorage.getItem('token')?.split('.') : '';
     this.user = JSON.parse(atob(tok[1]));
-    // console.log(this.user.user);
+
+    this.superadmin = this.user.user.super_admin;
+    this.userRoles = this.user.user.roles.map(
+      (r: any) => r.role_id.slug
+    );
+    if (this.superadmin) this.userRoles.push('superadmin');
+    this.filteredMenu = this.filterMenu(this.MENU_ITEMS);
+
     this.isMobile = this.detectMobileDevice();
-    console.log('¿Está usando un dispositivo móvil?', this.isMobile);
   }
 
   detectMobileDevice(): boolean {
@@ -129,5 +164,38 @@ export class ScaffoldComponent implements OnInit {
     this._nbSidebarService.toggle(true, 'core-sidebar');
     this.isLessThanXl = !this.isLessThanXl;
     return false;
+  }
+
+  hasRole(roles?: string[]): boolean {
+
+    if (!roles || roles.length === 0) {
+      return true;
+    }
+
+    return this.userRoles.some(
+      role => roles.includes(role)
+    );
+  }
+
+  filterMenu(items: AppMenuItem[]): AppMenuItem[] {
+
+    return items
+      .filter(item => this.hasRole(item.roles))
+      .map(item => {
+
+        const filteredChildren = item.children
+          ? this.filterMenu(item.children)
+          : undefined;
+
+        return {
+          ...item,
+          children: filteredChildren,
+        };
+      })
+      .filter(item => {
+
+        return item.link ||
+          (item.children && item.children.length > 0);
+      });
   }
 }

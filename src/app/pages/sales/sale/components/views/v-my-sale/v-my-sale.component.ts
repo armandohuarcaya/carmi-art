@@ -1,11 +1,9 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { NbDialogService } from '@nebular/theme';
-import { GeneralService } from 'src/app/providers';
-import { END_POINTS } from 'src/app/providers/utils';
-import { MMySaleComponent } from '../../modals/m-my-sale/m-my-sale.component';
-import { STATUS, TYPE_PAY } from '../../static/json';
-import { SSalesService } from '../../../services/s-sales.service';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
+import {NbDialogService} from '@nebular/theme';
+import {MMySaleComponent} from '../../modals/m-my-sale/m-my-sale.component';
+import {STATUS, TYPE_PAY} from '../../static/json';
+import {SSalesService} from '../../../services/s-sales.service';
 
 @Component({
   selector: 'art-v-my-sale',
@@ -15,17 +13,27 @@ import { SSalesService } from '../../../services/s-sales.service';
 export class VMySaleComponent implements OnInit {
   formHeaders: any = FormGroup;
   @Output() editSale: EventEmitter<any> = new EventEmitter();
-  sales:any = [];
-  paginate:any = '';
-  loading:boolean = false;
-  typePay:any = TYPE_PAY;
-  status:any = STATUS;
-  constructor(private sSalesServ: SSalesService, private formBuilder: FormBuilder, private nbDialogService: NbDialogService) {}
+  sales: any = [];
+  paginate: any = '';
+  loading: boolean = false;
+  typePay: any = TYPE_PAY;
+  status: any = STATUS;
+  isMobile: boolean = false;
+
+  constructor(
+    private readonly sSalesServ: SSalesService,
+    private readonly formBuilder: FormBuilder,
+    private readonly nbDialogService: NbDialogService
+  ) {
+  }
+
   ngOnInit(): void {
     this.fieldReactive();
     this.getMySales();
+    this.isMobile = this.detectMobileDevice();
     // this.getYears();
   }
+
   private fieldReactive() {
     const controls = {
       name: [''],
@@ -35,27 +43,30 @@ export class VMySaleComponent implements OnInit {
     };
     this.formHeaders = this.formBuilder.group(controls);
   }
-  get page():any {
+
+  get page(): any {
     return this.formHeaders.get('page') as FormControl;
   }
-  changePerPage($event:any) {
+
+  changePerPage($event: any) {
     this.formHeaders.controls['per_page'].setValue($event);
     this.formHeaders.controls['page'].setValue(1);
     this.getMySales();
   }
-  changePagePaginations($event:any) {
+
+  changePagePaginations($event: any) {
     this.formHeaders.controls['page'].setValue($event);
     this.getMySales();
   }
+
   filters() {
     this.formHeaders.controls['page'].setValue(1);
     this.getMySales();
   }
+
   getMySales() {
     const forms = this.formHeaders.value;
-    const params:any = {
-      // page: 1,
-      // size: 100,
+    const params: any = {
       size: forms.per_page,
       page: forms.page,
       filter: forms.name
@@ -64,7 +75,7 @@ export class VMySaleComponent implements OnInit {
       params.status = forms.status
     }
     this.loading = true;
-    this.sSalesServ.listSale$(params).subscribe((res:any) => {
+    this.sSalesServ.listSale$(params).subscribe((res: any) => {
       this.sales = res.data || [];
       setTimeout(() => {
         this.setPaginate(res);
@@ -72,7 +83,8 @@ export class VMySaleComponent implements OnInit {
       // this.articuloServ.push({nombre: 'Prueba', codigo: '2010', id_articulo: 1})
     }, () => this.loading = false, () => this.loading = false);
   }
-  setPaginate(values:any) {
+
+  setPaginate(values: any) {
 
     // const next = values.next_page_url ? values.next_page_url.split('=') : [];
     // const previus = values.prev_page_url ? values.prev_page_url.split('=') : [];
@@ -84,20 +96,22 @@ export class VMySaleComponent implements OnInit {
       pages: values.pages,
       perPage: values.pageSize,
       nextPage: (Number(values.pageNum) < Number(values.pages)) ? Number(values.pageNum) + 1 : null,
-      previousPage:  (Number(values.pageNum) > 1) ? Number(values.pages) - 1 : null,
+      previousPage: (Number(values.pageNum) > 1) ? Number(values.pages) - 1 : null,
       total: values.total,
       data: values.data
     }
   }
-  getTypePays(code:any) {
-    const type = this.typePay.find((r:any) => r.code === code);
+
+  getTypePays(code: any) {
+    const type = this.typePay.find((r: any) => r.code === code);
     if (type) {
       return type.name;
     } else {
       return 'Otros';
     }
   }
-  openSale(item:any) {
+
+  openSale(item: any) {
     this.nbDialogService.open(MMySaleComponent, {
       dialogClass: 'dialog-limited-height',
       context: {
@@ -106,7 +120,7 @@ export class VMySaleComponent implements OnInit {
       closeOnBackdropClick: false,
       closeOnEsc: false,
     })
-    .onClose.subscribe((result:any) => {
+      .onClose.subscribe((result: any) => {
       if (result && result.close === 'ok') {
         this.formHeaders.controls['page'].setValue(1);
         this.getMySales();
@@ -117,8 +131,9 @@ export class VMySaleComponent implements OnInit {
       }
     });
   }
-  getStatus(code:any) {
-    const st = this.status.find((r:any) => r.code === code);
+
+  getStatus(code: any) {
+    const st = this.status.find((r: any) => r.code === code);
     if (st) {
       return st;
     } else {
@@ -129,7 +144,7 @@ export class VMySaleComponent implements OnInit {
   getAvailableStatus(current: string) {
     if (current === 'PROCESSED') {
       return this.status;
-    } else{
+    } else {
       return this.status.filter(status => status.code !== 'PROCESSED');
     }
   }
@@ -140,10 +155,20 @@ export class VMySaleComponent implements OnInit {
       status: item.status,
     }
     this.loading = true;
-    this.sSalesServ.updateStatusSale$(item._id, params).subscribe((res:any) => {
+    this.sSalesServ.updateStatusSale$(item._id, params).subscribe((res: any) => {
       if (res.success) {
         this.getMySales();
       }
-    }, () => {this.loading = false}, () => {this.loading = false});
+    }, () => {
+      this.loading = false
+    }, () => {
+      this.loading = false
+    });
+  }
+
+  detectMobileDevice(): boolean {
+    const userAgent = navigator.userAgent || navigator.vendor;
+    // Detecta si el usuario está en un dispositivo móvil (iOS, Android, Windows Phone)
+    return /android|iPad|iPhone|iPod|windows phone/i.test(userAgent);
   }
 }

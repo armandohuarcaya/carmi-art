@@ -32,8 +32,11 @@ export class SSalesService {
   search$(params: any) {
     return this.httpClient.get(`${this.api.product}/search`, {params});
   }
+  // products$(params: any) {
+  //   return this.httpClient.get(`${this.api.product}`, {params});
+  // }
   products$(params: any) {
-    return this.httpClient.get(`${this.api.product}`, {params});
+    return this.httpClient.get(`${this.api.product}/sale`, {params});
   }
   // generatePdf$(id:any) {
   //   return this.httpClient.post(`${this.api.sale}/generate-pdf/${id}`,{}, {

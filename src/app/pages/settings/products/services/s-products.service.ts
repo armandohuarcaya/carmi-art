@@ -32,7 +32,7 @@ export class SProductsService {
     return this.httpClient.delete(`${this.api.product}/${id}`);
   }
   putProductsImages$(params: any, id:any) {
-    return this.httpClient.post(`${this.api.product}/images/${id}`, params);
+    return this.httpClient.post(`${this.api.product}/${id}/images`, params);
   }
   subCategory$(params: any) {
     return this.httpClient.get(`${this.api.subCategory}`, {params});
